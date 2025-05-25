@@ -5,91 +5,144 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Practical Module - SmartAC</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <link rel="stylesheet" href="/css/style.css">
-    <meta name="theme-color" content="#0062ff">
+    <link rel="stylesheet" href="/css/theme-toggle.css">
+    <meta name="theme-color" content="#000000">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--body-bg);
+            color: var(--text-color);
+        }
+        .dashboard-header {
+            padding: 2.5rem 0;
+            margin-top: 56px;
+            background: linear-gradient(135deg, rgba(45, 212, 191, 0.1), rgba(59, 95, 224, 0.1));
+            position: relative;
+        }
+        .card {
+            border-radius: 16px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+            border: none;
+            overflow: hidden;
+            background-color: var(--card-bg-color);
+            color: var(--text-color);
+            margin-bottom: 1.5rem;
+        }
+        .user-avatar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2dd4bf, #3b5fe0);
+            color: white;
+            font-weight: bold;
+        }
+        .section-divider {
+            height: 4px;
+            width: 60px;
+            background: linear-gradient(135deg, #2dd4bf, #3b5fe0);
+            border-radius: 2px;
+            margin: 0 auto 1.5rem;
+        }
+        .practical-step {
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+            background-color: var(--card-bg-color);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+        }
+        .step-header {
+            background-color: var(--card-bg-color);
+            color: var(--text-color);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        .step-content {
+            background-color: var(--card-bg-color);
+            color: var(--text-color);
+        }
+        [data-theme="dark"] .card,
+        [data-theme="dark"] .practical-step {
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        [data-theme="dark"] .text-muted {
+            color: rgba(255, 255, 255, 0.6) !important;
+        }
+        [data-theme="dark"] .step-header {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #2dd4bf, #3b5fe0);
+            border: none;
+        }
+        footer {
+            margin-top: auto;
+            background-color: var(--footer-bg);
+            color: var(--footer-text);
+            padding: 60px 0 30px;
+        }
+    </style>
 </head>
 <body class="animate__animated animate__fadeIn">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div class="container">
-            <a class="navbar-brand d-flex align-items-center" href="/student/dashboard">
-                <div class="d-flex align-items-center">
-                    <i class="bi bi-snow me-2" style="font-size: 1.4rem;"></i>
-                    <div>
-                        <span class="fw-bold">Smart</span><span class="fw-light">AC</span>
-                        <span class="badge bg-light text-primary ms-2 animate__animated animate__pulse animate__infinite">Student</span>
+    <div class="container-fluid p-0 footer-wrapper">
+        <header class="fixed-top">
+            <nav class="navbar navbar-expand-lg navbar-dark py-2">
+                <div class="container-fluid px-4">
+                    <a class="navbar-brand d-flex align-items-center" href="/student/dashboard">
+                        <span class="fw-bold fs-2 logo-text">SmartAC</span>
+                        <span class="badge bg-light text-primary ms-2 d-none d-md-inline-block">Student</span>
+                    </a>
+                    
+                    <!-- Theme toggle and user profile for mobile -->
+                    <div class="d-flex align-items-center order-lg-2">
+                        <!-- Theme toggle will be added here by JavaScript -->
+                        <div class="theme-toggle-container me-2 me-lg-3"></div>
+                        
+                        <div class="dropdown d-inline-block">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="user-avatar me-2"><%= user.name.charAt(0) %></span>
+                                <span class="d-none d-lg-inline"><%= user.name %></span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <li class="px-3 py-2 text-muted">
+                                    <small>Signed in as</small>
+                                    <div class="fw-bold"><%= user.name %></div>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="/student/profile"><i class="bi bi-person-circle me-2"></i> Profile</a></li>
+                                <li><a class="dropdown-item" href="/logout"><i class="bi bi-box-arrow-right me-2 text-danger"></i> Logout</a></li>
+                            </ul>
+                        </div>
+                        
+                        <button class="navbar-toggler ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
                     </div>
-                </div>
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto nav-interactive">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/student/dashboard">
-                            <div class="d-flex align-items-center">
-                                <i class="bi bi-speedometer2 me-2"></i>
-                                <span>Dashboard</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/student/components">
-                            <div class="d-flex align-items-center">
-                                <i class="bi bi-gear-wide-connected me-2"></i>
-                                <span>AC Components</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/student/practicals">
-                            <div class="d-flex align-items-center">
-                                <i class="bi bi-tools me-2"></i>
-                                <span>All Practicals</span>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item me-3">
-                        <a class="nav-link" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Notifications">
-                            <i class="bi bi-bell-fill"></i>
-                            <span class="badge rounded-pill bg-danger badge-floating">2</span>
-                        </a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <div class="user-avatar me-2"><%= user.name.charAt(0) %></div>
-                            <span class="d-none d-md-block"><%= user.name %></span>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end shadow-lg animate__animated animate__fadeIn animate__faster" aria-labelledby="navbarDropdown">
-                            <li class="px-3 py-2 text-muted">
-                                <small>Signed in as</small>
-                                <div class="fw-bold"><%= user.name %></div>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav mx-auto">
+                            <li class="nav-item">
+                                <a class="nav-link px-3" href="/student/dashboard">Dashboard</a>
                             </li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li>
-                                <a class="dropdown-item" href="/student/profile">
-                                    <i class="bi bi-person-circle me-2 text-primary"></i> My Profile
+                            <li class="nav-item">
+                                <a class="nav-link px-3" href="/student/components">AC Components</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle active px-3" href="#" id="practicalDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Practical Modules
                                 </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="/student/progress">
-                                    <i class="bi bi-graph-up me-2 text-success"></i> My Progress
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="/student/settings">
-                                    <i class="bi bi-gear me-2 text-secondary"></i> Settings
-                                </a>
-                            </li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li>
-                                <a class="dropdown-item" href="/logout">
-                                    <i class="bi bi-box-arrow-right me-2 text-danger"></i> Logout
+                                <ul class="dropdown-menu" aria-labelledby="practicalDropdown">
+                                    <li><a class="dropdown-item <%= practicalId === '1' ? 'active' : '' %>" href="/student/practical/1">Praktikal 1</a></li>
+                                    <li><a class="dropdown-item <%= practicalId === '2' ? 'active' : '' %>" href="/student/practical/2">Praktikal 2</a></li>
+                                    <li><a class="dropdown-item <%= practicalId === '3' ? 'active' : '' %>" href="/student/practical/3">Praktikal 3</a></li>
+                                </ul>
                                 </a>
                             </li>
                         </ul>
@@ -99,10 +152,10 @@
         </div>
     </nav>
 
-    <div class="dashboard-header position-relative overflow-hidden animate__animated animate__fadeIn">
-        <div class="container position-relative" style="z-index: 2;">
+    <section class="dashboard-header py-5 text-center d-flex align-items-center">
+        <div class="container py-5 mt-5">
             <div class="row align-items-center">
-                <div class="col-lg-8">
+                <div class="col-lg-8 mx-auto text-center" data-aos="fade-up" data-aos-duration="1000">
                     <% if (practicalId === '1') { %>
                         <div class="d-flex align-items-center mb-3 animate__animated animate__fadeInUp">
                             <div class="badge-floating bg-primary text-white fs-5 me-3 d-flex align-items-center justify-content-center" style="width: 50px; height: 50px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,98,255,0.3);">01</div>
@@ -707,7 +760,9 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/js/custom.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="/js/theme-toggle.js"></script>
     <script src="/js/responsive.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
