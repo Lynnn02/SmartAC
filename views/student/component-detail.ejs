@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= componentName %> - SmartAC</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="/student/dashboard">SmartAC Student</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/student/dashboard">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/student/components">AC Components</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="user-avatar me-2"><%= user.name.charAt(0) %></span>
+                            <%= user.name %>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="/student/profile">Profile</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-header">
+        <div class="container">
+            <div class="d-flex align-items-center">
+                <a href="/student/components" class="btn btn-outline-primary me-3">
+                    <i class="bi bi-arrow-left"></i> Back to Components
+                </a>
+                <div>
+                    <h1 class="mb-0"><%= componentName %></h1>
+                    <p class="lead">Explore the 3D model and learn about this component</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mb-5">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0">3D Model Viewer</h4>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="model-container" id="componentModelContainer" data-model="<%= modelFile %>">
+                            <div class="d-flex justify-content-center align-items-center h-100">
+                                <div class="text-center">
+                                    <div class="spinner-border text-primary mb-3" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                    <p>Loading 3D model...</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="model-controls p-3">
+                            <button class="btn btn-primary" id="rotateLeft"><i class="bi bi-arrow-counterclockwise"></i></button>
+                            <button class="btn btn-primary" id="resetView"><i class="bi bi-aspect-ratio"></i></button>
+                            <button class="btn btn-primary" id="rotateRight"><i class="bi bi-arrow-clockwise"></i></button>
+                            <button class="btn btn-success" id="viewAR"><i class="bi bi-phone"></i> View in AR</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0">Component Information</h4>
+                    </div>
+                    <div class="card-body" id="componentInfo">
+                        <div class="text-center">
+                            <div class="spinner-border text-primary mb-3" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <p>Loading component information...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card shadow-sm">
+                    <div class="card-header bg-info text-white">
+                        <h4 class="mb-0">Related Components</h4>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <% if (componentId !== 'pressure-switch') { %>
+                                <li class="list-group-item">
+                                    <a href="/student/component/pressure-switch">Pressure Switch</a>
+                                </li>
+                            <% } %>
+                            <% if (componentId !== 'receiver-drier') { %>
+                                <li class="list-group-item">
+                                    <a href="/student/component/receiver-drier">Receiver Drier</a>
+                                </li>
+                            <% } %>
+                            <% if (componentId !== 'sight-glass') { %>
+                                <li class="list-group-item">
+                                    <a href="/student/component/sight-glass">Sight Glass</a>
+                                </li>
+                            <% } %>
+                            <% if (componentId !== 'txv') { %>
+                                <li class="list-group-item">
+                                    <a href="/student/component/txv">Thermal Expansion Valve (TXV)</a>
+                                </li>
+                            <% } %>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white py-4 mt-auto">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>SmartAC</h5>
+                    <p>A project to help TVET students understand more about practical car AC maintenance and repair.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p>&copy; 2025 SmartAC. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.176.0/build/three.min.js"></script>
+    <script>
+        // We need to make sure THREE is defined before importing modules that depend on it
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create script elements for Three.js modules
+            const loadGLTFLoader = document.createElement('script');
+            loadGLTFLoader.src = 'https://cdn.jsdelivr.net/npm/three@0.176.0/examples/js/loaders/GLTFLoader.js';
+            document.head.appendChild(loadGLTFLoader);
+            
+            const loadOrbitControls = document.createElement('script');
+            loadOrbitControls.src = 'https://cdn.jsdelivr.net/npm/three@0.176.0/examples/js/controls/OrbitControls.js';
+            document.head.appendChild(loadOrbitControls);
+            
+            // Component information
+            const componentInfo = {
+                'PressureSwitch': {
+                    name: 'Pressure Switch',
+                    description: 'The pressure switch is a safety device that monitors the refrigerant pressure in the AC system. It will shut off the compressor if the pressure gets too high or too low, protecting the system from damage.',
+                    function: 'Controls the compressor based on refrigerant pressure levels',
+                    location: 'Usually mounted on the high pressure line near the compressor',
+                    maintenance: 'Check electrical connections and pressure calibration during system service'
+                },
+                'ReceiverDrier': {
+                    name: 'Receiver Drier',
+                    description: 'The receiver drier stores excess refrigerant and contains a desiccant material that removes moisture from the refrigerant. Moisture in the system can cause acid formation and component damage.',
+                    function: 'Removes moisture from the refrigerant and stores excess refrigerant',
+                    location: 'Typically located between the condenser and expansion valve',
+                    maintenance: 'Should be replaced whenever the system is opened for major repairs'
+                },
+                'SightGlass': {
+                    name: 'Sight Glass',
+                    description: 'The sight glass allows technicians to visually inspect the refrigerant flow in the system. Bubbles in the sight glass can indicate low refrigerant levels, while cloudy appearance can indicate moisture contamination.',
+                    function: 'Provides visual indication of refrigerant condition and level',
+                    location: 'Usually installed in the liquid line after the receiver drier',
+                    maintenance: 'Inspect during system service for bubbles or cloudiness'
+                },
+                'TXV': {
+                    name: 'Thermal Expansion Valve (TXV)',
+                    description: 'The thermal expansion valve is a precision device that controls the flow of refrigerant into the evaporator. It responds to temperature and pressure changes to maintain optimal system performance.',
+                    function: 'Regulates refrigerant flow based on cooling demand',
+                    location: 'Mounted at the inlet of the evaporator',
+                    maintenance: 'Check for proper operation during system service, replace if stuck or malfunctioning'
+                }
+            };
+            
+            // Load component information
+            const modelFile = document.getElementById('componentModelContainer').getAttribute('data-model');
+            const componentKey = modelFile.split('.')[0];
+            const infoContainer = document.getElementById('componentInfo');
+            
+            if (infoContainer && componentInfo[componentKey]) {
+                const info = componentInfo[componentKey];
+                infoContainer.innerHTML = `
+                    <h4>${info.name}</h4>
+                    <p>${info.description}</p>
+                    <hr>
+                    <p><strong>Function:</strong> ${info.function}</p>
+                    <p><strong>Location:</strong> ${info.location}</p>
+                    <p><strong>Maintenance:</strong> ${info.maintenance}</p>
+                `;
+            }
+            
+            // Initialize 3D model viewer after Three.js modules are loaded
+            loadOrbitControls.onload = function() {
+                // Initialize the component viewer
+                initializeComponentViewer();
+            };
+            
+            // Set up AR view button
+            const arButton = document.getElementById('viewAR');
+            if (arButton) {
+                arButton.addEventListener('click', function() {
+                    alert('AR functionality will be implemented in a future update.');
+                });
+            }
+        });
+        
+        // Initialize the component viewer
+        function initializeComponentViewer() {
+            const container = document.getElementById('componentModelContainer');
+            const modelFile = container.getAttribute('data-model');
+            
+            // Create scene, camera, renderer
+            const scene = new THREE.Scene();
+            scene.background = new THREE.Color(0xf0f0f0);
+            
+            const camera = new THREE.PerspectiveCamera(
+                75, 
+                container.clientWidth / container.clientHeight, 
+                0.1, 
+                1000
+            );
+            camera.position.z = 5;
+            
+            const renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            container.innerHTML = '';
+            container.appendChild(renderer.domElement);
+            
+            // Add lighting
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+            scene.add(ambientLight);
+            
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+            directionalLight.position.set(1, 1, 1);
+            scene.add(directionalLight);
+            
+            // Add controls
+            const controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.25;
+            
+            // Load the GLB model
+            const loader = new THREE.GLTFLoader();
+            const modelPath = `/models/${modelFile}`;
+            
+            // Add a loading manager to handle errors
+            const loadingManager = new THREE.LoadingManager();
+            loadingManager.onError = (url) => {
+                console.error('Error loading model:', url);
+                // If model fails to load, add a placeholder cube
+                const geometry = new THREE.BoxGeometry(2, 2, 2);
+                const material = new THREE.MeshStandardMaterial({ color: 0x0d6efd });
+                const cube = new THREE.Mesh(geometry, material);
+                scene.add(cube);
+                
+                // Add error message to container
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'position-absolute top-0 start-0 p-3 bg-danger text-white';
+                errorDiv.style.zIndex = '10';
+                errorDiv.innerHTML = `<i class="bi bi-exclamation-triangle"></i> Error loading model: ${modelFile}`;
+                container.appendChild(errorDiv);
+            };
+            
+            // Try to load the model
+            let model = null;
+            loader.load(modelPath, (gltf) => {
+                model = gltf.scene;
+                
+                // Center the model
+                const box = new THREE.Box3().setFromObject(model);
+                const center = box.getCenter(new THREE.Vector3());
+                const size = box.getSize(new THREE.Vector3());
+                
+                // Adjust model position to center it
+                model.position.x = -center.x;
+                model.position.y = -center.y;
+                model.position.z = -center.z;
+                
+                // Adjust camera position based on model size
+                const maxDim = Math.max(size.x, size.y, size.z);
+                const fov = camera.fov * (Math.PI / 180);
+                let cameraZ = Math.abs(maxDim / 2 / Math.tan(fov / 2));
+                cameraZ *= 1.5; // Add some margin
+                camera.position.z = cameraZ;
+                
+                // Update camera near and far planes
+                camera.near = cameraZ / 100;
+                camera.far = cameraZ * 100;
+                camera.updateProjectionMatrix();
+                
+                // Add the model to the scene
+                scene.add(model);
+                
+                // Reset controls target to center of model
+                controls.target.set(0, 0, 0);
+                controls.update();
+            }, undefined, loadingManager.onError);
+            
+            // Animation loop
+            function animate() {
+                requestAnimationFrame(animate);
+                controls.update();
+                renderer.render(scene, camera);
+            }
+            animate();
+            
+            // Handle window resize
+            window.addEventListener('resize', () => {
+                camera.aspect = container.clientWidth / container.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.clientWidth, container.clientHeight);
+            });
+            
+            // Set up control buttons
+            const rotateLeftBtn = document.getElementById('rotateLeft');
+            const resetViewBtn = document.getElementById('resetView');
+            const rotateRightBtn = document.getElementById('rotateRight');
+
+            if (rotateLeftBtn) {
+                rotateLeftBtn.addEventListener('click', function() {
+                    controls.rotateLeft(Math.PI / 8);
+                });
+            }
+
+            if (resetViewBtn) {
+                resetViewBtn.addEventListener('click', function() {
+                    controls.reset();
+                });
+            }
+
+            if (rotateRightBtn) {
+                rotateRightBtn.addEventListener('click', function() {
+                    controls.rotateLeft(-Math.PI / 8);
+                });
+            }
+        }
+        // Add responsive behavior for the 3D model viewer
+    function adjustModelViewerForScreenSize() {
+        const container = document.getElementById('componentModelContainer');
+        if (container) {
+            // Adjust height based on screen width
+            if (window.innerWidth < 768) {
+                container.style.height = '300px';
+            } else if (window.innerWidth < 992) {
+                container.style.height = '400px';
+            } else {
+                container.style.height = '500px';
+            }
+        }
+    }
+    
+    // Call on load and on resize
+    adjustModelViewerForScreenSize();
+    window.addEventListener('resize', adjustModelViewerForScreenSize);
+</script>
+<script src="/js/responsive.js"></script>
+</body>
+</html>

@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practical Module - SmartAC</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="/teacher/dashboard">SmartAC Teacher</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/teacher/dashboard">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/teacher/create-session">Create Session</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="user-avatar me-2"><%= user.name.charAt(0) %></span>
+                            <%= user.name %>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="/teacher/profile">Profile</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-header">
+        <div class="container">
+            <% if (practicalId === '1') { %>
+                <h1 class="mb-0">Praktikal 1</h1>
+                <p class="lead">Pemasangan Hose Manifold Gauge & Vacuum Hose (Kaedah Manual)</p>
+            <% } else if (practicalId === '2') { %>
+                <h1 class="mb-0">Praktikal 2</h1>
+                <p class="lead">Proses Vacuum System Selepas Baik-Pulih (Kaedah Manual)</p>
+                <div class="mt-2">
+                    <a href="/teacher/practical/1" class="btn btn-outline-primary btn-sm">Lihat Praktikal 1</a>
+                </div>
+            <% } else if (practicalId === '3') { %>
+                <h1 class="mb-0">Praktikal 3</h1>
+                <p class="lead">Proses Charging Gas Dalam System Selepas Baik-Pulih (Kaedah Manual)</p>
+                <div class="mt-2">
+                    <a href="/teacher/practical/1" class="btn btn-outline-primary btn-sm me-2">Lihat Praktikal 1</a>
+                    <a href="/teacher/practical/2" class="btn btn-outline-primary btn-sm">Lihat Praktikal 2</a>
+                </div>
+            <% } %>
+        </div>
+    </div>
+
+    <div class="container mb-5">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                        <h4 class="mb-0">Prosedur</h4>
+                        <a href="/teacher/create-session?practical=<%= practicalId %>" class="btn btn-light btn-sm">
+                            <i class="bi bi-plus-circle me-1"></i> Create Session with this Module
+                        </a>
+                    </div>
+                    <div class="card-body">
+                        <% if (practicalId === '1') { %>
+                            <div class="practical-step" data-step="1">
+                                <h5>Langkah 1</h5>
+                                <p>Hose Vacuum (Hitam) Manifold Gauge sambung ke injap servis Vacuum Pump.</p>
+                                <button class="btn btn-sm btn-primary view-ar-btn" data-step="1">Lihat dalam AR</button>
+                            </div>
+                            <div class="practical-step" data-step="2">
+                                <h5>Langkah 2</h5>
+                                <p>Hose Perbagai (Kuning) Manifold Gauge sambung ke injap tangan Tank Refrigerant R134a.</p>
+                                <button class="btn btn-sm btn-primary view-ar-btn" data-step="2">Lihat dalam AR</button>
+                            </div>
+                            <div class="practical-step" data-step="3">
+                                <h5>Langkah 3</h5>
+                                <p>Hose Low Pressure (Biru) Manifold Gauge sambung ke Adapter Biru.</p>
+                                <button class="btn btn-sm btn-primary view-ar-btn" data-step="3">Lihat dalam AR</button>
+                            </div>
+                            <div class="practical-step" data-step="4">
+                                <h5>Langkah 4</h5>
+                                <p>Pasang Adapter Biru pada Servis Valve Low Pressure system AC.</p>
+                                <button class="btn btn-sm btn-primary view-ar-btn" data-step="4">Lihat dalam AR</button>
+                            </div>
+                            <div class="practical-step" data-step="5">
+                                <h5>Langkah 5</h5>
+                                <p>Hose High Pressure (Merah) Manifold Gauge sambung ke Adapter Merah.</p>
+                                <button class="btn btn-sm btn-primary view-ar-btn" data-step="5">Lihat dalam AR</button>
+                            </div>
+                            <div class="practical-step" data-step="6">
+                                <h5>Langkah 6</h5>
+                                <p>Pasang Adaptor Merah pada Servis Valve High Pressure system AC.</p>
+                                <button class="btn btn-sm btn-primary view-ar-btn" data-step="6">Lihat dalam AR</button>
+                            </div>
+                            <div class="practical-step" data-step="7">
+                                <h5>Langkah 7</h5>
+                                <p>ON Switch Vacuum Pump (Proses mengeluarkan kelembapan dari hose-hose Manifold Gauge).</p>
+                                <button class="btn btn-sm btn-primary view-ar-btn" data-step="7">Lihat dalam AR</button>
+                            </div>
+                            <div class="practical-step" data-step="8">
+                                <h5>Langkah 8</h5>
+                                <p>Buka (Open) Injap Tangan Hitam di Manifold Gauge.</p>
+                                <button class="btn btn-sm btn-primary view-ar-btn" data-step="8">Lihat dalam AR</button>
+                            </div>
+                            <div class="practical-step" data-step="9">
+                                <h5>Langkah 9</h5>
+                                <p>Buka Injap Tangan Kuning di Manifold Gauge.</p>
+                                <button class="btn btn-sm btn-primary view-ar-btn" data-step="9">Lihat dalam AR</button>
+                            </div>
+                            <div class="practical-step" data-step="10">
+                                <h5>Langkah 10</h5>
+                                <p>Buka Injap Tangan Low Pressure (Biru) di Manifold Gauge.</p>
+                                <button class="btn btn-sm btn-primary view-ar-btn" data-step="10">Lihat dalam AR</button>
+                            </div>
+                            <div class="practical-step" data-step="11">
+                                <h5>Langkah 11</h5>
+                                <p>Buka Injap Tanan High Pressure (Merah) di Manifold Gauge.</p>
+                                <button class="btn btn-sm btn-primary view-ar-btn" data-step="11">Lihat dalam AR</button>
+                            </div>
+                            <div class="practical-step" data-step="12">
+                                <h5>Langkah 12</h5>
+                                <p>Micron Gauge mencapai bacaan 1000 micron: TUTUP Injap Tangan Hitam di Manifold Gauge.</p>
+                                <button class="btn btn-sm btn-primary view-ar-btn" data-step="12">Lihat dalam AR</button>
+                            </div>
+                            <div class="practical-step" data-step="13">
+                                <h5>Langkah 13</h5>
+                                <p>OFF switch Vacuum Pump.</p>
+                                <button class="btn btn-sm btn-primary view-ar-btn" data-step="13">Lihat dalam AR</button>
+                            </div>
+                        <% } else if (practicalId === '2') { %>
+                            <div class="practical-step" data-step="1">
+                                <h5>Langkah 1</h5>
+                                <p>Tutup semua Injap Tangan di Manifold Gauge (Biru ; Merah ; Kuning & Hitam).</p>
+                                <button class="btn btn-sm btn-primary view-ar-btn" data-step="1">Lihat dalam AR</button>
+                            </div>
+                            <div class="practical-step" data-step="2">
+                                <h5>Langkah 2</h5>
+                                <p>ON Switch Vacuum Pump (Proses mengeluarkan kelembapan dari hose-hose Manifold Gauge).</p>
+                                <button class="btn btn-sm btn-primary view-ar-btn" data-step="2">Lihat dalam AR</button>
+                            </div>
+                            <div class="practical-step" data-step="3">
+                                <h5>Langkah 3</h5>
+                                <p>Buka Injap Tangan Hitam (Vacuum) di Manifold Gauge.</p>
+                                <button class="btn btn-sm btn-primary view-ar-btn" data-step="3">Lihat dalam AR</button>
+                            </div>
+                            <div class="practical-step" data-step="4">
+                                <h5>Langkah 4</h5>
+                                <p>Buka Injap Tangan Biru (Low Pressure) di Manifold Gauge.</p>
+                                <button class="btn btn-sm btn-primary view-ar-btn" data-step="4">Lihat dalam AR</button>
+                            </div>
+                            <div class="practical-step" data-step="5">
+                                <h5>Langkah 5</h5>
+                                <p>Buka Injap Tangan Merah (High Pressure) di Manifold Gauge.</p>
+                                <button class="btn btn-sm btn-primary view-ar-btn" data-step="5">Lihat dalam AR</button>
+                            </div>
+                            <div class="practical-step" data-step="6">
+                                <h5>Langkah 6</h5>
+                                <p>Buka Injap Tangan Adaptor Biru (Low Pressure).</p>
+                                <button class="btn btn-sm btn-primary view-ar-btn" data-step="6">Lihat dalam AR</button>
+                            </div>
+                            <div class="practical-step" data-step="7">
+                                <h5>Langkah 7</h5>
+                                <p>Buka Injap Tangan Adaptor Merah (High Pressure).</p>
+                                <button class="btn btn-sm btn-primary view-ar-btn" data-step="7">Lihat dalam AR</button>
+                            </div>
+                            <div class="practical-step" data-step="8">
+                                <h5>Langkah 8</h5>
+                                <p>Micron Gauge mencapai bacaan 200 micron: TUTUP Injap Tangan Hitam di Manifold Gauge.</p>
+                                <button class="btn btn-sm btn-primary view-ar-btn" data-step="8">Lihat dalam AR</button>
+                            </div>
+                            <div class="practical-step" data-step="9">
+                                <h5>Langkah 9</h5>
+                                <p>Tutup semua Injap Tangan di Manifold Gauge (Biru ; Merah & Hitam).</p>
+                                <button class="btn btn-sm btn-primary view-ar-btn" data-step="9">Lihat dalam AR</button>
+                            </div>
+                            <div class="practical-step" data-step="10">
+                                <h5>Langkah 10</h5>
+                                <p>OFF switch Vacuum Pump.</p>
+                                <button class="btn btn-sm btn-primary view-ar-btn" data-step="10">Lihat dalam AR</button>
+                            </div>
+                        <% } else if (practicalId === '3') { %>
+                            <div class="practical-step" data-step="1">
+                                <h5>Langkah 1</h5>
+                                <p>Tutup semua Injap Tangan di Manifold Gauge (Biru ; Merah ; Kuning & Hitam).</p>
+                                <button class="btn btn-sm btn-primary view-ar-btn" data-step="1">Lihat dalam AR</button>
+                            </div>
+                            <div class="practical-step" data-step="2">
+                                <h5>Langkah 2</h5>
+                                <p>Letakkan Refrigerant Tank R134a di atas Timbang (Catat bacaan berat timbangan).</p>
+                                <button class="btn btn-sm btn-primary view-ar-btn" data-step="2">Lihat dalam AR</button>
+                            </div>
+                            <div class="practical-step" data-step="3">
+                                <h5>Langkah 3</h5>
+                                <p>Buka Injap Tangan Tank Refrigerant R134a.</p>
+                                <button class="btn btn-sm btn-primary view-ar-btn" data-step="3">Lihat dalam AR</button>
+                            </div>
+                            <div class="practical-step" data-step="4">
+                                <h5>Langkah 4</h5>
+                                <p>Buka Injap Tangan Biru (Low Pressure) di Manifold Gauge.</p>
+                                <button class="btn btn-sm btn-primary view-ar-btn" data-step="4">Lihat dalam AR</button>
+                            </div>
+                            <div class="practical-step" data-step="5">
+                                <h5>Langkah 5</h5>
+                                <p>Buka Injap Tangan Adaptor Biru (Low Pressure) (Refrigerant R134a bentuk vapor akan masuk ke dalam system sehingga tekanan tank).</p>
+                                <button class="btn btn-sm btn-primary view-ar-btn" data-step="5">Lihat dalam AR</button>
+                            </div>
+                            <div class="practical-step" data-step="6">
+                                <h5>Langkah 6</h5>
+                                <p>Tutup Injap Tangan Biru (Low Pressure) di Manifold Gauge.</p>
+                                <button class="btn btn-sm btn-primary view-ar-btn" data-step="6">Lihat dalam AR</button>
+                            </div>
+                            <div class="practical-step" data-step="7">
+                                <h5>Langkah 7</h5>
+                                <p>ON / Start System.</p>
+                                <button class="btn btn-sm btn-primary view-ar-btn" data-step="7">Lihat dalam AR</button>
+                            </div>
+                            <div class="practical-step" data-step="8">
+                                <h5>Langkah 8</h5>
+                                <p>Pilih kaedah pengisian:</p>
+                                <ul class="nav nav-tabs" id="chargingMethodTab" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link active" id="weight-tab" data-bs-toggle="tab" data-bs-target="#weight" type="button" role="tab" aria-controls="weight" aria-selected="true">Kaedah Berat</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="pressure-tab" data-bs-toggle="tab" data-bs-target="#pressure" type="button" role="tab" aria-controls="pressure" aria-selected="false">Kaedah Tekanan</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="sight-tab" data-bs-toggle="tab" data-bs-target="#sight" type="button" role="tab" aria-controls="sight" aria-selected="false">Kaedah Kaca Cerap</button>
+                                    </li>
+                                </ul>
+                                <div class="tab-content mt-3" id="chargingMethodTabContent">
+                                    <div class="tab-pane fade show active" id="weight" role="tabpanel" aria-labelledby="weight-tab">
+                                        <div class="practical-step" data-step="8A1">
+                                            <h6>Langkah 8A.1</h6>
+                                            <p>Buka Injap Tangan Biru di Manifold Gauge: Berpandu pada timbang. Masukkan Refrigerant R134a sehingga cukup jumlah yang di kehendaki mengikut berat Refrigerant (300 gram).</p>
+                                            <button class="btn btn-sm btn-primary view-ar-btn" data-step="8A1">Lihat dalam AR</button>
+                                        </div>
+                                        <div class="practical-step" data-step="8A2">
+                                            <h6>Langkah 8A.2</h6>
+                                            <p>Setelah cukup berat Refrigerant: Tutup Injap Tangan Biru di Manifold Gauge.</p>
+                                            <button class="btn btn-sm btn-primary view-ar-btn" data-step="8A2">Lihat dalam AR</button>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="pressure" role="tabpanel" aria-labelledby="pressure-tab">
+                                        <div class="practical-step" data-step="8B1">
+                                            <h6>Langkah 8B.1</h6>
+                                            <p>Buka Injap Tangan Biru di Manifold Gauge (10 detik) dan Tutup kembali (10 – 15 detik). Buka Kembali (10 detik) dan Tutup kembali. Lakukan proses ini sehingga bacaan di Low Pressure Gauge dalam 30psi – 40psi dan bacaan di High Pressure Gauge 150psi – 220psi.</p>
+                                            <button class="btn btn-sm btn-primary view-ar-btn" data-step="8B1">Lihat dalam AR</button>
+                                        </div>
+                                        <div class="practical-step" data-step="8B2">
+                                            <h6>Langkah 8B.2</h6>
+                                            <p>Setelah mencapai bacaan 40psi: Tutup Injap Tangan Biru di Manifold Gauge.</p>
+                                            <button class="btn btn-sm btn-primary view-ar-btn" data-step="8B2">Lihat dalam AR</button>
+                                        </div>
+                                        <div class="practical-step" data-step="8B3">
+                                            <h6>Langkah 8B.3</h6>
+                                            <p>Jalankan (Running) sistem selama 10 minit untuk memastikan gas cukup dengan tekanan tersebut.</p>
+                                            <button class="btn btn-sm btn-primary view-ar-btn" data-step="8B3">Lihat dalam AR</button>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="sight" role="tabpanel" aria-labelledby="sight-tab">
+                                        <div class="practical-step" data-step="8C1">
+                                            <h6>Langkah 8C.1</h6>
+                                            <p>Buka Injap Tangan Biru di Manifold Gauge (10 detik) dan Tutup kembali (10 – 15 detik). Buka Kembali (10 detik) dan Tutup kembali. Berpandu kepada kaca cerap, lakukan proses ini sehingga kaca cerap kelihatan jernih (tiada berbuih-buih). Jika melalui kaca cerap terlihat ada berbuih-buih, bermaksud refrigerant di dalam sistem belum mencukupi.</p>
+                                            <button class="btn btn-sm btn-primary view-ar-btn" data-step="8C1">Lihat dalam AR</button>
+                                        </div>
+                                        <div class="practical-step" data-step="8C2">
+                                            <h6>Langkah 8C.2</h6>
+                                            <p>Setelah Kelihatan jernih: Tutup Injap Tangan di Manifold Gauge.</p>
+                                            <button class="btn btn-sm btn-primary view-ar-btn" data-step="8C2">Lihat dalam AR</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="practical-step" data-step="9">
+                                <h5>Langkah 9</h5>
+                                <p>Running kan system selama 5 minit: Dapatkan bacaan.</p>
+                                <button class="btn btn-sm btn-primary view-ar-btn" data-step="9">Lihat dalam AR</button>
+                            </div>
+                            <div class="practical-step" data-step="10">
+                                <h5>Langkah 10</h5>
+                                <p>OFF System.</p>
+                                <button class="btn btn-sm btn-primary view-ar-btn" data-step="10">Lihat dalam AR</button>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0">Peralatan</h4>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <% if (practicalId === '1' || practicalId === '2') { %>
+                                <li class="list-group-item">Manifold Gauge 4 ways Valve</li>
+                                <li class="list-group-item">Adaptor Low Pressure & Adapor High Pressure</li>
+                                <li class="list-group-item">Vacuum Pump</li>
+                                <li class="list-group-item">Micron Gauge</li>
+                                <li class="list-group-item">Sistem AC Kenderaan</li>
+                            <% } else if (practicalId === '3') { %>
+                                <li class="list-group-item">Manifold Gauge 4 ways Valve</li>
+                                <li class="list-group-item">Adaptor Low Pressure & Adapor High Pressure</li>
+                                <li class="list-group-item">Tank Refrigerant R134a</li>
+                                <li class="list-group-item">Timbang</li>
+                                <li class="list-group-item">Sistem AC Kenderaan</li>
+                            <% } %>
+                        </ul>
+                    </div>
+                </div>
+
+                <% if (practicalId === '2') { %>
+                    <div class="card shadow-sm mb-4">
+                        <div class="card-header bg-info text-white">
+                            <h4 class="mb-0">Info Tambahan</h4>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Proses vacuum untuk mengeluarkan kelembapan (udara) dan kekotoran dalam system</li>
+                                <li class="list-group-item">200 micron adalah nilai terendah kelembapan yang disyorkan (Akta 127 : JAS) di dalam system untuk Refrigerant R134a</li>
+                            </ul>
+                        </div>
+                    </div>
+                <% } %>
+
+                <div class="card shadow-sm">
+                    <div class="card-header bg-info text-white">
+                        <h4 class="mb-0">Teaching Notes</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="teachingNotes" class="form-label">Add your teaching notes here:</label>
+                            <textarea class="form-control" id="teachingNotes" rows="5" placeholder="Enter your notes for teaching this practical..."></textarea>
+                        </div>
+                        <div class="d-grid">
+                            <button class="btn btn-primary" id="saveNotes">Save Notes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white py-4 mt-auto">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>SmartAC</h5>
+                    <p>A project to help TVET students understand more about practical car AC maintenance and repair.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p>&copy; 2025 SmartAC. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const arButtons = document.querySelectorAll('.view-ar-btn');
+            
+            arButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const step = this.getAttribute('data-step');
+                    alert(`AR visualization for step ${step} will be implemented in a future update.`);
+                    
+                    // Highlight the active step
+                    document.querySelectorAll('.practical-step').forEach(step => {
+                        step.classList.remove('active');
+                    });
+                    this.closest('.practical-step').classList.add('active');
+                });
+            });
+            
+            // Save teaching notes
+            const saveNotesBtn = document.getElementById('saveNotes');
+            if (saveNotesBtn) {
+                saveNotesBtn.addEventListener('click', function() {
+                    const notes = document.getElementById('teachingNotes').value;
+                    if (notes.trim() !== '') {
+                        alert('Teaching notes saved successfully!');
+                    } else {
+                        alert('Please enter some notes before saving.');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

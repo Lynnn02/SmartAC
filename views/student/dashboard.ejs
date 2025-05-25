@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - SmartAC</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/theme-toggle.css">
+    <meta name="theme-color" content="#000000">
+    <style>
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--body-bg);
+            color: var(--text-color);
+        }
+        .dashboard-header {
+            background: linear-gradient(135deg, #2dd4bf, #3b5fe0);
+            color: white;
+            padding: 2.5rem 0;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .dashboard-header::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .dashboard-header::after {
+            content: '';
+            position: absolute;
+            bottom: -80px;
+            left: -80px;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .dashboard-header .container {
+            position: relative;
+            z-index: 1;
+        }
+        .modern-card {
+            border-radius: 16px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border: none;
+            overflow: hidden;
+            height: 100%;
+            background-color: var(--card-bg-color);
+            color: var(--text-color);
+        }
+        
+        [data-theme="dark"] .modern-card {
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        [data-theme="dark"] .btn-light {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+            border-color: transparent;
+        }
+        
+        [data-theme="dark"] .btn-light:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #fff;
+        }
+        .modern-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+        }
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            background: rgba(59, 95, 224, 0.1);
+            color: #3b5fe0;
+        }
+        .blue-card .card-icon {
+            background: rgba(59, 95, 224, 0.1);
+            color: #3b5fe0;
+        }
+        .green-card .card-icon {
+            background: rgba(45, 212, 191, 0.1);
+            color: #2dd4bf;
+        }
+        .yellow-card .card-icon {
+            background: rgba(255, 170, 0, 0.1);
+            color: #ffaa00;
+        }
+        .pink-card .card-icon {
+            background: rgba(236, 72, 153, 0.1);
+            color: #ec4899;
+        }
+        .section-title {
+            position: relative;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(135deg, #2dd4bf, #3b5fe0);
+            border-radius: 3px;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #2dd4bf, #3b5fe0);
+            border: none;
+            box-shadow: 0 4px 15px rgba(59, 95, 224, 0.3);
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 95, 224, 0.4);
+        }
+        .navbar {
+            background-color: var(--navbar-bg) !important;
+        }
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            font-weight: 600;
+        }
+        .session-card {
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+            background-color: var(--card-bg-color);
+        }
+        .session-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        footer {
+            margin-top: auto;
+            background-color: var(--footer-bg);
+            color: var(--footer-text);
+            padding: 60px 0 30px;
+        }
+        .footer-logo {
+            font-weight: 700;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        .footer-desc {
+            opacity: 0.8;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+        .footer-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+        .footer-links a {
+            color: inherit;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            opacity: 0.8;
+        }
+        .footer-links a:hover {
+            opacity: 1;
+            color: var(--primary-color);
+        }
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: inherit;
+            margin-right: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        .social-links a:hover {
+            background-color: var(--primary-color);
+            color: #fff;
+            transform: translateY(-3px);
+        }
+        .contact-item {
+            display: flex;
+            margin-bottom: 1rem;
+        }
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+        }
+        .contact-link {
+            color: inherit;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+        .contact-link:hover {
+            opacity: 1;
+            color: var(--primary-color);
+        }
+        
+        /* Component styles */
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .feature-list li {
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            color: var(--text-color);
+        }
+        
+        .component-icon-large {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(45, 212, 191, 0.2), rgba(59, 95, 224, 0.2));
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .dashboard-header {
+                padding: 2rem 0;
+            }
+            .card-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .dashboard-header {
+                padding: 1.5rem 0;
+            }
+            .dashboard-header h1 {
+                font-size: 1.8rem;
+            }
+            .dashboard-header p {
+                font-size: 1rem;
+            }
+            .card-body {
+                padding: 1.25rem;
+            }
+            .card-icon {
+                width: 45px;
+                height: 45px;
+                font-size: 1.2rem;
+                margin-bottom: 0.75rem;
+            }
+            .card-title {
+                font-size: 1.1rem;
+            }
+            .card-text {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid p-0 footer-wrapper">
+        <header class="fixed-top">
+            <nav class="navbar navbar-expand-lg navbar-dark py-2">
+                <div class="container-fluid px-4">
+                    <a class="navbar-brand d-flex align-items-center" href="/student/dashboard">
+                        <span class="fw-bold fs-2 logo-text">SmartAC</span>
+                        <span class="badge bg-light text-primary ms-2 d-none d-md-inline-block">Student</span>
+                    </a>
+                
+                <!-- Theme toggle and user profile for mobile -->
+                <div class="d-flex align-items-center order-lg-2">
+                    <!-- Theme toggle will be added here by JavaScript -->
+                    <div class="theme-toggle-container me-2 me-lg-3"></div>
+                    
+                    <div class="dropdown d-inline-block">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center p-0" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <div class="user-avatar me-md-2">
+                                <span><%= user.name.charAt(0) %></span>
+                            </div>
+                            <span class="d-none d-md-inline-block"><%= user.name %></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="userDropdown">
+                            <li><a class="dropdown-item" href="/student/profile"><i class="bi bi-person me-2"></i>Profile</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="/logout"><i class="bi bi-box-arrow-right me-2 text-danger"></i>Logout</a></li>
+                        </ul>
+                    </div>
+                    
+                    <button class="navbar-toggler ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+                
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav mx-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active px-3" href="/student/dashboard">
+                                <i class="bi bi-speedometer2 me-2"></i> Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link px-3" href="/student/components">
+                                <i class="bi bi-grid-3x3-gap me-2"></i> AC Components
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle px-3" href="#" id="practicalDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-journal-text me-2"></i> Practical Modules
+                            </a>
+                            <ul class="dropdown-menu shadow-sm" aria-labelledby="practicalDropdown">
+                                <li><a class="dropdown-item" href="/student/practical/1">Praktikal 1</a></li>
+                                <li><a class="dropdown-item" href="/student/practical/2">Praktikal 2</a></li>
+                                <li><a class="dropdown-item" href="/student/practical/3">Praktikal 3</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero-section py-5 text-center d-flex align-items-center">
+        <div class="container py-5 mt-5">
+            <div class="row align-items-center">
+                <div class="col-lg-8 mx-auto text-center" data-aos="fade-up" data-aos-duration="1000">
+                    <h1 class="display-3 fw-bold mb-3">Welcome, <span class="text-primary">Student</span></h1>
+                    <div class="section-divider mb-4 mx-auto"></div>
+                    <p class="lead mb-5">Access your learning materials and track your progress in car AC maintenance and repair</p>
+                    <a href="/student/practical/1" class="btn btn-primary btn-lg px-5 py-3 fw-semibold">
+                        Start Learning <i class="bi bi-arrow-right ms-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <main class="flex-grow-1">
+        <section id="resources" class="features-section py-5">
+            <div class="container py-5">
+                <div class="section-header text-center mb-5" data-aos="fade-up" data-aos-duration="800">
+                    <h2 class="display-5 fw-bold mb-3">Learning Resources</h2>
+                    <div class="section-divider mb-4 mx-auto"></div>
+                    <p class="lead text-secondary">Explore our comprehensive learning materials and practical modules</p>
+                </div>
+                
+                <div class="row g-5">
+                    <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
+                        <div class="modern-card pink-card h-100">
+                            <div class="card-body">
+                                <div class="card-icon mb-4">
+                                    <i class="bi bi-journal-text"></i>
+                                </div>
+                                <h3 class="card-title h4 mb-3">Practical Modules</h3>
+                                <p class="card-text mb-4">Access step-by-step practical modules for car AC maintenance and repair with interactive guides.</p>
+                                <div class="card-action">
+                                    <a href="/student/practical/1" class="btn btn-light">Start Practical 1</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
+                        <div class="modern-card purple-card h-100">
+                            <div class="card-body">
+                                <div class="card-icon mb-4">
+                                    <i class="bi bi-gear"></i>
+                                </div>
+                                <h3 class="card-title h4 mb-3">AC Components</h3>
+                                <p class="card-text mb-4">Explore detailed information about car AC components and their functions with 3D models.</p>
+                                <div class="card-action">
+                                    <a href="/student/components" class="btn btn-light">View Components</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-duration="800" data-aos-delay="300">
+                        <div class="modern-card teal-card h-100">
+                            <div class="card-body">
+                                <div class="card-icon mb-4">
+                                    <i class="bi bi-person"></i>
+                                </div>
+                                <h3 class="card-title h4 mb-3">My Profile</h3>
+                                <p class="card-text mb-4">View and update your profile information and track your learning progress in one place.</p>
+                                <div class="card-action">
+                                    <a href="/student/profile" class="btn btn-light">Go to Profile</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="container py-4">
+            <!-- Available Sessions Section -->
+            <div class="section-header text-center mb-5" data-aos="fade-up" data-aos-duration="800">
+                <h2 class="display-5 fw-bold mb-3">Available Sessions</h2>
+                <div class="section-divider mb-4 mx-auto"></div>
+                <p class="lead">Join sessions created by your teachers to learn about car AC systems</p>
+            </div>
+            
+            <div class="row g-4 mb-5">
+                <% if (typeof sessions !== 'undefined' && sessions.length > 0) { %>
+                    <% sessions.forEach(function(session) { %>
+                        <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-duration="800">
+                            <div class="modern-card blue-card h-100">
+                                <div class="card-body">
+                                    <div class="card-icon mb-4">
+                                        <i class="bi bi-calendar-event"></i>
+                                    </div>
+                                    <h3 class="card-title h4 mb-3"><%= session.title %></h3>
+                                    <p class="card-text mb-4"><%= session.description %></p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="badge bg-primary text-white"><%= session.date %></span>
+                                        <div class="card-action">
+                                            <a href="<%= session.link %>" class="btn btn-light">Join Session</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <% }); %>
+                <% } else { %>
+                    <div class="col-md-8 mx-auto" data-aos="fade-up" data-aos-duration="800">
+                        <div class="modern-card h-100 text-center p-5">
+                            <div class="card-icon blue-card mx-auto mb-4">
+                                <i class="bi bi-info-circle"></i>
+                            </div>
+                            <h3 class="card-title h4 mb-3">No Sessions Available</h3>
+                            <p class="card-text mb-0">There are no active sessions at the moment. Check back later for new sessions from your teachers.</p>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+
+            <!-- Car AC Components Section -->
+            <div class="section-header text-center mb-5" data-aos="fade-up" data-aos-duration="800">
+                <h2 class="display-5 fw-bold mb-3">Car AC Components</h2>
+                <div class="section-divider mb-4 mx-auto"></div>
+                <p class="lead">Explore the components of a car air conditioning system in 3D</p>
+            </div>
+            
+            <div class="row g-4 mb-5 align-items-center">
+                <div class="col-lg-7" data-aos="fade-right" data-aos-duration="1000">
+                    <div class="modern-card h-100 p-4">
+                        <div class="card-body">
+                            <h3 class="h4 mb-4">Interactive 3D Components</h3>
+                            <p class="card-text mb-4">Explore the components of a car air conditioning system in 3D. Learn about each part's function and how they work together in an interactive environment.</p>
+                            <ul class="feature-list mb-4">
+                                <li><i class="bi bi-check-circle-fill text-primary me-2"></i> Compressor</li>
+                                <li><i class="bi bi-check-circle-fill text-primary me-2"></i> Condenser</li>
+                                <li><i class="bi bi-check-circle-fill text-primary me-2"></i> Expansion Valve</li>
+                                <li><i class="bi bi-check-circle-fill text-primary me-2"></i> Evaporator</li>
+                            </ul>
+                            <div class="mt-4">
+                                <a href="/student/components" class="btn btn-primary btn-lg px-4">
+                                    <i class="bi bi-box me-2"></i>View Components
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-5" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
+                    <div class="component-image-container text-center">
+                        <div class="component-icon-large d-flex align-items-center justify-content-center mx-auto mb-4">
+                            <i class="bi bi-gear-wide-connected display-1"></i>
+                        </div>
+                        <h4 class="mb-3">Interactive 3D Models</h4>
+                        <p>Rotate, zoom and explore each component in detail</p>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer mt-auto">
+        <div class="container">
+            <div class="row gy-4">
+                <div class="col-md-3 col-sm-6 mb-4 mb-md-0">
+                    <div class="footer-brand mb-4">
+                        <h4 class="footer-logo">SmartAC</h4>
+                        <p class="footer-desc">SmartAC is an innovative educational platform designed to provide comprehensive training on car air conditioning systems with interactive 3D models and AR visualization.</p>
+                    </div>
+                    <div class="social-links mb-3">
+                        <a href="#"><i class="bi bi-facebook"></i></a>
+                        <a href="#"><i class="bi bi-twitter"></i></a>
+                        <a href="#"><i class="bi bi-instagram"></i></a>
+                        <a href="#"><i class="bi bi-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="col-md-2 col-sm-6 mb-4 mb-md-0">
+                    <h5>Quick Links</h5>
+                    <ul class="footer-links">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/student/dashboard">Dashboard</a></li>
+                        <li><a href="/student/components">Components</a></li>
+                        <li><a href="/student/practical/1">Practicals</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-md-2 col-sm-6 mb-4 mb-md-0">
+                    <h5>Practicals</h5>
+                    <ul class="footer-links">
+                        <li><a href="/student/practical/1">Praktikal 1</a></li>
+                        <li><a href="/student/practical/2">Praktikal 2</a></li>
+                        <li><a href="/student/practical/3">Praktikal 3</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-md-2 col-sm-6 mb-4 mb-md-0">
+                    <h5>Components</h5>
+                    <ul class="footer-links">
+                        <li><a href="/student/components#compressor">Compressor</a></li>
+                        <li><a href="/student/components#condenser">Condenser</a></li>
+                        <li><a href="/student/components#txv">TXV</a></li>
+                        <li><a href="/student/components#cooling-coil">Cooling Coil</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-md-3 col-sm-6 mb-4 mb-md-0">
+                    <h5>Contact</h5>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="bi bi-envelope-fill"></i>
+                            </div>
+                            <div class="contact-text">
+                                <p class="mb-0">Email</p>
+                                <a href="mailto:info@smartac.edu" class="contact-link">info@smartac.edu</a>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="bi bi-telephone-fill"></i>
+                            </div>
+                            <div class="contact-text">
+                                <p class="mb-0">Phone</p>
+                                <a href="tel:+1234567890" class="contact-link">+123 456 7890</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="mb-md-0 text-center text-md-start">&copy; 2025 SmartAC. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <p class="mb-0">Designed with <i class="bi bi-heart-fill text-danger"></i> for automotive education</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="/js/theme-toggle.js"></script>
+    
+    <script>
+        // Initialize AOS animations
+        AOS.init();
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add padding to body for fixed header
+            document.body.style.paddingTop = document.querySelector('header').offsetHeight + 'px';
+        });
+    </script>
+    </div>
+</body>
+</html>

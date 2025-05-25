@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - SmartAC</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="/admin/dashboard">SmartAC Admin</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/admin/dashboard">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/users">Manage Users</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="user-avatar me-2"><%= user.name.charAt(0) %></span>
+                            <%= user.name %>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="/admin/profile">Profile</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-header">
+        <div class="container">
+            <h1 class="mb-0">Admin Dashboard</h1>
+            <p class="lead">Manage users and system settings</p>
+        </div>
+    </div>
+
+    <div class="container mb-5">
+        <div class="row">
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="bi bi-people-fill text-primary me-2"></i>User Management</h5>
+                        <p class="card-text">Create, update, and manage accounts for teachers and students.</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="badge bg-primary"><%= users.length %> Users</span>
+                            <a href="/admin/users" class="btn btn-outline-primary">Manage Users</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="bi bi-person-badge-fill text-primary me-2"></i>Teacher Accounts</h5>
+                        <p class="card-text">Manage teacher accounts and their permissions.</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="badge bg-info"><%= users.filter(u => u.role === 'teacher').length %> Teachers</span>
+                            <a href="/admin/users?role=teacher" class="btn btn-outline-primary">View Teachers</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="bi bi-mortarboard-fill text-primary me-2"></i>Student Accounts</h5>
+                        <p class="card-text">Manage student accounts and their access to modules.</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="badge bg-success"><%= users.filter(u => u.role === 'student').length %> Students</span>
+                            <a href="/admin/users?role=student" class="btn btn-outline-primary">View Students</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Quick Actions</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <a href="/admin/users/create" class="btn btn-outline-primary w-100">
+                                    <i class="bi bi-person-plus-fill me-2"></i>Add New User
+                                </a>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <a href="/admin/profile" class="btn btn-outline-secondary w-100">
+                                    <i class="bi bi-gear-fill me-2"></i>Edit Profile
+                                </a>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <a href="/logout" class="btn btn-outline-danger w-100">
+                                    <i class="bi bi-box-arrow-right me-2"></i>Logout
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white py-4 mt-auto">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>SmartAC</h5>
+                    <p>A project to help TVET students understand more about practical car AC maintenance and repair.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p>&copy; 2025 SmartAC. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

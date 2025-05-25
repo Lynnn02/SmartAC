@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartAC - Car AC Training Platform</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/theme-toggle.css">
+    <meta name="theme-color" content="#000000">
+</head>
+<body>
+    <div class="container-fluid p-0 footer-wrapper">
+        <header class="fixed-top">
+            <nav class="navbar navbar-expand-lg navbar-dark py-2">
+                <div class="container-fluid px-4">
+                    <a class="navbar-brand d-flex align-items-center" href="/">
+                        <span class="fw-bold fs-2 logo-text">SmartAC</span>
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav mx-auto">
+                            <li class="nav-item">
+                                <a class="nav-link px-3 mx-1" href="#features">Features</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link px-3 mx-1" href="#about">About</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link px-3 mx-1" href="#components">Components</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link px-3 mx-1" href="#resources">Resources</a>
+                            </li>
+                        </ul>
+                        <div class="d-flex align-items-center">
+                            <!-- Theme toggle will be added here by JavaScript -->
+                            <div class="theme-toggle-container me-3"></div>
+                            <a class="btn login-btn px-4" href="/login">
+                                <i class="bi bi-box-arrow-in-right me-1"></i> Login
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <main>
+            <section class="hero-section py-5 text-center d-flex align-items-center">
+                <div class="container py-5 mt-5">
+                    <div class="row align-items-center">
+                        <div class="col-lg-6 text-lg-start" data-aos="fade-right" data-aos-duration="1000">
+                            <h1 class="display-3 fw-bold mb-3">Smart<span class="text-primary">AC</span></h1>
+                            <h2 class="h2 mb-4">Car AC Training Platform</h2>
+                            <p class="lead mb-5">
+                                A comprehensive platform for learning car air conditioning systems maintenance and repair with interactive 3D models and AR visualization.
+                            </p>
+                            <a href="/login" class="btn btn-primary btn-lg px-5 py-3 fw-semibold">
+                                Get Started <i class="bi bi-arrow-right ms-2"></i>
+                            </a>
+                        </div>
+                        <div class="col-lg-6 d-none d-lg-block" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
+                            <div class="hero-image">
+                                <img src="/images/ac-illustration.svg" alt="Car AC System" class="img-fluid" onerror="this.src='/images/ac-placeholder.png'; this.onerror=null;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="features" class="features-section py-5">
+                <div class="container py-5">
+                    <div class="section-header text-center mb-5" data-aos="fade-up" data-aos-duration="800">
+                        <h2 class="display-5 fw-bold mb-3">Key Features</h2>
+                        <div class="section-divider mb-4"></div>
+                        <p class="lead text-secondary">Explore what makes SmartAC the perfect learning platform</p>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
+                            <div class="modern-card pink-card h-100">
+                                <div class="card-body">
+                                    <div class="card-icon">
+                                        <i class="bi bi-book"></i>
+                                    </div>
+                                    <h3 class="card-title fw-bold">Practical Modules</h3>
+                                    <p class="card-text">Learn through detailed step-by-step practical modules with clear instructions in Bahasa Melayu.</p>
+                                    <div class="mt-4">
+                                        <a href="/login" class="btn btn-light">Explore Modules</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
+                            <div class="modern-card purple-card h-100">
+                                <div class="card-body">
+                                    <div class="card-icon">
+                                        <i class="bi bi-gear-wide-connected"></i>
+                                    </div>
+                                    <h3 class="card-title fw-bold">Interactive 3D Models</h3>
+                                    <p class="card-text">Explore car AC components with interactive 3D models to understand their functions and relationships.</p>
+                                    <div class="mt-4">
+                                        <a href="/login" class="btn btn-light">View Models</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-duration="800" data-aos-delay="300">
+                            <div class="modern-card teal-card h-100">
+                                <div class="card-body">
+                                    <div class="card-icon">
+                                        <i class="bi bi-phone"></i>
+                                    </div>
+                                    <h3 class="card-title fw-bold">AR Visualization</h3>
+                                    <p class="card-text">Experience augmented reality visualization of car AC components and procedures for immersive learning.</p>
+                                    <div class="mt-4">
+                                        <a href="/login" class="btn btn-light">Try AR Features</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="about" class="about-section py-5">
+                <div class="container py-5">
+                    <div class="section-header text-center mb-5" data-aos="fade-up" data-aos-duration="800">
+                        <h2 class="display-5 fw-bold mb-3">About SmartAC</h2>
+                        <div class="section-divider mb-4"></div>
+                        <p class="lead text-secondary mb-5">The next generation platform for automotive AC training</p>
+                    </div>
+                    <div class="row align-items-center">
+                        <div class="col-lg-6 mb-4 mb-lg-0" data-aos="fade-right" data-aos-duration="1000">
+                            <img src="/images/about-image.jpg" alt="About SmartAC" class="img-fluid rounded-4 shadow" onerror="this.src='/images/about-placeholder.png'; this.onerror=null;">
+                        </div>
+                        <div class="col-lg-6" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
+                            <h3 class="h2 mb-4 fw-semibold">Revolutionary Learning Experience</h3>
+                            <p class="mb-4">SmartAC is an innovative educational platform designed to provide comprehensive training on car air conditioning systems. Our platform combines theoretical knowledge with practical, hands-on learning experiences.</p>
+                            <p class="mb-4">With SmartAC, students can:</p>
+                            <ul class="feature-list">
+                                <li class="mb-3"><i class="bi bi-check-circle-fill text-primary me-2"></i> Learn at their own pace with step-by-step guides</li>
+                                <li class="mb-3"><i class="bi bi-check-circle-fill text-primary me-2"></i> Interact with 3D models of AC components</li>
+                                <li class="mb-3"><i class="bi bi-check-circle-fill text-primary me-2"></i> Experience AR visualization for better understanding</li>
+                                <li class="mb-3"><i class="bi bi-check-circle-fill text-primary me-2"></i> Test their knowledge with quizzes and assessments</li>
+                            </ul>
+                            <a href="/login" class="btn btn-outline-primary mt-3">Start Learning Now</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Components Section -->
+            <section id="components" class="py-5 bg-light">
+                <div class="container py-5">
+                    <div class="section-header text-center mb-5" data-aos="fade-up" data-aos-duration="800">
+                        <h2 class="display-5 fw-bold mb-3">AC System Components</h2>
+                        <div class="section-divider mb-4"></div>
+                        <p class="lead text-secondary">Explore the key components of automotive air conditioning systems</p>
+                    </div>
+                    <div class="row g-4">
+                        <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                            <div class="modern-card h-100">
+                                <div class="card-body">
+                                    <div class="card-icon">
+                                        <i class="bi bi-gear-fill"></i>
+                                    </div>
+                                    <h4 class="card-title">Compressor</h4>
+                                    <p class="card-text">The heart of the AC system that pressurizes refrigerant and circulates it through the system.</p>
+                                    <div class="card-footer border-0 bg-transparent pt-0">
+                                        <a href="/login" class="btn btn-outline-primary">Learn More</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                            <div class="modern-card h-100">
+                                <div class="card-body">
+                                    <div class="card-icon">
+                                        <i class="bi bi-grid-3x3-gap-fill"></i>
+                                    </div>
+                                    <h4 class="card-title">Condenser</h4>
+                                    <p class="card-text">Releases heat from the refrigerant to the outside air, converting hot gas to liquid.</p>
+                                    <div class="card-footer border-0 bg-transparent pt-0">
+                                        <a href="/login" class="btn btn-outline-primary">Learn More</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                            <div class="modern-card h-100">
+                                <div class="card-body">
+                                    <div class="card-icon">
+                                        <i class="bi bi-arrows-expand"></i>
+                                    </div>
+                                    <h4 class="card-title">TXV</h4>
+                                    <p class="card-text">Thermal Expansion Valve controls refrigerant flow into the evaporator based on temperature.</p>
+                                    <div class="card-footer border-0 bg-transparent pt-0">
+                                        <a href="/login" class="btn btn-outline-primary">Learn More</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="400">
+                            <div class="modern-card h-100">
+                                <div class="card-body">
+                                    <div class="card-icon">
+                                        <i class="bi bi-snow"></i>
+                                    </div>
+                                    <h4 class="card-title">Cooling Coil</h4>
+                                    <p class="card-text">The evaporator absorbs heat from the cabin air, cooling and dehumidifying it.</p>
+                                    <div class="card-footer border-0 bg-transparent pt-0">
+                                        <a href="/login" class="btn btn-outline-primary">Learn More</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Resources Section -->
+            <section id="resources" class="py-5">
+                <div class="container py-5">
+                    <div class="section-header text-center mb-5" data-aos="fade-up" data-aos-duration="800">
+                        <h2 class="display-5 fw-bold mb-3">Learning Resources</h2>
+                        <div class="section-divider mb-4"></div>
+                        <p class="lead text-secondary">Access comprehensive materials to enhance your understanding</p>
+                    </div>
+                    <div class="row g-4">
+                        <div class="col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                            <div class="resource-card">
+                                <div class="resource-icon">
+                                    <i class="bi bi-journal-text"></i>
+                                </div>
+                                <div class="resource-content">
+                                    <h4>Tutorials</h4>
+                                    <p>Step-by-step guides for understanding AC system operation, diagnosis, and repair.</p>
+                                    <ul class="resource-list">
+                                        <li><i class="bi bi-check2-circle me-2"></i>Basic AC System Operation</li>
+                                        <li><i class="bi bi-check2-circle me-2"></i>Refrigerant Cycle Explained</li>
+                                        <li><i class="bi bi-check2-circle me-2"></i>Troubleshooting Common Issues</li>
+                                    </ul>
+                                    <a href="/login" class="btn btn-primary mt-3">Browse Tutorials</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                            <div class="resource-card">
+                                <div class="resource-icon">
+                                    <i class="bi bi-file-earmark-text"></i>
+                                </div>
+                                <div class="resource-content">
+                                    <h4>Documentation</h4>
+                                    <p>Comprehensive technical documentation covering all aspects of automotive AC systems.</p>
+                                    <ul class="resource-list">
+                                        <li><i class="bi bi-check2-circle me-2"></i>Component Specifications</li>
+                                        <li><i class="bi bi-check2-circle me-2"></i>System Diagrams</li>
+                                        <li><i class="bi bi-check2-circle me-2"></i>Maintenance Procedures</li>
+                                    </ul>
+                                    <a href="/login" class="btn btn-primary mt-3">View Documentation</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                            <div class="resource-card">
+                                <div class="resource-icon">
+                                    <i class="bi bi-camera-video"></i>
+                                </div>
+                                <div class="resource-content">
+                                    <h4>Videos</h4>
+                                    <p>Visual learning resources demonstrating AC system components and repair techniques.</p>
+                                    <ul class="resource-list">
+                                        <li><i class="bi bi-check2-circle me-2"></i>Component Identification</li>
+                                        <li><i class="bi bi-check2-circle me-2"></i>Diagnostic Procedures</li>
+                                        <li><i class="bi bi-check2-circle me-2"></i>Repair Demonstrations</li>
+                                    </ul>
+                                    <a href="/login" class="btn btn-primary mt-3">Watch Videos</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="400">
+                            <div class="resource-card">
+                                <div class="resource-icon">
+                                    <i class="bi bi-cloud-download"></i>
+                                </div>
+                                <div class="resource-content">
+                                    <h4>Downloads</h4>
+                                    <p>Downloadable resources for offline learning and reference materials.</p>
+                                    <ul class="resource-list">
+                                        <li><i class="bi bi-check2-circle me-2"></i>PDF Guides</li>
+                                        <li><i class="bi bi-check2-circle me-2"></i>Checklists</li>
+                                        <li><i class="bi bi-check2-circle me-2"></i>Reference Charts</li>
+                                    </ul>
+                                    <a href="/login" class="btn btn-primary mt-3">Download Resources</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <footer class="footer">
+            <div class="container">
+                <div class="row gy-4">
+                    <div class="col-lg-4 col-md-6">
+                        <h5>SmartAC</h5>
+                        <p>SmartAC is an innovative educational platform designed to provide comprehensive training on car air conditioning systems with interactive 3D models and AR visualization.</p>
+                        <div class="social-links mt-4">
+                            <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+                            <a href="#" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
+                            <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+                            <a href="#" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-6">
+                        <h5>Quick Links</h5>
+                        <ul class="footer-links">
+                            <li><a href="/login">Login</a></li>
+                            <li><a href="#features">Features</a></li>
+                            <li><a href="#about">About Us</a></li>
+                            <li><a href="#contact">Contact</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="col-md-2 col-sm-6 mb-4 mb-md-0">
+                        <h5>Features</h5>
+                        <ul class="footer-links">
+                            <li><a href="#">3D Models</a></li>
+                            <li><a href="#">AR Visualization</a></li>
+                            <li><a href="#">Practical Guides</a></li>
+                            <li><a href="#">Assessments</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="col-md-2 col-sm-6 mb-4 mb-md-0">
+                        <h5>Components</h5>
+                        <ul class="footer-links">
+                            <li><a href="#">Compressor</a></li>
+                            <li><a href="#">Condenser</a></li>
+                            <li><a href="#">TXV</a></li>
+                            <li><a href="#">Cooling Coil</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="col-md-2 col-sm-6 mb-4 mb-md-0">
+                        <h5>Resources</h5>
+                        <ul class="footer-links">
+                            <li><a href="#">Tutorials</a></li>
+                            <li><a href="#">Documentation</a></li>
+                            <li><a href="#">Videos</a></li>
+                            <li><a href="#">Downloads</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="col-md-3 col-sm-6 mb-4 mb-md-0">
+                        <h5>Contact</h5>
+                        <div class="contact-info">
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="bi bi-envelope-fill"></i>
+                                </div>
+                                <div class="contact-text">
+                                    <p class="mb-0">Email</p>
+                                    <a href="mailto:info@smartac.edu" class="contact-link">info@smartac.edu</a>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="bi bi-telephone-fill"></i>
+                                </div>
+                                <div class="contact-text">
+                                    <p class="mb-0">Phone</p>
+                                    <a href="tel:+1234567890" class="contact-link">+123 456 7890</a>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="bi bi-geo-alt-fill"></i>
+                                </div>
+                                <div class="contact-text">
+                                    <p class="mb-0">Address</p>
+                                    <p class="contact-address">123 Education Street, Learning City</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="my-4">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <p class="mb-md-0 text-center text-md-start">&copy; 2023 SmartAC. All rights reserved.</p>
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                        <p class="mb-0">Designed with <i class="bi bi-heart-fill text-danger"></i> for automotive education</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="/js/custom.js"></script>
+    <script src="/js/responsive.js"></script>
+    <script src="/js/theme-toggle.js"></script>
+    <script>
+        // Initialize AOS animations
+        AOS.init();
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    const navHeight = document.querySelector('header').offsetHeight;
+                    const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navHeight;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add padding to body for fixed header
+        document.body.style.paddingTop = document.querySelector('header').offsetHeight + 'px';
+    </script>
+</body>
+</html>

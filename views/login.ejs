@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - SmartAC</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/theme-toggle.css">
+    <meta name="theme-color" content="#000000">
+    <style>
+        body, html {
+            height: 100%;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        .login-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--body-bg);
+        }
+        .login-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 20px;
+            margin-bottom: 60px; /* Space for info banner */
+        }
+        .login-form-container {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 15px;
+        }
+        .login-card {
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            background-color: var(--card-bg-color);
+            border: none;
+            margin-bottom: 20px;
+        }
+        .card-header {
+            border-bottom: none;
+            padding: 20px 15px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #2dd4bf, #3b5fe0) !important;
+            text-align: center;
+        }
+        .card-header h3 {
+            font-size: 1.5rem;
+            margin: 0;
+            position: relative;
+            z-index: 2;
+        }
+        .card-header:before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 1;
+        }
+        .card-header:after {
+            content: '';
+            position: absolute;
+            bottom: -30px;
+            left: -30px;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 1;
+        }
+        .card-body {
+            padding: 25px 20px;
+        }
+        .form-control, .input-group-text {
+            height: 45px;
+            font-size: 14px;
+        }
+        .custom-input-group {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            margin-bottom: 5px;
+        }
+        .custom-input-group .input-group-text {
+            background-color: var(--card-bg-color);
+            color: var(--primary);
+            border-right: none;
+            width: 42px;
+            display: flex;
+            justify-content: center;
+        }
+        .custom-input-group .form-control {
+            border-left: none;
+            padding-left: 0;
+            background-color: var(--card-bg-color);
+            border-color: var(--border-color);
+        }
+        .custom-input-group .form-control:focus {
+            box-shadow: none;
+            border-color: var(--border-color);
+        }
+        .toggle-password {
+            background-color: var(--card-bg-color);
+            border-color: var(--border-color);
+            border-left: none;
+            color: var(--text-muted);
+            padding: 0 10px;
+        }
+        .toggle-password:hover {
+            color: var(--primary);
+            background-color: var(--card-bg-color);
+        }
+        .invalid-feedback {
+            color: #dc3545;
+            background-color: rgba(220, 53, 69, 0.1);
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin-top: 5px;
+            font-size: 13px;
+        }
+        .custom-checkbox .form-check-input {
+            width: 18px;
+            height: 18px;
+            margin-top: 0.2em;
+        }
+        .custom-checkbox .form-check-label {
+            font-size: 14px;
+        }
+        .custom-checkbox .form-check-input:checked {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+        .btn-primary {
+            height: 45px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            background: linear-gradient(135deg, #2dd4bf, #3b5fe0);
+            border: none;
+            box-shadow: 0 4px 15px rgba(59, 95, 224, 0.3);
+            transition: all 0.3s ease;
+            font-size: 15px;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 95, 224, 0.4);
+        }
+        .info-banner {
+            background-color: var(--card-bg-color);
+            border-top: 1px solid var(--border-color);
+            padding: 12px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+            z-index: 100;
+        }
+        .info-banner p {
+            font-size: 13px;
+            margin: 0;
+            line-height: 1.4;
+        }
+        .info-icon {
+            width: 32px;
+            height: 32px;
+            min-width: 32px; /* Prevent shrinking */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(45, 212, 191, 0.2), rgba(59, 95, 224, 0.2));
+            color: var(--primary);
+            margin-right: 12px;
+        }
+        
+        /* Dark mode specific styles */
+        [data-theme="dark"] .custom-input-group .input-group-text,
+        [data-theme="dark"] .custom-input-group .form-control,
+        [data-theme="dark"] .toggle-password {
+            background-color: var(--card-bg-color);
+            border-color: var(--border-color);
+            color: var(--text-color);
+        }
+        [data-theme="dark"] .custom-input-group .input-group-text {
+            color: var(--primary);
+        }
+        [data-theme="dark"] .toggle-password {
+            color: var(--text-muted);
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 576px) {
+            .navbar-brand .logo-text {
+                font-size: 1.5rem;
+            }
+            .login-form-container {
+                padding: 10px;
+            }
+            .card-header {
+                padding: 15px 10px;
+            }
+            .card-body {
+                padding: 20px 15px;
+            }
+            .form-control, .input-group-text, .btn-primary {
+                height: 42px;
+                font-size: 14px;
+            }
+            .info-banner {
+                padding: 10px 0;
+            }
+            .info-banner p {
+                font-size: 12px;
+            }
+            .info-icon {
+                width: 28px;
+                height: 28px;
+                min-width: 28px;
+            }
+        }
+        
+        /* iPhone SE specific adjustments */
+        @media (max-width: 375px) {
+            .navbar-brand .logo-text {
+                font-size: 1.3rem;
+            }
+            .login-content {
+                padding: 0 10px;
+            }
+            .card-header h3 {
+                font-size: 1.3rem;
+            }
+            .form-label {
+                font-size: 14px;
+            }
+            .form-control, .input-group-text {
+                height: 40px;
+                font-size: 13px;
+            }
+            .btn-primary {
+                height: 40px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-page">
+        <header class="fixed-top">
+            <nav class="navbar navbar-expand-lg navbar-dark py-2">
+                <div class="container-fluid px-3">
+                    <a class="navbar-brand d-flex align-items-center" href="/">
+                        <span class="fw-bold logo-text">SmartAC</span>
+                    </a>
+                    <div class="d-flex align-items-center order-lg-2">
+                        <!-- Theme toggle will be added here by JavaScript -->
+                        <div class="theme-toggle-container me-2 me-lg-3"></div>
+                        <a class="btn login-btn px-3 active d-none d-lg-inline-block" href="/login">
+                            <i class="bi bi-box-arrow-in-right me-1"></i> Login
+                        </a>
+                        <button class="navbar-toggler ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                    </div>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav mx-auto">
+                            <li class="nav-item">
+                                <a class="nav-link px-2 py-2" href="/#features">Features</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link px-2 py-2" href="/#about">About</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link px-2 py-2" href="/#components">Components</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link px-2 py-2" href="/#resources">Resources</a>
+                            </li>
+                            <li class="nav-item d-lg-none mt-2">
+                                <a class="btn btn-primary w-100" href="/login">
+                                    <i class="bi bi-box-arrow-in-right me-1"></i> Login
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <div class="login-content">
+            <div class="login-form-container">
+                <div class="login-card">
+                    <div class="card-header text-center bg-primary text-white">
+                        <h3 class="mb-0 fw-bold">Welcome Back</h3>
+                    </div>
+                    <div class="card-body">
+                        <% if (typeof error !== 'undefined') { %>
+                            <div class="alert alert-danger d-flex align-items-center" role="alert">
+                                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                                <%= error %>
+                            </div>
+                        <% } %>
+                        <form action="/login" method="POST" class="fade-in">
+                            <div class="mb-4">
+                                <label for="username" class="form-label fw-medium mb-2">Username</label>
+                                <div class="input-group custom-input-group">
+                                    <span class="input-group-text">
+                                        <i class="bi bi-person"></i>
+                                    </span>
+                                    <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" required>
+                                </div>
+                                <div class="invalid-feedback" id="username-feedback" style="display: none;">
+                                    <i class="bi bi-exclamation-circle me-1"></i>
+                                    Please enter your username
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <label for="password" class="form-label fw-medium">Password</label>
+                                    <a href="#" class="text-decoration-none small text-primary">Forgot Password?</a>
+                                </div>
+                                <div class="input-group custom-input-group">
+                                    <span class="input-group-text">
+                                        <i class="bi bi-lock"></i>
+                                    </span>
+                                    <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
+                                    <button class="btn toggle-password" type="button" id="togglePassword" onclick="togglePasswordVisibility('password', 'passwordIcon')">
+                                        <i class="bi bi-eye" id="passwordIcon"></i>
+                                    </button>
+                                </div>
+                                <div class="invalid-feedback" id="password-feedback" style="display: none;">
+                                    <i class="bi bi-exclamation-circle me-1"></i>
+                                    Please enter your password
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <div class="form-check custom-checkbox">
+                                    <input class="form-check-input" type="checkbox" id="rememberMe" name="rememberMe">
+                                    <label class="form-check-label" for="rememberMe">Remember me</label>
+                                </div>
+                            </div>
+                            <div class="d-grid mt-4">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="bi bi-box-arrow-in-right me-2"></i> Sign In
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-banner">
+            <div class="container">
+                <div class="d-flex align-items-center justify-content-center">
+                    <div class="info-icon">
+                        <i class="bi bi-info-circle"></i>
+                    </div>
+                    <p class="mb-0 text-secondary"><strong>Account Information:</strong> Students and teachers cannot register directly. Contact your administrator for account creation.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/theme-toggle.js"></script>
+    <script>
+        function togglePasswordVisibility(inputId, iconId) {
+            const input = document.getElementById(inputId);
+            const icon = document.getElementById(iconId);
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('bi-eye');
+                icon.classList.add('bi-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('bi-eye-slash');
+                icon.classList.add('bi-eye');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add padding to body for fixed header
+            const headerHeight = document.querySelector('header').offsetHeight;
+            document.querySelector('.login-content').style.paddingTop = headerHeight + 'px';
+            
+            // Form validation
+            const loginForm = document.querySelector('form');
+            const usernameInput = document.getElementById('username');
+            const passwordInput = document.getElementById('password');
+            const usernameFeedback = document.getElementById('username-feedback');
+            const passwordFeedback = document.getElementById('password-feedback');
+            
+            loginForm.addEventListener('submit', function(event) {
+                let isValid = true;
+                
+                // Validate username
+                if (!usernameInput.value.trim()) {
+                    event.preventDefault();
+                    usernameFeedback.style.display = 'block';
+                    usernameInput.classList.add('is-invalid');
+                    isValid = false;
+                } else {
+                    usernameFeedback.style.display = 'none';
+                    usernameInput.classList.remove('is-invalid');
+                }
+                
+                // Validate password
+                if (!passwordInput.value) {
+                    event.preventDefault();
+                    passwordFeedback.style.display = 'block';
+                    passwordInput.classList.add('is-invalid');
+                    isValid = false;
+                } else {
+                    passwordFeedback.style.display = 'none';
+                    passwordInput.classList.remove('is-invalid');
+                }
+                
+                return isValid;
+            });
+            
+            // Clear validation on input
+            usernameInput.addEventListener('input', function() {
+                if (this.value.trim()) {
+                    usernameFeedback.style.display = 'none';
+                    this.classList.remove('is-invalid');
+                }
+            });
+            
+            passwordInput.addEventListener('input', function() {
+                if (this.value) {
+                    passwordFeedback.style.display = 'none';
+                    this.classList.remove('is-invalid');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

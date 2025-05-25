@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practical Module - SmartAC</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <meta name="theme-color" content="#0062ff">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+</head>
+<body class="animate__animated animate__fadeIn">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="/student/dashboard">
+                <div class="d-flex align-items-center">
+                    <i class="bi bi-snow me-2" style="font-size: 1.4rem;"></i>
+                    <div>
+                        <span class="fw-bold">Smart</span><span class="fw-light">AC</span>
+                        <span class="badge bg-light text-primary ms-2 animate__animated animate__pulse animate__infinite">Student</span>
+                    </div>
+                </div>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto nav-interactive">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/student/dashboard">
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-speedometer2 me-2"></i>
+                                <span>Dashboard</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/student/components">
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-gear-wide-connected me-2"></i>
+                                <span>AC Components</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/student/practicals">
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-tools me-2"></i>
+                                <span>All Practicals</span>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item me-3">
+                        <a class="nav-link" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Notifications">
+                            <i class="bi bi-bell-fill"></i>
+                            <span class="badge rounded-pill bg-danger badge-floating">2</span>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <div class="user-avatar me-2"><%= user.name.charAt(0) %></div>
+                            <span class="d-none d-md-block"><%= user.name %></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end shadow-lg animate__animated animate__fadeIn animate__faster" aria-labelledby="navbarDropdown">
+                            <li class="px-3 py-2 text-muted">
+                                <small>Signed in as</small>
+                                <div class="fw-bold"><%= user.name %></div>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <a class="dropdown-item" href="/student/profile">
+                                    <i class="bi bi-person-circle me-2 text-primary"></i> My Profile
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="/student/progress">
+                                    <i class="bi bi-graph-up me-2 text-success"></i> My Progress
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="/student/settings">
+                                    <i class="bi bi-gear me-2 text-secondary"></i> Settings
+                                </a>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <a class="dropdown-item" href="/logout">
+                                    <i class="bi bi-box-arrow-right me-2 text-danger"></i> Logout
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-header position-relative overflow-hidden animate__animated animate__fadeIn">
+        <div class="container position-relative" style="z-index: 2;">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <% if (practicalId === '1') { %>
+                        <div class="d-flex align-items-center mb-3 animate__animated animate__fadeInUp">
+                            <div class="badge-floating bg-primary text-white fs-5 me-3 d-flex align-items-center justify-content-center" style="width: 50px; height: 50px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,98,255,0.3);">01</div>
+                            <div>
+                                <h1 class="mb-0 display-5 fw-bold">Praktikal 1</h1>
+                                <div class="text-primary">AC Maintenance Fundamentals</div>
+                            </div>
+                            <div class="ms-auto d-none d-md-block">
+                                <span class="badge bg-info text-white p-2">Beginner</span>
+                            </div>
+                        </div>
+                        <p class="lead mb-4 animate__animated animate__fadeInUp animate__delay-1s">Pemasangan Hose Manifold Gauge & Vacuum Hose (Kaedah Manual)</p>
+                        <div class="d-flex flex-wrap gap-3 animate__animated animate__fadeInUp animate__delay-2s">
+                            <div class="card-neumorphic py-2 px-3 d-flex align-items-center">
+                                <i class="bi bi-tools text-primary me-2"></i>
+                                <span>13 Langkah</span>
+                            </div>
+                            <div class="card-neumorphic py-2 px-3 d-flex align-items-center">
+                                <i class="bi bi-clock text-primary me-2"></i>
+                                <span>Est. 45 minit</span>
+                            </div>
+                            <div class="card-neumorphic py-2 px-3 d-flex align-items-center">
+                                <i class="bi bi-trophy text-warning me-2"></i>
+                                <span>100 XP</span>
+                            </div>
+                        </div>
+                    <% } else if (practicalId === '2') { %>
+                        <div class="d-flex align-items-center mb-3 animate__animated animate__fadeInUp">
+                            <div class="badge-floating bg-primary text-white fs-5 me-3 d-flex align-items-center justify-content-center" style="width: 50px; height: 50px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,98,255,0.3);">02</div>
+                            <div>
+                                <h1 class="mb-0 display-5 fw-bold">Praktikal 2</h1>
+                                <div class="text-primary">System Vacuum Process</div>
+                            </div>
+                            <div class="ms-auto d-none d-md-block">
+                                <span class="badge bg-warning text-dark p-2">Intermediate</span>
+                            </div>
+                        </div>
+                        <p class="lead mb-4 animate__animated animate__fadeInUp animate__delay-1s">Proses Vacuum System Selepas Baik-Pulih (Kaedah Manual)</p>
+                        <div class="d-flex flex-wrap gap-3 mb-4 animate__animated animate__fadeInUp animate__delay-2s">
+                            <div class="card-neumorphic py-2 px-3 d-flex align-items-center">
+                                <i class="bi bi-tools text-primary me-2"></i>
+                                <span>10 Langkah</span>
+                            </div>
+                            <div class="card-neumorphic py-2 px-3 d-flex align-items-center">
+                                <i class="bi bi-clock text-primary me-2"></i>
+                                <span>Est. 30 minit</span>
+                            </div>
+                            <div class="card-neumorphic py-2 px-3 d-flex align-items-center">
+                                <i class="bi bi-trophy text-warning me-2"></i>
+                                <span>150 XP</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 animate__animated animate__fadeInUp animate__delay-3s">
+                            <a href="/student/practical/1" class="btn btn-outline-primary">
+                                <i class="bi bi-arrow-left me-2"></i> Lihat Praktikal 1
+                            </a>
+                        </div>
+                    <% } else if (practicalId === '3') { %>
+                        <div class="d-flex align-items-center mb-3 animate__animated animate__fadeInUp">
+                            <div class="badge-floating bg-primary text-white fs-5 me-3 d-flex align-items-center justify-content-center" style="width: 50px; height: 50px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,98,255,0.3);">03</div>
+                            <div>
+                                <h1 class="mb-0 display-5 fw-bold">Praktikal 3</h1>
+                                <div class="text-primary">Gas Charging Process</div>
+                            </div>
+                            <div class="ms-auto d-none d-md-block">
+                                <span class="badge bg-danger text-white p-2">Advanced</span>
+                            </div>
+                        </div>
+                        <p class="lead mb-4 animate__animated animate__fadeInUp animate__delay-1s">Proses Charging Gas Dalam System Selepas Baik-Pulih (Kaedah Manual)</p>
+                        <div class="d-flex flex-wrap gap-3 mb-4 animate__animated animate__fadeInUp animate__delay-2s">
+                            <div class="card-neumorphic py-2 px-3 d-flex align-items-center">
+                                <i class="bi bi-tools text-primary me-2"></i>
+                                <span>12 Langkah</span>
+                            </div>
+                            <div class="card-neumorphic py-2 px-3 d-flex align-items-center">
+                                <i class="bi bi-clock text-primary me-2"></i>
+                                <span>Est. 40 minit</span>
+                            </div>
+                            <div class="card-neumorphic py-2 px-3 d-flex align-items-center">
+                                <i class="bi bi-trophy text-warning me-2"></i>
+                                <span>200 XP</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 d-flex gap-2 animate__animated animate__fadeInUp animate__delay-3s">
+                            <a href="/student/practical/1" class="btn btn-outline-primary">
+                                <i class="bi bi-arrow-left me-2"></i> Praktikal 1
+                            </a>
+                            <a href="/student/practical/2" class="btn btn-outline-primary">
+                                <i class="bi bi-arrow-left me-2"></i> Praktikal 2
+                            </a>
+                        </div>
+                    <% } %>
+                </div>
+                <div class="col-lg-4 d-none d-lg-block">
+                    <div class="position-relative animate__animated animate__fadeInRight animate__delay-2s">
+                        <div class="position-absolute top-0 start-0 w-100 h-100 bg-primary rounded-circle" style="filter: blur(70px); opacity: 0.1; z-index: -1;"></div>
+                        <div class="text-center position-relative">
+                            <i class="bi bi-tools" style="font-size: 8rem; color: var(--primary-color); opacity: 0.2;"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="position-absolute top-0 end-0 w-50 h-100 d-none d-lg-block" style="background: linear-gradient(135deg, transparent 0%, rgba(0,98,255,0.03) 100%);"></div>
+    </div>
+
+    <div class="container mb-5">
+        <div class="row">
+            <div class="col-lg-4 order-lg-2 mb-4">
+                <div class="position-sticky" style="top: 2rem;">
+                    <!-- Progress Card -->
+                    <div class="card card-neumorphic mb-4 animate__animated animate__fadeInRight">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 40px; height: 40px;">
+                                    <i class="bi bi-graph-up text-white"></i>
+                                </div>
+                                <h5 class="mb-0">Your Progress</h5>
+                            </div>
+                            
+                            <div class="progress mb-3" style="height: 10px;">
+                                <div class="progress-bar bg-primary" role="progressbar" style="width: 0%" id="progressBar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="text-muted">Progress</span>
+                                <span class="badge bg-primary" id="progressPercentage">0%</span>
+                            </div>
+                            
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="text-muted">Steps Completed</span>
+                                <span class="badge bg-light text-primary" id="stepsCompleted">0/13</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- AR Visualization Card -->
+                    <div class="card card-neumorphic animate__animated animate__fadeInRight animate__delay-1s">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 40px; height: 40px;">
+                                    <i class="bi bi-phone-fill text-white"></i>
+                                </div>
+                                <h5 class="mb-0">AR Visualization</h5>
+                            </div>
+                            
+                            <div id="ar-container" class="d-none">
+                                <div class="mb-3">
+                                    <div class="d-flex align-items-center">
+                                        <div class="badge bg-primary text-white me-2 fs-6" id="ar-step-number">1</div>
+                                        <h6 id="ar-step-title" class="mb-0">Loading...</h6>
+                                    </div>
+                                </div>
+                                <div class="ar-placeholder position-relative overflow-hidden rounded-lg shadow-sm" style="height: 250px;">
+                                    <div class="position-absolute top-50 start-50 translate-middle text-center">
+                                        <div class="spinner-grow text-primary" role="status" style="width: 3rem; height: 3rem;">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                        <p class="mt-3 fw-bold">Preparing AR visualization...</p>
+                                        <p class="text-muted">This may take a few moments</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between mt-3">
+                                    <button class="btn btn-outline-primary btn-sm" id="prev-ar-step-btn">
+                                        <i class="bi bi-arrow-left me-1"></i> Previous
+                                    </button>
+                                    <button class="btn btn-secondary btn-sm" id="close-ar-btn">
+                                        <i class="bi bi-x-circle me-1"></i> Close
+                                    </button>
+                                    <button class="btn btn-outline-primary btn-sm" id="next-ar-step-btn">
+                                        Next <i class="bi bi-arrow-right ms-1"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div id="ar-instructions" class="text-start">
+                                <div class="alert alert-primary d-flex align-items-center" role="alert">
+                                    <i class="bi bi-info-circle-fill me-2 fs-4"></i>
+                                    <div>
+                                        <p class="mb-0">Click on <span class="badge bg-primary text-white"><i class="bi bi-phone"></i> View AR</span> button next to any step to see the AR visualization.</p>
+                                    </div>
+                                </div>
+                                <div class="text-center mt-4">
+                                    <div class="bg-light rounded-lg p-4 mx-auto position-relative overflow-hidden" style="max-width: 80%;">
+                                        <div class="position-absolute top-0 start-0 w-100 h-100" style="background: radial-gradient(circle at center, rgba(0,98,255,0.05) 0%, rgba(255,255,255,0) 70%);"></div>
+                                        <i class="bi bi-phone-fill text-primary" style="font-size: 3rem; opacity: 0.5;"></i>
+                                        <p class="text-muted mt-3 mb-0">AR visualization will appear here</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-8 order-lg-1">
+                <div class="d-flex align-items-center mb-4 animate__animated animate__fadeInUp">
+                    <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 45px; height: 45px;">
+                        <i class="bi bi-list-check text-white fs-5"></i>
+                    </div>
+                    <h3 class="mb-0">Prosedur</h3>
+                    <div class="ms-auto">
+                        <button class="btn btn-sm btn-outline-primary me-2" id="expandAllSteps">
+                            <i class="bi bi-arrows-expand"></i> Expand All
+                        </button>
+                        <button class="btn btn-sm btn-outline-primary" id="collapseAllSteps">
+                            <i class="bi bi-arrows-collapse"></i> Collapse All
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="card gradient-border mb-4 animate__animated animate__fadeInUp animate__delay-1s shadow-sm">
+                    <div class="card-body">
+                        <% if (practicalId === '1') { %>
+                            <div class="practical-steps-container">
+                                <!-- Step 1 -->
+                                <div class="practical-step shadow-sm animate__animated animate__fadeInUp" data-step="1">
+                                    <div class="d-flex align-items-center mb-3 step-header">
+                                        <div class="step-number">1</div>
+                                        <h5 class="mb-0 ms-3 fw-bold">Langkah 1</h5>
+                                        <div class="ms-auto">
+                                            <span class="badge bg-light text-dark step-status px-3 py-2">Belum Selesai</span>
+                                        </div>
+                                    </div>
+                                    <div class="step-content">
+                                        <div class="card-neumorphic p-3 mb-3">
+                                            <div class="d-flex">
+                                                <div class="me-3 text-primary">
+                                                    <i class="bi bi-info-circle-fill fs-4"></i>
+                                                </div>
+                                                <div>
+                                                    <p class="mb-0">Hose Vacuum (Hitam) Manifold Gauge sambung ke injap servis Vacuum Pump.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-4 mb-2">
+                                            <div class="d-flex flex-wrap gap-2">
+                                                <button class="btn btn-primary view-ar-btn ar-button" data-step="1">
+                                                    <i class="bi bi-phone"></i> View AR
+                                                </button>
+                                                <button class="btn btn-outline-success mark-complete-btn" data-step="1">
+                                                    <i class="bi bi-check-circle"></i> Mark Complete
+                                                </button>
+                                                <button class="btn btn-outline-secondary step-help-btn" data-step="1">
+                                                    <i class="bi bi-question-circle"></i> Help
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Step 2 -->
+                                <div class="practical-step shadow-sm animate__animated animate__fadeInUp animate__delay-1s" data-step="2">
+                                    <div class="d-flex align-items-center mb-3 step-header">
+                                        <div class="step-number">2</div>
+                                        <h5 class="mb-0 ms-3 fw-bold">Langkah 2</h5>
+                                        <div class="ms-auto">
+                                            <span class="badge bg-light text-dark step-status px-3 py-2">Belum Selesai</span>
+                                        </div>
+                                    </div>
+                                    <div class="step-content">
+                                        <div class="card-neumorphic p-3 mb-3">
+                                            <div class="d-flex">
+                                                <div class="me-3 text-primary">
+                                                    <i class="bi bi-info-circle-fill fs-4"></i>
+                                                </div>
+                                                <div>
+                                                    <p class="mb-0">Hose Perbagai (Kuning) Manifold Gauge sambung ke injap tangan Tank Refrigerant R134a.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-4 mb-2">
+                                            <div class="d-flex flex-wrap gap-2">
+                                                <button class="btn btn-primary view-ar-btn ar-button" data-step="2">
+                                                    <i class="bi bi-phone"></i> View AR
+                                                </button>
+                                                <button class="btn btn-outline-success mark-complete-btn" data-step="2">
+                                                    <i class="bi bi-check-circle"></i> Mark Complete
+                                                </button>
+                                                <button class="btn btn-outline-secondary step-help-btn" data-step="2">
+                                                    <i class="bi bi-question-circle"></i> Help
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Step 3 -->
+                                <div class="practical-step shadow-sm animate__animated animate__fadeInUp animate__delay-2s" data-step="3">
+                                    <div class="d-flex align-items-center mb-3 step-header">
+                                        <div class="step-number">3</div>
+                                        <h5 class="mb-0 ms-3 fw-bold">Langkah 3</h5>
+                                        <div class="ms-auto">
+                                            <span class="badge bg-light text-dark step-status px-3 py-2">Belum Selesai</span>
+                                        </div>
+                                    </div>
+                                    <div class="step-content">
+                                        <div class="card-neumorphic p-3 mb-3">
+                                            <div class="d-flex">
+                                                <div class="me-3 text-primary">
+                                                    <i class="bi bi-info-circle-fill fs-4"></i>
+                                                </div>
+                                                <div>
+                                                    <p class="mb-0">Hose Low Pressure (Biru) Manifold Gauge sambung ke Adapter Biru.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-4 mb-2">
+                                            <div class="d-flex flex-wrap gap-2">
+                                                <button class="btn btn-primary view-ar-btn ar-button" data-step="3">
+                                                    <i class="bi bi-phone"></i> View AR
+                                                </button>
+                                                <button class="btn btn-outline-success mark-complete-btn" data-step="3">
+                                                    <i class="bi bi-check-circle"></i> Mark Complete
+                                                </button>
+                                                <button class="btn btn-outline-secondary step-help-btn" data-step="3">
+                                                    <i class="bi bi-question-circle"></i> Help
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Step 4 -->
+                                <div class="practical-step shadow-sm" data-step="4">
+                                    <div class="d-flex align-items-center mb-3 step-header">
+                                        <div class="step-number">4</div>
+                                        <h5 class="mb-0 ms-3 fw-bold">Langkah 4</h5>
+                                        <div class="ms-auto">
+                                            <span class="badge bg-light text-dark step-status px-3 py-2">Belum Selesai</span>
+                                        </div>
+                                    </div>
+                                    <div class="step-content" style="display: none;">
+                                        <div class="card-neumorphic p-3 mb-3">
+                                            <div class="d-flex">
+                                                <div class="me-3 text-primary">
+                                                    <i class="bi bi-info-circle-fill fs-4"></i>
+                                                </div>
+                                                <div>
+                                                    <p class="mb-0">Pasang Adapter Biru pada Servis Valve Low Pressure system AC.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-4 mb-2">
+                                            <div class="d-flex flex-wrap gap-2">
+                                                <button class="btn btn-primary view-ar-btn ar-button" data-step="4">
+                                                    <i class="bi bi-phone"></i> View AR
+                                                </button>
+                                                <button class="btn btn-outline-success mark-complete-btn" data-step="4">
+                                                    <i class="bi bi-check-circle"></i> Mark Complete
+                                                </button>
+                                                <button class="btn btn-outline-secondary step-help-btn" data-step="4">
+                                                    <i class="bi bi-question-circle"></i> Help
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Step 5 -->
+                                <div class="practical-step shadow-sm" data-step="5">
+                                    <div class="d-flex align-items-center mb-3 step-header">
+                                        <div class="step-number">5</div>
+                                        <h5 class="mb-0 ms-3 fw-bold">Langkah 5</h5>
+                                        <div class="ms-auto">
+                                            <span class="badge bg-light text-dark step-status px-3 py-2">Belum Selesai</span>
+                                        </div>
+                                    </div>
+                                    <div class="step-content" style="display: none;">
+                                        <div class="card-neumorphic p-3 mb-3">
+                                            <div class="d-flex">
+                                                <div class="me-3 text-primary">
+                                                    <i class="bi bi-info-circle-fill fs-4"></i>
+                                                </div>
+                                                <div>
+                                                    <p class="mb-0">Pasang Adapter Merah pada Servis Valve High Pressure system AC.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-4 mb-2">
+                                            <div class="d-flex flex-wrap gap-2">
+                                                <button class="btn btn-primary view-ar-btn ar-button" data-step="5">
+                                                    <i class="bi bi-phone"></i> View AR
+                                                </button>
+                                                <button class="btn btn-outline-success mark-complete-btn" data-step="5">
+                                                    <i class="bi bi-check-circle"></i> Mark Complete
+                                                </button>
+                                                <button class="btn btn-outline-secondary step-help-btn" data-step="5">
+                                                    <i class="bi bi-question-circle"></i> Help
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Step 6 -->
+                                <div class="practical-step shadow-sm" data-step="6">
+                                    <div class="d-flex align-items-center mb-3 step-header">
+                                        <div class="step-number">6</div>
+                                        <h5 class="mb-0 ms-3 fw-bold">Langkah 6</h5>
+                                        <div class="ms-auto">
+                                            <span class="badge bg-light text-dark step-status px-3 py-2">Belum Selesai</span>
+                                        </div>
+                                    </div>
+                                    <div class="step-content" style="display: none;">
+                                        <div class="card-neumorphic p-3 mb-3">
+                                            <div class="d-flex">
+                                                <div class="me-3 text-primary">
+                                                    <i class="bi bi-info-circle-fill fs-4"></i>
+                                                </div>
+                                                <div>
+                                                    <p class="mb-0">Pastikan semua Injap Tangan pada Manifold Gauge dalam keadaan tertutup.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-4 mb-2">
+                                            <div class="d-flex flex-wrap gap-2">
+                                                <button class="btn btn-primary view-ar-btn ar-button" data-step="6">
+                                                    <i class="bi bi-phone"></i> View AR
+                                                </button>
+                                                <button class="btn btn-outline-success mark-complete-btn" data-step="6">
+                                                    <i class="bi bi-check-circle"></i> Mark Complete
+                                                </button>
+                                                <button class="btn btn-outline-secondary step-help-btn" data-step="6">
+                                                    <i class="bi bi-question-circle"></i> Help
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Step 7 -->
+                                <div class="practical-step shadow-sm" data-step="7">
+                                    <div class="d-flex align-items-center mb-3 step-header">
+                                        <div class="step-number">7</div>
+                                        <h5 class="mb-0 ms-3 fw-bold">Langkah 7</h5>
+                                        <div class="ms-auto">
+                                            <span class="badge bg-light text-dark step-status px-3 py-2">Belum Selesai</span>
+                                        </div>
+                                    </div>
+                                    <div class="step-content" style="display: none;">
+                                        <div class="card-neumorphic p-3 mb-3">
+                                            <div class="d-flex">
+                                                <div class="me-3 text-primary">
+                                                    <i class="bi bi-info-circle-fill fs-4"></i>
+                                                </div>
+                                                <div>
+                                                    <p class="mb-0">Buka Injap Tangan Adaptor Merah (High Pressure).</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-4 mb-2">
+                                            <div class="d-flex flex-wrap gap-2">
+                                                <button class="btn btn-primary view-ar-btn ar-button" data-step="7">
+                                                    <i class="bi bi-phone"></i> View AR
+                                                </button>
+                                                <button class="btn btn-outline-success mark-complete-btn" data-step="7">
+                                                    <i class="bi bi-check-circle"></i> Mark Complete
+                                                </button>
+                                                <button class="btn btn-outline-secondary step-help-btn" data-step="7">
+                                                    <i class="bi bi-question-circle"></i> Help
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="practical-step" data-step="8">
+                                <h5>Langkah 8</h5>
+                                <p>Buka (Open) Injap Tangan Hitam di Manifold Gauge.</p>
+                                <button class="btn btn-sm btn-primary view-ar-btn" data-step="8">Lihat dalam AR</button>
+                            </div>
+                            <div class="practical-step" data-step="9">
+                                <h5>Langkah 9</h5>
+                                <p>Buka Injap Tangan Kuning di Manifold Gauge.</p>
+                                <button class="btn btn-sm btn-primary view-ar-btn" data-step="9">Lihat dalam AR</button>
+                            </div>
+                            <div class="practical-step" data-step="10">
+                                <h5>Langkah 10</h5>
+                                <p>Buka Injap Tangan Low Pressure (Biru) di Manifold Gauge.</p>
+                                <button class="btn btn-sm btn-primary view-ar-btn" data-step="10">Lihat dalam AR</button>
+                            </div>
+                            <div class="practical-step" data-step="11">
+                                <h5>Langkah 11</h5>
+                                <p>Buka Injap Tanan High Pressure (Merah) di Manifold Gauge.</p>
+                                <button class="btn btn-sm btn-primary view-ar-btn" data-step="11">Lihat dalam AR</button>
+                            </div>
+                            <div class="practical-step" data-step="12">
+                                <h5>Langkah 12</h5>
+                                <p>Micron Gauge mencapai bacaan 1000 micron: TUTUP Injap Tangan Hitam di Manifold Gauge.</p>
+                                <button class="btn btn-sm btn-primary view-ar-btn" data-step="12">Lihat dalam AR</button>
+                            </div>
+                            <div class="practical-step" data-step="13">
+                                <h5>Langkah 13</h5>
+                                <p>OFF switch Vacuum Pump.</p>
+                                <button class="btn btn-sm btn-primary view-ar-btn" data-step="13">Lihat dalam AR</button>
+                            </div>
+                        <% } else if (practicalId === '2') { %>
+                            <div class="practical-step" data-step="1">
+                                <h5>Langkah 1</h5>
+                                <p>Tutup semua Injap Tangan di Manifold Gauge (Biru ; Merah ; Kuning & Hitam).</p>
+                                <button class="btn btn-sm btn-primary view-ar-btn" data-step="1">Lihat dalam AR</button>
+                            </div>
+                            <div class="practical-step" data-step="2">
+                                <h5>Langkah 2</h5>
+                                <p>ON Switch Vacuum Pump (Proses mengeluarkan kelembapan dari hose-hose Manifold Gauge).</p>
+                                <button class="btn btn-sm btn-primary view-ar-btn" data-step="2">Lihat dalam AR</button>
+                            </div>
+                            <div class="practical-step" data-step="3">
+                                <h5>Langkah 3</h5>
+                                <p>Buka Injap Tangan Hitam (Vacuum) di Manifold Gauge.</p>
+                                <button class="btn btn-sm btn-primary view-ar-btn" data-step="3">Lihat dalam AR</button>
+                            </div>
+                            <div class="practical-step" data-step="4">
+                                <h5>Langkah 4</h5>
+                                <p>Buka Injap Tangan Biru (Low Pressure) di Manifold Gauge.</p>
+                                <button class="btn btn-sm btn-primary view-ar-btn" data-step="4">Lihat dalam AR</button>
+                            </div>
+                            <div class="practical-step" data-step="5">
+                                <h5>Langkah 5</h5>
+                                <p>Buka Injap Tangan Merah (High Pressure) di Manifold Gauge.</p>
+                                <button class="btn btn-sm btn-primary view-ar-btn" data-step="5">Lihat dalam AR</button>
+                            </div>
+                            <div class="practical-step" data-step="6">
+                                <h5>Langkah 6</h5>
+                                <p>Buka Injap Tangan Adaptor Biru (Low Pressure).</p>
+                                <button class="btn btn-sm btn-primary view-ar-btn" data-step="6">Lihat dalam AR</button>
+                            </div>
+                            <div class="practical-step" data-step="7">
+                                <h5>Langkah 7</h5>
+                                <p>Buka Injap Tangan Adaptor Merah (High Pressure).</p>
+                                <button class="btn btn-sm btn-primary view-ar-btn" data-step="7">Lihat dalam AR</button>
+                            </div>
+                            </ul>
+                        </div>
+                    </div>
+                <% } %>
+
+                <div class="card gradient-border">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 40px; height: 40px;">
+                                <i class="bi bi-phone-fill text-white"></i>
+                            </div>
+                            <h3 class="mb-0">AR Visualization</h3>
+                        </div>
+                        
+                        <div id="ar-container" class="d-none">
+                            <div class="mb-3">
+                                <div class="d-flex align-items-center">
+                                    <div class="badge bg-primary text-white me-2 fs-6" id="ar-step-number">1</div>
+                                    <h4 id="ar-step-title" class="mb-0">Loading...</h4>
+                                </div>
+                            </div>
+                            <div class="ar-placeholder position-relative overflow-hidden rounded shadow-sm" style="height: 300px; background-color: #f8f9fa;">
+                                <div class="position-absolute top-50 start-50 translate-middle text-center">
+                                    <div class="spinner-grow text-primary" role="status" style="width: 3rem; height: 3rem;">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                    <p class="mt-3 fw-bold">Preparing AR visualization...</p>
+                                    <p class="text-muted">This may take a few moments</p>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between mt-3">
+                                <button class="btn btn-outline-primary" id="prev-ar-step-btn">
+                                    <i class="bi bi-arrow-left me-1"></i> Previous Step
+                                </button>
+                                <button class="btn btn-secondary" id="close-ar-btn">
+                                    <i class="bi bi-x-circle me-1"></i> Close
+                                </button>
+                                <button class="btn btn-outline-primary" id="next-ar-step-btn">
+                                    Next Step <i class="bi bi-arrow-right ms-1"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div id="ar-instructions" class="text-start">
+                            <div class="alert alert-primary d-flex align-items-center" role="alert">
+                                <i class="bi bi-info-circle-fill me-2 fs-4"></i>
+                                <div>
+                                    <p class="mb-0">Click on <span class="badge bg-primary text-white"><i class="bi bi-phone"></i> Lihat dalam AR</span> button next to any step to view the AR visualization for that step.</p>
+                                </div>
+                            </div>
+                            <div class="text-center mt-4">
+                                <div class="bg-light rounded shadow-sm p-5 mx-auto" style="max-width: 80%;">
+                                    <i class="bi bi-phone-fill text-primary" style="font-size: 4rem; opacity: 0.5;"></i>
+                                    <p class="text-muted mt-3">AR visualization will appear here</p>
+                                </div>
+                                <p class="text-muted mt-2"><small>Sample AR visualization</small></p>
+                            </div>
+                        </div>
+                    </div>
+                </div> class="col-md-6">
+                    <h5>SmartAC</h5>
+                    <p>A project to help TVET students understand more about practical car AC maintenance and repair.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p>&copy; 2025 SmartAC. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/custom.js"></script>
+    <script src="/js/responsive.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Function to adjust UI for mobile devices
+            function adjustForMobileDevices() {
+                if (window.innerWidth < 768) {
+                    // Adjust step headers for better mobile display
+                    document.querySelectorAll('.step-header').forEach(header => {
+                        header.style.flexDirection = 'column';
+                        header.style.alignItems = 'flex-start';
+                    });
+                } else {
+                    // Reset for larger screens
+                    document.querySelectorAll('.step-header').forEach(header => {
+                        header.style.flexDirection = 'row';
+                        header.style.alignItems = 'center';
+                    });
+                }
+            }
+            
+            // Function to apply interactive classes to elements
+            function applyInteractiveClasses() {
+                // Add hover effects to cards
+                document.querySelectorAll('.card:not(.interactive-card)').forEach(card => {
+                    card.classList.add('interactive-card');
+                });
+                
+                // Add interactive effects to buttons
+                document.querySelectorAll('button:not(.interactive-button)').forEach(button => {
+                    button.classList.add('interactive-button');
+                });
+            }
+            // AR Visualization functionality
+            const arContainer = document.getElementById('ar-container');
+            const arInstructions = document.getElementById('ar-instructions');
+            const arStepTitle = document.getElementById('ar-step-title');
+            const arStepNumber = document.getElementById('ar-step-number');
+            const closeArBtn = document.getElementById('close-ar-btn');
+            const viewArBtns = document.querySelectorAll('.view-ar-btn');
+            const prevArStepBtn = document.getElementById('prev-ar-step-btn');
+            const nextArStepBtn = document.getElementById('next-ar-step-btn');
+            
+            let currentStep = 1;
+            const totalSteps = document.querySelectorAll('.practical-step').length;
+            
+            // Function to update progress bar
+            function updateProgressBar(completedSteps) {
+                const progressPercentage = (completedSteps / totalSteps) * 100;
+                const progressBar = document.getElementById('progressBar');
+                if (progressBar) {
+                    progressBar.style.width = `${progressPercentage}%`;
+                    progressBar.setAttribute('aria-valuenow', progressPercentage);
+                }
+            }
+            
+            // Function to show AR visualization
+            function showArVisualization(step) {
+                arStepTitle.textContent = `Langkah ${step} AR Visualization`;
+                arStepNumber.textContent = step;
+                arContainer.classList.remove('d-none');
+                arInstructions.classList.add('d-none');
+                
+                // Update prev/next buttons
+                prevArStepBtn.disabled = (step === 1);
+                nextArStepBtn.disabled = (step === totalSteps);
+            }
+            
+            // Initialize progress bar
+            updateProgressBar(0);
+            
+            // Style step numbers
+            document.querySelectorAll('.step-number').forEach(stepNumber => {
+                stepNumber.classList.add('bg-primary', 'text-white', 'rounded-circle', 'd-flex', 'align-items-center', 'justify-content-center');
+                stepNumber.style.width = '30px';
+                stepNumber.style.height = '30px';
+                stepNumber.style.fontSize = '14px';
+            });
+            
+            // Add spacing between practical steps
+            document.querySelectorAll('.practical-step').forEach(step => {
+                step.classList.add('mb-4', 'pb-4', 'border-bottom');
+            });
+            
+            // AR Visualization button click
+            viewArBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const step = parseInt(this.getAttribute('data-step'));
+                    currentStep = step;
+                    showArVisualization(step);
+                    
+                    // Add loading animation to button
+                    this.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...';
+                    this.disabled = true;
+                    
+                    // Simulate loading time
+                    setTimeout(() => {
+                        this.innerHTML = '<i class="bi bi-phone"></i> Lihat dalam AR';
+                        this.disabled = false;
+                    }, 2000);
+                });
+            });
+            
+            // Close AR button click
+            closeArBtn.addEventListener('click', function() {
+                    
+                    if (statusBadge.textContent === 'Belum Selesai') {
+                        // Mark as complete
+                        statusBadge.textContent = 'Selesai';
+                        statusBadge.classList.remove('bg-light', 'text-dark');
+                        statusBadge.classList.add('bg-success', 'text-white');
+                        
+                        // Add completion animation and styling
+                        step.classList.add('step-completed');
+                        step.querySelector('.step-number').classList.add('bg-success');
+                        
+                        // Update button text and style
+                        this.innerHTML = '<i class="bi bi-check2-circle"></i> Completed';
+                        this.classList.remove('btn-outline-success');
+                        this.classList.add('btn-success');
+                        
+                        // Progress tracking removed
+                        // No confetti animation
+                    } else {
+                        // Mark as incomplete
+                        statusBadge.textContent = 'Belum Selesai';
+                        statusBadge.classList.remove('bg-success', 'text-white');
+                        statusBadge.classList.add('bg-light', 'text-dark');
+                        
+                        // Remove completion styling
+                        step.classList.remove('step-completed');
+                        step.querySelector('.step-number').classList.remove('bg-success');
+                        
+                        // Reset button text and style
+                        this.innerHTML = '<i class="bi bi-check-circle"></i> Mark Complete';
+                        this.classList.remove('btn-success');
+                        this.classList.add('btn-outline-success');
+                        
+                        // Progress tracking removed
+                    }
+                });
+            });
+            
+            // AR View button event listeners
+            document.querySelectorAll('.view-ar-btn').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.stopPropagation(); // Prevent event bubbling
+                    const stepNumber = this.getAttribute('data-step');
+                    const stepTitle = document.querySelector(`.practical-step[data-step="${stepNumber}"] h5`).textContent;
+                    
+                    // Update AR container with step info
+                    document.getElementById('ar-step-number').textContent = stepNumber;
+                    document.getElementById('ar-step-title').textContent = stepTitle;
+                    
+                    // Show AR container, hide instructions
+                    document.getElementById('ar-container').classList.remove('d-none');
+                    document.getElementById('ar-instructions').classList.add('d-none');
+                    
+                    // Simulate AR loading (in a real app, this would load actual AR content)
+                    setTimeout(function() {
+                        // Hide spinner and show a placeholder image/message
+                        const arPlaceholder = document.querySelector('.ar-placeholder');
+                        arPlaceholder.innerHTML = `
+                            <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-light rounded-lg">
+                                <div class="text-center">
+                                    <i class="bi bi-phone-fill text-primary" style="font-size: 3rem;"></i>
+                                    <h5 class="mt-3 mb-1">AR View - Step ${stepNumber}</h5>
+                                    <p class="text-muted">3D visualization would appear here</p>
+                                </div>
+                            </div>
+                        `;
+                    }, 2000);
+                });
+            });
+            
+            // AR Navigation buttons
+            document.getElementById('prev-ar-step-btn').addEventListener('click', function() {
+                const currentStep = parseInt(document.getElementById('ar-step-number').textContent);
+                if (currentStep > 1) {
+                    navigateAR(currentStep - 1);
+                }
+            });
+            
+            document.getElementById('next-ar-step-btn').addEventListener('click', function() {
+                const currentStep = parseInt(document.getElementById('ar-step-number').textContent);
+                if (currentStep < totalSteps) {
+                    navigateAR(currentStep + 1);
+                }
+            });
+            
+            document.getElementById('close-ar-btn').addEventListener('click', function() {
+                // Hide AR container, show instructions
+                document.getElementById('ar-container').classList.add('d-none');
+                document.getElementById('ar-instructions').classList.remove('d-none');
+            });
+            
+            // Help button event listeners
+            document.querySelectorAll('.step-help-btn').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.stopPropagation(); // Prevent event bubbling
+                    const stepNumber = this.getAttribute('data-step');
+                    
+                    // In a real app, this would show contextual help
+                    // For now, we'll use a simple alert
+                    alert(`Help for Step ${stepNumber}: Additional guidance would appear here in a modal dialog.`);
+                });
+            });
+            
+            // Function to navigate AR steps
+            function navigateAR(stepNumber) {
+                const step = document.querySelector(`.practical-step[data-step="${stepNumber}"]`);
+                const stepTitle = step.querySelector('h5').textContent;
+                
+                // Update AR container with step info
+                document.getElementById('ar-step-number').textContent = stepNumber;
+                document.getElementById('ar-step-title').textContent = stepTitle;
+                
+                // Show loading state
+                const arPlaceholder = document.querySelector('.ar-placeholder');
+                arPlaceholder.innerHTML = `
+                    <div class="position-absolute top-50 start-50 translate-middle text-center">
+                        <div class="spinner-grow text-primary" role="status" style="width: 3rem; height: 3rem;">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <p class="mt-3 fw-bold">Loading AR for Step ${stepNumber}...</p>
+                    </div>
+                `;
+                
+                // Simulate AR loading (in a real app, this would load actual AR content)
+                setTimeout(function() {
+                    arPlaceholder.innerHTML = `
+                        <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-light rounded-lg">
+                            <div class="text-center">
+                                <i class="bi bi-phone-fill text-primary" style="font-size: 3rem;"></i>
+                                <h5 class="mt-3 mb-1">AR View - Step ${stepNumber}</h5>
+                                <p class="text-muted">3D visualization would appear here</p>
+                            </div>
+                        </div>
+                    `;
+                }, 1000);
+            }
+            
+            // Progress tracking has been removed
+            
+            // Completion tracking functions have been removed
+            
+            // Expand/Collapse all steps
+            document.getElementById('expandAllSteps').addEventListener('click', function() {
+                document.querySelectorAll('.step-content').forEach(content => {
+                    content.style.display = 'block';
+                });
+            });
+            
+            document.getElementById('collapseAllSteps').addEventListener('click', function() {
+                document.querySelectorAll('.step-content').forEach(content => {
+                    content.style.display = 'none';
+                });
+            });
+            
+            // Step headers toggle content
+            document.querySelectorAll('.step-header').forEach(header => {
+                header.addEventListener('click', function() {
+                    const step = this.closest('.practical-step');
+                    const content = step.querySelector('.step-content');
+                    
+                    if (content.style.display === 'none' || content.style.display === '') {
+                        content.style.display = 'block';
+                        step.classList.add('step-expanded');
+                    } else {
+                        content.style.display = 'none';
+                        step.classList.remove('step-expanded');
+                    }
+                });
+            });
+            
+            // Function to apply interactive classes to elements
+            function applyInteractiveClasses() {
+                // Add hover effects to cards
+                document.querySelectorAll('.card:not(.interactive-card)').forEach(card => {
+                    card.classList.add('interactive-card');
+                });
+                
+                // Add interactive effects to buttons
+                document.querySelectorAll('button:not(.interactive-button)').forEach(button => {
+                    button.classList.add('interactive-button');
+                });
+            }
+            
+            // Apply interactive classes to all elements
+            applyInteractiveClasses();
+            
+            // Call responsive adjustments on load and on resize
+            adjustForMobileDevices();
+            window.addEventListener('resize', adjustForMobileDevices);
+    </script>
+</body>
+</html>
