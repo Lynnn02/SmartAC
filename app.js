@@ -227,7 +227,42 @@ app.get('/teacher/dashboard', isAuthenticated, authorize(['teacher']), (req, res
 });
 
 app.get('/teacher/create-session', isAuthenticated, authorize(['teacher']), (req, res) => {
-  res.render('teacher/create-session', { user: req.session.user });
+  // Generate a random session code
+  const generateSessionCode = () => {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let result = '';
+    for (let i = 0; i < 6; i++) {
+      result += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return result;
+  };
+  
+  const sessionCode = generateSessionCode();
+  res.render('teacher/create-session', { user: req.session.user, sessionCode });
+});
+
+// Handle session creation
+app.post('/teacher/create-session', isAuthenticated, authorize(['teacher']), (req, res) => {
+  const { sessionName, sessionCode, practicalModule, sessionDate, sessionTime, sessionDescription, targetAudience } = req.body;
+  
+  // In a real implementation, you would save this to a database
+  // For now, we'll add it to our mock sessions array
+  const newSession = {
+    id: sessions.length + 1,
+    name: sessionName,
+    code: sessionCode,
+    teacher: req.session.user.name,
+    practical: practicalModule,
+    date: sessionDate,
+    time: sessionTime,
+    description: sessionDescription || '',
+    targetAudience: targetAudience || 'all',
+    status: 'upcoming'
+  };
+  
+  sessions.push(newSession);
+  
+  res.redirect('/teacher/dashboard');
 });
 
 app.get('/teacher/profile', isAuthenticated, authorize(['teacher']), (req, res) => {
@@ -292,6 +327,107 @@ app.get('/student/component/:componentId', isAuthenticated, authorize(['student'
 
 app.get('/student/profile', isAuthenticated, authorize(['student']), (req, res) => {
   res.render('student/profile', { user: req.session.user });
+});
+
+// =====================================================================
+// STUDENT SESSION FLOW - DUMMY IMPLEMENTATION
+// =====================================================================
+
+/*
+ * STUDENT SESSION FLOW:
+ * 1. Student clicks "Join Session" on dashboard
+ * 2. Student enters session code or scans QR code
+ * 3. Student customizes display name and avatar
+ * 4. Student enters waiting room
+ * 5. When session starts, student is redirected to session detail page
+ * 6. Student participates in interactive session
+ */
+
+// Step 1: Join session page - Student enters this page from dashboard
+app.get('/student/join-session', isAuthenticated, authorize(['student']), (req, res) => {
+  // Check if a code was provided in the URL (from QR code scan)
+  const providedCode = req.query.code;
+  
+  res.render('student/join-session', { 
+    user: req.session.user,
+    providedCode: providedCode || ''
+  });
+});
+
+// Step 2: Process join request - This would be called when student submits the join form
+app.post('/student/join-session', isAuthenticated, authorize(['student']), (req, res) => {
+  // This route is commented out because we're using client-side redirection for the demo
+  // In a real implementation, this would validate the session code and redirect to waiting room
+  
+  /* 
+  const { sessionCode, displayName, avatar, avatarColor } = req.body;
+  
+  // Validate session code
+  const session = sessions.find(s => s.code === sessionCode);
+  if (!session) {
+    return res.render('student/join-session', {
+      user: req.session.user,
+      error: 'Invalid session code. Please try again.'
+    });
+  }
+  
+  // Store student info in session
+  req.session.joinInfo = {
+    sessionCode,
+    displayName,
+    avatar,
+    avatarColor
+  };
+  
+  // Redirect to waiting room or session detail page
+  res.redirect(`/student/session/${sessionCode}`);
+  */
+  
+  // For demo purposes, we'll just redirect to the session detail page
+  const { sessionCode } = req.body;
+  res.redirect(`/student/session/${sessionCode}`);
+});
+
+// Step 3: Session detail/waiting room - Student sees session details and waits for start
+app.get('/student/session/:sessionCode', isAuthenticated, authorize(['student']), (req, res) => {
+  const sessionCode = req.params.sessionCode;
+  
+  // Find session by code
+  let session = sessions.find(s => s.code === sessionCode);
+  
+  // If session not found in our mock data, create a dummy one for demo purposes
+  if (!session) {
+    session = {
+      id: 999,
+      code: sessionCode,
+      name: 'AC Maintenance Session',
+      teacher: 'Teacher User',
+      practical: 'Praktikal 1',
+      date: '2025-05-30',
+      time: '10:00 AM',
+      description: 'Learn about car AC maintenance and repair',
+      status: 'live',
+      participants: [
+        { name: 'Student 1', avatar: 'person-fill', color: '#3b5fe0' },
+        { name: 'Student 2', avatar: 'star-fill', color: '#8a70d6' },
+        { name: 'Student 3', avatar: 'gear-fill', color: '#2dd4bf' }
+      ]
+    };
+  }
+  
+  // In a real implementation, we would check if the session is in waiting room state
+  // or active state and render the appropriate view
+  
+  res.render('student/session-detail', { 
+    user: req.session.user,
+    session: session,
+    // Pass join info if available
+    joinInfo: req.session.joinInfo || {
+      displayName: req.session.user.name,
+      avatar: 'person-fill',
+      avatarColor: '#3b5fe0'
+    }
+  });
 });
 
 // Start server

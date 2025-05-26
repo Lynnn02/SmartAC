@@ -302,64 +302,8 @@
 </head>
 <body>
     <div class="container-fluid p-0 footer-wrapper">
-        <header class="fixed-top">
-            <nav class="navbar navbar-expand-lg navbar-dark py-2">
-                <div class="container-fluid px-4">
-                    <a class="navbar-brand d-flex align-items-center" href="/student/dashboard">
-                        <span class="fw-bold fs-2 logo-text">SmartAC Student</span>
-                    </a>
-                
-                <!-- Theme toggle and user profile for mobile -->
-                <div class="d-flex align-items-center order-lg-2">
-                    <!-- Theme toggle will be added here by JavaScript -->
-                    <div class="theme-toggle-container me-2 me-lg-3"></div>
-                    
-                    <div class="dropdown d-inline-block">
-                        <a class="nav-link dropdown-toggle d-flex align-items-center p-0" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <div class="user-avatar me-md-2">
-                                <span><%= user.name.charAt(0) %></span>
-                            </div>
-                            <span class="d-none d-md-inline-block"><%= user.name %></span>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="userDropdown">
-                            <li><a class="dropdown-item" href="/student/profile"><i class="bi bi-person me-2"></i>Profile</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="/logout"><i class="bi bi-box-arrow-right me-2 text-danger"></i>Logout</a></li>
-                        </ul>
-                    </div>
-                    
-                    <button class="navbar-toggler ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                </div>
-                
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav mx-auto">
-                        <li class="nav-item">
-                            <a class="nav-link active px-3" href="/student/dashboard">
-                                <i class="bi bi-speedometer2 me-2"></i> Dashboard
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link px-3" href="/student/components">
-                                <i class="bi bi-grid-3x3-gap me-2"></i> AC Components
-                            </a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle px-3" href="#" id="practicalDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="bi bi-journal-text me-2"></i> Practical Modules
-                            </a>
-                            <ul class="dropdown-menu shadow-sm" aria-labelledby="practicalDropdown">
-                                <li><a class="dropdown-item" href="/student/practical/1">Praktikal 1</a></li>
-                                <li><a class="dropdown-item" href="/student/practical/2">Praktikal 2</a></li>
-                                <li><a class="dropdown-item" href="/student/practical/3">Praktikal 3</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
+        <!-- Include student header partial -->
+        <%- include('../partials/student-header', { user: user, activePage: 'dashboard' }) %>
 
     <section class="hero-section py-5 text-center d-flex align-items-center">
         <div class="container py-5 mt-5">
@@ -368,8 +312,8 @@
                     <h1 class="display-3 fw-bold mb-3">Welcome, <span class="text-primary">Student</span></h1>
                     <div class="section-divider mb-4 mx-auto"></div>
                     <p class="lead mb-5">Access your learning materials and track your progress in car AC maintenance and repair</p>
-                    <a href="/student/practical/1" class="btn btn-primary btn-lg px-5 py-3 fw-semibold">
-                        Start Learning <i class="bi bi-arrow-right ms-2"></i>
+                    <a href="/student/join-session" class="btn btn-primary btn-lg px-5 py-3 fw-semibold">
+                        Join Session <i class="bi bi-broadcast ms-2"></i>
                     </a>
                 </div>
             </div>
@@ -434,48 +378,6 @@
             </div>
         </section>
 
-        <div class="container py-4">
-            <!-- Available Sessions Section -->
-            <div class="section-header text-center mb-5" data-aos="fade-up" data-aos-duration="800">
-                <h2 class="display-5 fw-bold mb-3">Available Sessions</h2>
-                <div class="section-divider mb-4 mx-auto"></div>
-                <p class="lead">Join sessions created by your teachers to learn about car AC systems</p>
-            </div>
-            
-            <div class="row g-4 mb-5">
-                <% if (typeof sessions !== 'undefined' && sessions.length > 0) { %>
-                    <% sessions.forEach(function(session) { %>
-                        <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-duration="800">
-                            <div class="modern-card blue-card h-100">
-                                <div class="card-body">
-                                    <div class="card-icon mb-4">
-                                        <i class="bi bi-calendar-event"></i>
-                                    </div>
-                                    <h3 class="card-title h4 mb-3"><%= session.title %></h3>
-                                    <p class="card-text mb-4"><%= session.description %></p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <span class="badge bg-primary text-white"><%= session.date %></span>
-                                        <div class="card-action">
-                                            <a href="<%= session.link %>" class="btn btn-light">Join Session</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    <% }); %>
-                <% } else { %>
-                    <div class="col-md-8 mx-auto" data-aos="fade-up" data-aos-duration="800">
-                        <div class="modern-card h-100 text-center p-5">
-                            <div class="card-icon blue-card mx-auto mb-4">
-                                <i class="bi bi-info-circle"></i>
-                            </div>
-                            <h3 class="card-title h4 mb-3">No Sessions Available</h3>
-                            <p class="card-text mb-0">There are no active sessions at the moment. Check back later for new sessions from your teachers.</p>
-                        </div>
-                    </div>
-                <% } %>
-            </div>
-
             <!-- Car AC Components Section -->
             <div class="section-header text-center mb-5" data-aos="fade-up" data-aos-duration="800">
                 <h2 class="display-5 fw-bold mb-3">Car AC Components</h2>
@@ -490,10 +392,9 @@
                             <h3 class="h4 mb-4">Interactive 3D Components</h3>
                             <p class="card-text mb-4">Explore the components of a car air conditioning system in 3D. Learn about each part's function and how they work together in an interactive environment.</p>
                             <ul class="feature-list mb-4">
-                                <li><i class="bi bi-check-circle-fill text-primary me-2"></i> Compressor</li>
-                                <li><i class="bi bi-check-circle-fill text-primary me-2"></i> Condenser</li>
-                                <li><i class="bi bi-check-circle-fill text-primary me-2"></i> Expansion Valve</li>
-                                <li><i class="bi bi-check-circle-fill text-primary me-2"></i> Evaporator</li>
+                                <li><i class="bi bi-check-circle-fill text-primary me-2"></i> Core Components</li>
+                                <li><i class="bi bi-check-circle-fill text-primary me-2"></i> Electrical Components</li>
+                                <li><i class="bi bi-check-circle-fill text-primary me-2"></i> Repair Tools</li>
                             </ul>
                             <div class="mt-4">
                                 <a href="/student/components" class="btn btn-primary btn-lg px-4">
@@ -537,10 +438,11 @@
                 <div class="col-md-2 col-sm-6 mb-4 mb-md-0">
                     <h5>Quick Links</h5>
                     <ul class="footer-links">
-                        <li><a href="/">Home</a></li>
-                        <li><a href="/student/dashboard">Dashboard</a></li>
-                        <li><a href="/student/components">Components</a></li>
-                        <li><a href="/student/practical/1">Practicals</a></li>
+                        <li><a href="/student/dashboard">Home</a></li>
+                        <li><a href="/student/join-session">Join Session</a></li>
+                        <li><a href="/student/practical/1">Practical Modules</a></li>
+                        <li><a href="/student/components">AC Components</a></li>
+                        <li><a href="/student/profile">Profile</a></li>
                     </ul>
                 </div>
                 
@@ -553,16 +455,6 @@
                     </ul>
                 </div>
                 
-                <div class="col-md-2 col-sm-6 mb-4 mb-md-0">
-                    <h5>Components</h5>
-                    <ul class="footer-links">
-                        <li><a href="/student/components#compressor">Compressor</a></li>
-                        <li><a href="/student/components#condenser">Condenser</a></li>
-                        <li><a href="/student/components#txv">TXV</a></li>
-                        <li><a href="/student/components#cooling-coil">Cooling Coil</a></li>
-                    </ul>
-                </div>
-                
                 <div class="col-md-3 col-sm-6 mb-4 mb-md-0">
                     <h5>Contact</h5>
                     <div class="contact-info">
@@ -572,7 +464,7 @@
                             </div>
                             <div class="contact-text">
                                 <p class="mb-0">Email</p>
-                                <a href="mailto:info@smartac.edu" class="contact-link">info@smartac.edu</a>
+                                <a href="mailto:ikeyroll@gmail.com" class="contact-link">ikeyroll@gmail.com</a>
                             </div>
                         </div>
                         <div class="contact-item">
@@ -581,7 +473,7 @@
                             </div>
                             <div class="contact-text">
                                 <p class="mb-0">Phone</p>
-                                <a href="tel:+1234567890" class="contact-link">+123 456 7890</a>
+                                <a href="tel:+601165524675" class="contact-link">+60 1165524675</a>
                             </div>
                         </div>
                     </div>

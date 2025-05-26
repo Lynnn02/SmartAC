@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Session - SmartAC</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/theme-toggle.css">
+    <meta name="theme-color" content="#000000">
+    <style>
+        .join-session-container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .session-code-input {
+            font-size: 2rem;
+            letter-spacing: 0.5rem;
+            text-align: center;
+            font-weight: bold;
+            height: 80px;
+            border-radius: 16px;
+            background-color: var(--input-bg);
+            color: var(--text-color);
+            border: 2px solid var(--border-color);
+        }
+        
+        .session-code-input:focus {
+            border-color: #3b5fe0;
+            box-shadow: 0 0 0 0.25rem rgba(59, 95, 224, 0.25);
+            background-color: var(--input-bg);
+            color: var(--text-color);
+        }
+        
+        .qr-code-container {
+            background-color: var(--card-bg-color);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+        }
+        
+        .join-btn {
+            height: 60px;
+            font-size: 1.25rem;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #2dd4bf, #3b5fe0);
+            border: none;
+            transition: all 0.3s ease;
+        }
+        
+        .join-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(59, 95, 224, 0.3);
+            background: linear-gradient(135deg, #25c0ad, #2a4cd0);
+        }
+        
+        .avatar-selection {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .avatar-option {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: all 0.2s ease;
+            background-color: var(--avatar-bg, #e9ecef);
+            color: var(--avatar-color, #495057);
+            border: 3px solid transparent;
+        }
+        
+        .avatar-option:hover, .avatar-option.selected {
+            transform: scale(1.1);
+            border-color: #3b5fe0;
+        }
+        
+        .avatar-option.selected {
+            background: linear-gradient(135deg, #2dd4bf, #3b5fe0);
+            color: white;
+        }
+        
+        .tab-content {
+            padding: 2rem 0;
+        }
+        
+        .nav-tabs .nav-link {
+            color: var(--text-color);
+            border: none;
+            padding: 1rem 1.5rem;
+            font-weight: 500;
+            position: relative;
+        }
+        
+        .nav-tabs .nav-link.active {
+            color: #3b5fe0;
+            background-color: transparent;
+            border: none;
+        }
+        
+        .nav-tabs .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(135deg, #2dd4bf, #3b5fe0);
+            border-radius: 3px;
+        }
+        
+        .waiting-room {
+            display: none;
+            background-color: var(--card-bg-color);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+            text-align: center;
+        }
+        
+        .waiting-room .user-avatar {
+            width: 100px;
+            height: 100px;
+            font-size: 2.5rem;
+            margin: 0 auto 1.5rem;
+        }
+        
+        .participants-list {
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 1rem;
+            background-color: var(--body-bg);
+            border-radius: 12px;
+        }
+        
+        .participant-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            background-color: var(--card-bg-color);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .participant-avatar {
+            width: 40px;
+            height: 40px;
+            font-size: 1rem;
+            margin-right: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid p-0 d-flex flex-column min-vh-100">
+        <%- include('../partials/student-header', {activePage: 'join-session'}) %>
+
+        <section class="dashboard-header py-5 text-center d-flex align-items-center">
+            <div class="container py-5 mt-5">
+                <div class="row align-items-center">
+                    <div class="col-lg-8 mx-auto text-center text-white" data-aos="fade-up" data-aos-duration="1000">
+                        <h1 class="display-4 fw-bold mb-3">Join a Session</h1>
+                        <div class="section-divider mb-4 mx-auto"></div>
+                        <p class="lead">Enter a session code or scan a QR code to join an interactive learning session</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="container py-5">
+            <div class="join-session-container" data-aos="fade-up" data-aos-duration="800">
+                <ul class="nav nav-tabs justify-content-center mb-4" id="joinTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="code-tab" data-bs-toggle="tab" data-bs-target="#code-tab-pane" type="button" role="tab" aria-controls="code-tab-pane" aria-selected="true">
+                            <i class="bi bi-123 me-2"></i>Enter Code
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="qr-tab" data-bs-toggle="tab" data-bs-target="#qr-tab-pane" type="button" role="tab" aria-controls="qr-tab-pane" aria-selected="false">
+                            <i class="bi bi-qr-code-scan me-2"></i>Scan QR
+                        </button>
+                    </li>
+                </ul>
+                
+                <div class="tab-content" id="joinTabsContent">
+                    <div class="tab-pane fade show active" id="code-tab-pane" role="tabpanel" aria-labelledby="code-tab" tabindex="0">
+                        <div class="card shadow-sm">
+                            <div class="card-body p-4">
+                                <h3 class="card-title text-center mb-4">Enter Session Code</h3>
+                                
+                                <form id="joinSessionForm" action="/student/join-session" method="POST">
+                                    <div class="mb-4">
+                                        <input type="text" class="form-control session-code-input" id="sessionCode" name="sessionCode" placeholder="XXXXXX" maxlength="6" autocomplete="off" value="<%= typeof providedCode !== 'undefined' ? providedCode : '' %>">
+                                        <div class="form-text text-center mt-2">Enter the 6-digit code provided by your instructor</div>
+                                    </div>
+                                
+                                <div class="mb-4">
+                                    <label for="displayName" class="form-label">Your Display Name</label>
+                                    <input type="text" class="form-control" id="displayName" name="displayName" value="<%= user.name %>" placeholder="Enter your name">
+                                </div>
+                                
+                                <h5 class="text-center mb-3">Choose Your Avatar</h5>
+                                <div class="avatar-selection">
+                                    <div class="avatar-option selected" data-avatar="user" data-color="#3b5fe0">
+                                        <i class="bi bi-person-fill"></i>
+                                    </div>
+                                    <div class="avatar-option" data-avatar="gear" data-color="#2dd4bf">
+                                        <i class="bi bi-gear-fill"></i>
+                                    </div>
+                                    <div class="avatar-option" data-avatar="tools" data-color="#ffaa00">
+                                        <i class="bi bi-tools"></i>
+                                    </div>
+                                    <div class="avatar-option" data-avatar="lightning" data-color="#ec4899">
+                                        <i class="bi bi-lightning-fill"></i>
+                                    </div>
+                                    <div class="avatar-option" data-avatar="star" data-color="#8a70d6">
+                                        <i class="bi bi-star-fill"></i>
+                                    </div>
+                                    <div class="avatar-option" data-avatar="heart" data-color="#f43f5e">
+                                        <i class="bi bi-heart-fill"></i>
+                                    </div>
+                                </div>
+                                
+                                <!-- Hidden inputs to store avatar selection -->
+                                <input type="hidden" name="avatar" id="selectedAvatar" value="user">
+                                <input type="hidden" name="avatarColor" id="selectedColor" value="#3b5fe0">
+                                
+                                <div class="mt-5">
+                                    <button type="submit" class="btn btn-primary w-100 join-btn">
+                                        Join Session
+                                    </button>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-pane fade" id="qr-tab-pane" role="tabpanel" aria-labelledby="qr-tab" tabindex="0">
+                        <div class="qr-code-container text-center">
+                            <h3 class="mb-4">Scan QR Code</h3>
+                            <div class="qr-placeholder mb-4">
+                                <div id="qrScanner" class="d-flex flex-column align-items-center">
+                                    <div class="bg-light rounded-3 p-4 mb-3" style="width: 250px; height: 250px;">
+                                        <div class="d-flex justify-content-center align-items-center h-100">
+                                            <div class="text-center">
+                                                <i class="bi bi-camera text-primary" style="font-size: 3rem;"></i>
+                                                <p class="mt-3 mb-0">Camera access required</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button id="startScanBtn" class="btn btn-outline-primary">
+                                        <i class="bi bi-camera me-2"></i>Start Camera
+                                    </button>
+                                </div>
+                            </div>
+                            <p class="text-muted">Point your camera at the QR code displayed by your instructor</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Waiting Room (initially hidden) -->
+                <div id="waitingRoom" class="waiting-room mt-4">
+                    <div class="user-avatar">
+                        <i class="bi bi-person-fill"></i>
+                    </div>
+                    <h3 class="mb-3">Waiting for Session to Start</h3>
+                    <p class="text-muted mb-4">You've joined the session. Please wait for the instructor to begin.</p>
+                    
+                    <div class="session-info mb-4">
+                        <div class="d-flex justify-content-center">
+                            <div class="badge bg-primary p-2 px-3 fs-6 mb-3">Session Code: <span id="waitingRoomCode">XXXXXX</span></div>
+                        </div>
+                        <h5 id="waitingRoomSessionName">AC Maintenance Session</h5>
+                        <p class="text-muted">Instructor: <span id="waitingRoomInstructor">John Doe</span></p>
+                    </div>
+                    
+                    <div class="participants-container">
+                        <h5 class="mb-3"><i class="bi bi-people me-2"></i>Participants (<span id="participantCount">1</span>)</h5>
+                        <div class="participants-list">
+                            <div class="participant-item">
+                                <div class="participant-avatar">
+                                    <i class="bi bi-person-fill"></i>
+                                </div>
+                                <div class="participant-name">You (Host)</div>
+                            </div>
+                            <!-- Other participants will be added dynamically -->
+                        </div>
+                    </div>
+                    
+                    <button id="leaveSessionBtn" class="btn btn-outline-danger mt-4">
+                        <i class="bi bi-box-arrow-left me-2"></i>Leave Session
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <%- include('../partials/student-footer') %>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="/js/firebase-init.js"></script>
+    <script src="/js/student-app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize AOS animations
+            AOS.init();
+            
+            // Get DOM elements
+            const sessionCodeInput = document.getElementById('sessionCode');
+            const displayNameInput = document.getElementById('displayName');
+            const avatarOptions = document.querySelectorAll('.avatar-option');
+            const selectedAvatarInput = document.getElementById('selectedAvatar');
+            const selectedColorInput = document.getElementById('selectedColor');
+            const joinSessionForm = document.getElementById('joinSessionForm');
+            const waitingRoom = document.getElementById('waitingRoom');
+            
+            // Map avatar data attributes to Bootstrap icon classes
+            const avatarIconMap = {
+                'user': 'person-fill',
+                'gear': 'gear-fill',
+                'tools': 'tools',
+                'lightning': 'lightning-fill',
+                'star': 'star-fill',
+                'heart': 'heart-fill'
+            };
+            
+            // Format session code to uppercase
+            sessionCodeInput.addEventListener('input', function() {
+                this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+            });
+            
+            // Handle avatar selection
+            avatarOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Remove selected class from all options
+                    avatarOptions.forEach(opt => opt.classList.remove('selected'));
+                    // Add selected class to clicked option
+                    this.classList.add('selected');
+                    
+                    // Update hidden inputs with selected avatar and color
+                    const avatar = this.getAttribute('data-avatar');
+                    const color = this.getAttribute('data-color');
+                    selectedAvatarInput.value = avatarIconMap[avatar] || 'person-fill';
+                    selectedColorInput.value = color;
+                    
+                    // Update waiting room avatar if it exists
+                    const waitingRoomAvatar = document.querySelector('#waitingRoom .user-avatar');
+                    if (waitingRoomAvatar) {
+                        waitingRoomAvatar.innerHTML = `<i class="bi bi-${avatarIconMap[avatar]}"></i>`;
+                        waitingRoomAvatar.style.background = `linear-gradient(135deg, ${color}, ${color}aa)`;
+                    }
+                });
+            });
+            
+            // Form validation and submission
+            joinSessionForm.addEventListener('submit', function(event) {
+                const sessionCode = sessionCodeInput.value;
+                const displayName = displayNameInput.value;
+                
+                if (!sessionCode || sessionCode.length !== 6) {
+                    event.preventDefault();
+                    alert('Please enter a valid 6-digit session code.');
+                    return false;
+                }
+                
+                if (!displayName || displayName.trim() === '') {
+                    event.preventDefault();
+                    alert('Please enter your display name.');
+                    return false;
+                }
+                
+                // For demonstration purposes, let's just redirect to the session page
+                // This will allow the button to work without needing a waiting room
+                window.location.href = `/student/session/${sessionCode}`;
+                event.preventDefault();
+                return false;
+            });
+            
+            // Leave session button (if exists)
+            const leaveSessionBtn = document.getElementById('leaveSessionBtn');
+            if (leaveSessionBtn) {
+                leaveSessionBtn.addEventListener('click', function() {
+                    if (confirm('Are you sure you want to leave this session?')) {
+                        // Return to join session view
+                        document.querySelector('.join-session-container > .card').style.display = 'block';
+                        document.querySelector('.join-session-container > .nav').style.display = 'flex';
+                        document.getElementById('waitingRoom').style.display = 'none';
+                        
+                        // Clear session code
+                        sessionCodeInput.value = '';
+                    }
+                });
+            }
+            
+            // QR code scanner
+            const startScanBtn = document.getElementById('startScanBtn');
+            startScanBtn.addEventListener('click', function() {
+                // This is a placeholder for actual QR scanning functionality
+                // In a real implementation, this would access the camera and scan QR codes
+                this.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Accessing camera...';
+                
+                setTimeout(() => {
+                    // Simulate finding a QR code after 2 seconds
+                    const simulatedCode = 'ABC123';
+                    sessionCodeInput.value = simulatedCode;
+                    
+                    // Switch to code tab
+                    const codeTab = document.getElementById('code-tab');
+                    bootstrap.Tab.getInstance(codeTab).show();
+                    
+                    // Reset button
+                    this.innerHTML = '<i class="bi bi-camera me-2"></i>Start Camera';
+                    
+                    // Show notification
+                    alert(`QR Code detected! Session code: ${simulatedCode}`);
+                }, 2000);
+            });
+            
+            // Function to join Firebase session (placeholder)
+            function joinFirebaseSession(sessionCode, displayName, avatar, color) {
+                console.log(`Joining session ${sessionCode} as ${displayName} with avatar ${avatar}`);
+                
+                // In a real implementation, this would connect to Firebase
+                // and listen for session updates, participants, etc.
+                
+                // Simulate other participants joining
+                setTimeout(() => {
+                    addParticipant('Jane Doe', 'star', '#8a70d6');
+                }, 2000);
+                
+                setTimeout(() => {
+                    addParticipant('Mike Smith', 'gear', '#2dd4bf');
+                    updateParticipantCount();
+                }, 3500);
+            }
+            
+            // Function to add a participant to the list
+            function addParticipant(name, avatar, color) {
+                const participantsList = document.querySelector('.participants-list');
+                const avatarIcon = getAvatarIcon(avatar);
+                
+                const participantItem = document.createElement('div');
+                participantItem.className = 'participant-item';
+                participantItem.innerHTML = `
+                    <div class="participant-avatar" style="background: linear-gradient(135deg, ${color}, ${color}aa)">
+                        <i class="bi bi-${avatarIcon}"></i>
+                    </div>
+                    <div class="participant-name">${name}</div>
+                `;
+                
+                participantsList.appendChild(participantItem);
+                updateParticipantCount();
+            }
+            
+            // Function to update participant count
+            function updateParticipantCount() {
+                const count = document.querySelectorAll('.participant-item').length;
+                document.getElementById('participantCount').textContent = count;
+            }
+            
+            // Helper function to get avatar icon
+            function getAvatarIcon(avatar) {
+                const icons = {
+                    'user': 'person-fill',
+                    'gear': 'gear-fill',
+                    'tools': 'tools',
+                    'lightning': 'lightning-fill',
+                    'star': 'star-fill',
+                    'heart': 'heart-fill'
+                };
+                
+                return icons[avatar] || 'person-fill';
+            }
+        });
+    </script>
+</body>
+</html>

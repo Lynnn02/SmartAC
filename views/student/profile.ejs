@@ -18,32 +18,35 @@
             flex-direction: column;
             background-color: var(--body-bg);
             color: var(--text-color);
+            padding-top: 60px; /* Adjusted padding for fixed header */
         }
         .profile-header {
-            padding: 3rem 0;
-            margin-top: 56px;
-            background: linear-gradient(135deg, rgba(45, 212, 191, 0.1), rgba(59, 95, 224, 0.1));
+            padding: 2rem 0;
+            margin-top: 0;
+            background: linear-gradient(135deg, rgba(49, 135, 123, 0.2), rgba(59, 95, 224, 0.2));
         }
         .card {
             border-radius: 16px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 10px 20px rgba(0, 202, 188, 0.08);
             border: none;
             overflow: hidden;
-            background-color: var(--card-bg-color);
-            color: var(--text-color);
+            background-color: white;
+            color: #333;
             margin-bottom: 1.5rem;
         }
         .card-header {
-            border-bottom: none;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
             padding: 1.25rem 1.5rem;
+            background-color: #f8f9fa;
+            color: #333;
         }
         .card-body {
             padding: 1.5rem;
         }
         .list-group-item {
-            background-color: transparent;
-            border-color: rgba(0, 0, 0, 0.05);
-            color: var(--text-color);
+            background-color: white;
+            border-color: rgba(0, 0, 0, 0.1);
+            color: #333;
         }
         .user-avatar {
             display: flex;
@@ -77,77 +80,34 @@
         [data-theme="dark"] .card {
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
-        [data-theme="dark"] .text-muted {
-            color: rgba(255, 255, 255, 0.6) !important;
+        .text-muted {
+            color: #6c757d !important;
+        }
+        
+        .text-primary {
+            color: #3b5fe0 !important;
+        }
+        
+        .text-success {
+            color: #2dd4bf !important;
         }
     </style>
 </head>
 <body>
     <div class="container-fluid p-0 footer-wrapper">
-        <header class="fixed-top">
-            <nav class="navbar navbar-expand-lg navbar-dark py-2">
-                <div class="container-fluid px-4">
-                    <a class="navbar-brand d-flex align-items-center" href="/student/dashboard">
-                        <span class="fw-bold fs-2 logo-text">SmartAC</span>
-                        <span class="badge bg-light text-primary ms-2 d-none d-md-inline-block">Student</span>
-                    </a>
-                    
-                    <!-- Theme toggle and user profile for mobile -->
-                    <div class="d-flex align-items-center order-lg-2">
-                        <!-- Theme toggle will be added here by JavaScript -->
-                        <div class="theme-toggle-container me-2 me-lg-3"></div>
-                        
-                        <div class="dropdown d-inline-block">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <span class="user-avatar me-2"><%= user.name.charAt(0) %></span>
-                                <span class="d-none d-lg-inline"><%= user.name %></span>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item active" href="/student/profile">Profile</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="/logout">Logout</a></li>
-                            </ul>
-                        </div>
-                        
-                        <button class="navbar-toggler ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                    </div>
-                    
-                    <div class="collapse navbar-collapse" id="navbarNav">
-                        <ul class="navbar-nav mx-auto">
-                            <li class="nav-item">
-                                <a class="nav-link px-3" href="/student/dashboard">Dashboard</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link px-3" href="/student/components">AC Components</a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle px-3" href="#" id="practicalDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Practical Modules
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="practicalDropdown">
-                                    <li><a class="dropdown-item" href="/student/practical/1">Praktikal 1</a></li>
-                                    <li><a class="dropdown-item" href="/student/practical/2">Praktikal 2</a></li>
-                                    <li><a class="dropdown-item" href="/student/practical/3">Praktikal 3</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-        </header>
+        <!-- Include student header partial -->
+        <%- include('../partials/student-header', { user: user, activePage: 'profile' }) %>
 
-    <section class="profile-header py-5 text-center d-flex align-items-center">
-        <div class="container py-5 mt-4">
+    <section class="profile-header py-4 text-center d-flex align-items-center">
+        <div class="container py-4">
             <div class="row align-items-center">
-                <div class="col-lg-8 mx-auto text-center" data-aos="fade-up" data-aos-duration="1000">
-                    <div class="user-avatar large mx-auto mb-4" style="width: 120px; height: 120px; font-size: 3rem;">
-                        <%= user.name.charAt(0) %>
+                <div class="col-lg-8 mx-auto text-center">
+                    <div class="user-avatar large mx-auto mb-3">
+                        <span><%= user.name.charAt(0) %></span>
                     </div>
-                    <h1 class="display-4 fw-bold mb-2"><%= user.name %></h1>
+                    <h1 class="display-5 fw-bold mb-3" style="color: #333;"><%= user.name %></h1>
                     <div class="section-divider mb-3 mx-auto"></div>
-                    <p class="lead mb-0">Student Profile</p>
+                    <p class="lead mb-0" style="color: #333;">Student Profile</p>
                 </div>
             </div>
         </div>
@@ -232,114 +192,12 @@
                         </ul>
                     </div>
                 </div>
-
-                <div class="card shadow-sm mb-4" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
-                    <div class="card-header">
-                        <h4 class="mb-0 fw-bold">Learning Progress</h4>
-                    </div>
-                    <div class="card-body">
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">
-                                <div class="d-flex justify-content-between align-items-center mb-1">
-                                    <span>Praktikal 1</span>
-                                    <span>25%</span>
-                                </div>
-                                <div class="progress" style="height: 5px;">
-                                    <div class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </li>
-                            <li class="list-group-item">
-                                <div class="d-flex justify-content-between align-items-center mb-1">
-                                    <span>Praktikal 2</span>
-                                    <span>0%</span>
-                                </div>
-                                <div class="progress" style="height: 5px;">
-                                    <div class="progress-bar bg-success" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </li>
-                            <li class="list-group-item">
-                                <div class="d-flex justify-content-between align-items-center mb-1">
-                                    <span>Praktikal 3</span>
-                                    <span>0%</span>
-                                </div>
-                                <div class="progress" style="height: 5px;">
-                                    <div class="progress-bar bg-success" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
 
-    <footer class="footer mt-auto">
-        <div class="container">
-            <div class="row gy-4">
-                <div class="col-md-2 col-sm-6 mb-4 mb-md-0">
-                    <h5>Quick Links</h5>
-                    <ul class="footer-links">
-                        <li><a href="/">Home</a></li>
-                        <li><a href="/student/dashboard">Dashboard</a></li>
-                        <li><a href="/student/components">Components</a></li>
-                        <li><a href="/student/practical/1">Practicals</a></li>
-                    </ul>
-                </div>
-                
-                <div class="col-md-2 col-sm-6 mb-4 mb-md-0">
-                    <h5>Practicals</h5>
-                    <ul class="footer-links">
-                        <li><a href="/student/practical/1">Praktikal 1</a></li>
-                        <li><a href="/student/practical/2">Praktikal 2</a></li>
-                        <li><a href="/student/practical/3">Praktikal 3</a></li>
-                    </ul>
-                </div>
-                
-                <div class="col-md-2 col-sm-6 mb-4 mb-md-0">
-                    <h5>Components</h5>
-                    <ul class="footer-links">
-                        <li><a href="/student/components#compressor">Compressor</a></li>
-                        <li><a href="/student/components#condenser">Condenser</a></li>
-                        <li><a href="/student/components#txv">TXV</a></li>
-                        <li><a href="/student/components#cooling-coil">Cooling Coil</a></li>
-                    </ul>
-                </div>
-                
-                <div class="col-md-3 col-sm-6 mb-4 mb-md-0">
-                    <h5>Contact</h5>
-                    <div class="contact-info">
-                        <div class="contact-item">
-                            <div class="contact-icon">
-                                <i class="bi bi-envelope-fill"></i>
-                            </div>
-                            <div class="contact-text">
-                                <p class="mb-0">Email</p>
-                                <a href="mailto:info@smartac.edu" class="contact-link">info@smartac.edu</a>
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <div class="contact-icon">
-                                <i class="bi bi-telephone-fill"></i>
-                            </div>
-                            <div class="contact-text">
-                                <p class="mb-0">Phone</p>
-                                <a href="tel:+1234567890" class="contact-link">+123 456 7890</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <hr class="my-4">
-            <div class="row align-items-center">
-                <div class="col-md-6">
-                    <p class="mb-md-0 text-center text-md-start">&copy; 2025 SmartAC. All rights reserved.</p>
-                </div>
-                <div class="col-md-6 text-center text-md-end">
-                    <p class="mb-0">Designed with <i class="bi bi-heart-fill text-danger"></i> for automotive education</p>
-                </div>
-            </div>
-        </div>
-    </footer>
+    <!-- Include student footer partial -->
+    <%- include('../partials/student-footer') %>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

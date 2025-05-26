@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Sessions - SmartAC</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--body-bg);
+            color: var(--text-color);
+        }
+        .dashboard-header {
+            background: linear-gradient(135deg, #2dd4bf, #3b5fe0);
+            color: white;
+            padding: 2.5rem 0;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .dashboard-header::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .dashboard-header::after {
+            content: '';
+            position: absolute;
+            bottom: -80px;
+            left: -80px;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .dashboard-header .container {
+            position: relative;
+            z-index: 1;
+        }
+        .session-card {
+            border-radius: 16px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border: none;
+            overflow: hidden;
+            height: 100%;
+        }
+        .session-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+        }
+        .session-card .card-header {
+            background: linear-gradient(135deg, #2dd4bf, #3b5fe0);
+            color: white;
+            font-weight: 600;
+            border-bottom: none;
+            padding: 1rem 1.5rem;
+        }
+        .session-card .badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 0.8rem;
+            padding: 0.5rem 0.75rem;
+            border-radius: 30px;
+        }
+        .session-status-live {
+            background-color: #10b981;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+            }
+        }
+        .session-status-upcoming {
+            background-color: #f59e0b;
+        }
+        .session-status-ended {
+            background-color: #6b7280;
+        }
+        .session-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            background-color: rgba(0, 0, 0, 0.03);
+        }
+        .session-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #3b5fe0;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-right: 0.75rem;
+        }
+        .session-search {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+        .session-search input {
+            border-radius: 30px;
+            padding: 0.75rem 1.5rem;
+            padding-left: 3rem;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        .session-search input:focus {
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+        .session-search i {
+            position: absolute;
+            left: 1.25rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6b7280;
+        }
+        .join-session-btn {
+            background: linear-gradient(135deg, #2dd4bf, #3b5fe0);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 0.6rem 1.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(59, 95, 224, 0.2);
+        }
+        .join-session-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(59, 95, 224, 0.3);
+        }
+        .join-session-btn:disabled {
+            background: #6b7280;
+            opacity: 0.7;
+        }
+        .enter-code-form {
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+            padding: 2rem;
+        }
+        .session-code-input {
+            letter-spacing: 0.25rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+            text-align: center;
+        }
+        #joinSessionModal .modal-content {
+            border-radius: 16px;
+            border: none;
+            overflow: hidden;
+        }
+        #joinSessionModal .modal-header {
+            background: linear-gradient(135deg, #2dd4bf, #3b5fe0);
+            color: white;
+            border-bottom: none;
+        }
+        .session-tab {
+            cursor: pointer;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin-right: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .session-tab.active {
+            background: linear-gradient(135deg, #2dd4bf, #3b5fe0);
+            color: white;
+        }
+        .no-sessions {
+            text-align: center;
+            padding: 3rem 1rem;
+            background-color: #f9fafb;
+            border-radius: 16px;
+            border: 1px dashed #d1d5db;
+        }
+        .footer {
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid p-0 d-flex flex-column min-vh-100">
+        <%- include('../partials/student-header', {activePage: 'sessions'}) %>
+
+        <div class="dashboard-header">
+            <div class="container">
+                <div class="row align-items-center" data-aos="fade-up" data-aos-duration="1000">
+                    <div class="col-lg-8">
+                        <h1 class="display-5 fw-bold mb-2">Active Sessions</h1>
+                        <p class="lead mb-0">Join interactive learning sessions created by your educators</p>
+                    </div>
+                    <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
+                        <button class="btn btn-light btn-lg px-4" data-bs-toggle="modal" data-bs-target="#joinSessionModal">
+                            <i class="bi bi-plus-circle me-2"></i>Join Session by Code
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container mb-5">
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="session-search">
+                        <i class="bi bi-search"></i>
+                        <input type="text" class="form-control form-control-lg" id="sessionSearch" placeholder="Search sessions...">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="d-flex flex-wrap">
+                        <div class="session-tab active" data-filter="all">All Sessions</div>
+                        <div class="session-tab" data-filter="live">Live Now</div>
+                        <div class="session-tab" data-filter="upcoming">Upcoming</div>
+                        <div class="session-tab" data-filter="joined">Joined by Me</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" id="sessionsList">
+                <!-- Sample sessions - these would be generated from server data -->
+                <div class="col-md-6 col-lg-4 mb-4 session-item" data-status="live" data-joined="true">
+                    <div class="session-card">
+                        <div class="card-header">
+                            <h5 class="mb-0">AC Compressor Diagnosis</h5>
+                            <span class="badge session-status-live"><i class="bi bi-broadcast me-1"></i> Live Now</span>
+                        </div>
+                        <div class="card-body">
+                            <p class="text-muted mb-1"><i class="bi bi-calendar-event me-2"></i>Today, 10:00 AM - 12:00 PM</p>
+                            <p class="mb-3"><i class="bi bi-people me-2"></i>18 students joined</p>
+                            <p class="mb-0">Learn how to diagnose common issues with automobile AC compressors through interactive simulations.</p>
+                        </div>
+                        <div class="session-footer">
+                            <div class="d-flex align-items-center">
+                                <div class="session-avatar">TE</div>
+                                <div>
+                                    <p class="mb-0 fw-medium">Teacher Emily</p>
+                                    <p class="text-muted mb-0 small">Automotive HVAC Specialist</p>
+                                </div>
+                            </div>
+                            <a href="/student/session/123" class="join-session-btn">
+                                <i class="bi bi-arrow-right-circle me-2"></i>Resume
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4 mb-4 session-item" data-status="live" data-joined="false">
+                    <div class="session-card">
+                        <div class="card-header">
+                            <h5 class="mb-0">Refrigerant Cycle Simulation</h5>
+                            <span class="badge session-status-live"><i class="bi bi-broadcast me-1"></i> Live Now</span>
+                        </div>
+                        <div class="card-body">
+                            <p class="text-muted mb-1"><i class="bi bi-calendar-event me-2"></i>Today, 1:00 PM - 3:00 PM</p>
+                            <p class="mb-3"><i class="bi bi-people me-2"></i>12 students joined</p>
+                            <p class="mb-0">Interactive simulation of the complete refrigerant cycle in automotive AC systems.</p>
+                        </div>
+                        <div class="session-footer">
+                            <div class="d-flex align-items-center">
+                                <div class="session-avatar">DR</div>
+                                <div>
+                                    <p class="mb-0 fw-medium">Dr. Rodriguez</p>
+                                    <p class="text-muted mb-0 small">Mechanical Engineering</p>
+                                </div>
+                            </div>
+                            <a href="/student/session/456" class="join-session-btn">
+                                <i class="bi bi-box-arrow-in-right me-2"></i>Join Now
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4 mb-4 session-item" data-status="upcoming" data-joined="false">
+                    <div class="session-card">
+                        <div class="card-header">
+                            <h5 class="mb-0">TXV Troubleshooting</h5>
+                            <span class="badge session-status-upcoming"><i class="bi bi-clock me-1"></i> Upcoming</span>
+                        </div>
+                        <div class="card-body">
+                            <p class="text-muted mb-1"><i class="bi bi-calendar-event me-2"></i>Tomorrow, 2:00 PM - 4:00 PM</p>
+                            <p class="mb-3"><i class="bi bi-people me-2"></i>5 students enrolled</p>
+                            <p class="mb-0">Learn how to diagnose and fix common issues with Thermal Expansion Valves in AC systems.</p>
+                        </div>
+                        <div class="session-footer">
+                            <div class="d-flex align-items-center">
+                                <div class="session-avatar">JW</div>
+                                <div>
+                                    <p class="mb-0 fw-medium">James Wilson</p>
+                                    <p class="text-muted mb-0 small">HVAC Technician</p>
+                                </div>
+                            </div>
+                            <button class="join-session-btn">
+                                <i class="bi bi-bell me-2"></i>Remind Me
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Join Session Modal -->
+        <div class="modal fade" id="joinSessionModal" tabindex="-1" aria-labelledby="joinSessionModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="joinSessionModalLabel">Join Session by Code</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="enter-code-form">
+                            <p class="text-center mb-4">Enter the 6-digit session code provided by your educator</p>
+                            <div class="mb-4">
+                                <input type="text" class="form-control session-code-input" id="sessionCode" placeholder="XXXXXX" maxlength="6">
+                            </div>
+                            <div class="d-grid">
+                                <button class="btn btn-primary btn-lg" id="submitSessionCode">Join Session</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <%- include('../partials/student-footer') %>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="/js/firebase-init.js"></script>
+    <script src="/js/student-app.js"></script>
+</body>
+</html>

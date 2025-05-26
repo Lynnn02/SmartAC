@@ -63,6 +63,17 @@
                             </div>
                             
                             <div class="mb-3">
+                                <label for="sessionCode" class="form-label">Session Code</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="sessionCode" name="sessionCode" readonly value="<%= sessionCode || '' %>" placeholder="Auto-generated code">
+                                    <button class="btn btn-outline-secondary" type="button" id="generateCodeBtn">
+                                        <i class="bi bi-arrow-repeat"></i> Generate
+                                    </button>
+                                </div>
+                                <div class="form-text">Students will use this code to join your session</div>
+                            </div>
+                            
+                            <div class="mb-3">
                                 <label for="practicalModule" class="form-label">Practical Module</label>
                                 <select class="form-select" id="practicalModule" name="practicalModule" required>
                                     <option value="" selected disabled>Select a practical module</option>
@@ -119,8 +130,42 @@
                                 </div>
                             </div>
                             
-                            <div class="d-grid gap-2">
-                                <button type="submit" class="btn btn-primary">Create Session</button>
+                            <div class="row mt-4 mb-4">
+                                <div class="col-md-6">
+                                    <div class="card h-100">
+                                        <div class="card-header bg-light">
+                                            <h5 class="mb-0">Session QR Code</h5>
+                                        </div>
+                                        <div class="card-body text-center">
+                                            <div id="qrCodeContainer" class="mb-3 d-flex justify-content-center align-items-center" style="min-height: 200px;">
+                                                <div class="text-muted">
+                                                    <i class="bi bi-qr-code fs-1 mb-2"></i>
+                                                    <p>Generate a session code first</p>
+                                                </div>
+                                            </div>
+                                            <p class="mb-0 text-muted">Students can scan this QR code to join your session</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card h-100">
+                                        <div class="card-header bg-light">
+                                            <h5 class="mb-0">Session Preview</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <div id="sessionPreview">
+                                                <div class="text-center text-muted py-4">
+                                                    <i class="bi bi-eye fs-1 mb-2"></i>
+                                                    <p>Fill in session details to see preview</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="d-grid gap-2 mt-4">
+                                <button type="submit" class="btn btn-primary btn-lg">Create Session</button>
                                 <a href="/teacher/dashboard" class="btn btn-outline-secondary">Cancel</a>
                             </div>
                         </form>
@@ -145,6 +190,98 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const generateCodeBtn = document.getElementById('generateCodeBtn');
+            const sessionCodeInput = document.getElementById('sessionCode');
+            const qrCodeContainer = document.getElementById('qrCodeContainer');
+            const sessionPreview = document.getElementById('sessionPreview');
+            const sessionNameInput = document.getElementById('sessionName');
+            const practicalModuleSelect = document.getElementById('practicalModule');
+            const sessionDateInput = document.getElementById('sessionDate');
+            const sessionTimeInput = document.getElementById('sessionTime');
+            const sessionDescriptionInput = document.getElementById('sessionDescription');
+            
+            // Generate random session code
+            function generateSessionCode() {
+                const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+                let result = '';
+                for (let i = 0; i < 6; i++) {
+                    result += characters.charAt(Math.floor(Math.random() * characters.length));
+                }
+                return result;
+            }
+            
+            // Generate QR code
+            function generateQRCode(sessionCode) {
+                qrCodeContainer.innerHTML = '';
+                
+                // Create QR code with the join URL
+                const joinUrl = `${window.location.origin}/student/join-session?code=${sessionCode}`;
+                
+                QRCode.toCanvas(qrCodeContainer, joinUrl, {
+                    width: 200,
+                    margin: 1,
+                    color: {
+                        dark: '#3b5fe0',
+                        light: '#ffffff'
+                    }
+                }, function(error) {
+                    if (error) {
+                        console.error(error);
+                        qrCodeContainer.innerHTML = `<div class="text-danger">Error generating QR code</div>`;
+                    }
+                });
+            }
+            
+            // Update session preview
+            function updateSessionPreview() {
+                const sessionName = sessionNameInput.value || 'Session Name';
+                const practicalModule = practicalModuleSelect.options[practicalModuleSelect.selectedIndex]?.text || 'Practical Module';
+                const sessionDate = sessionDateInput.value || 'Date';
+                const sessionTime = sessionTimeInput.value || 'Time';
+                const sessionCode = sessionCodeInput.value || 'XXXXXX';
+                const sessionDescription = sessionDescriptionInput.value || 'No description provided';
+                
+                sessionPreview.innerHTML = `
+                    <div class="session-preview-card">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="mb-0">${sessionName}</h5>
+                            <span class="badge bg-primary">${sessionCode}</span>
+                        </div>
+                        <p class="mb-2"><strong>Module:</strong> ${practicalModule}</p>
+                        <p class="mb-2"><strong>Date:</strong> ${sessionDate}</p>
+                        <p class="mb-2"><strong>Time:</strong> ${sessionTime}</p>
+                        <p class="mb-0"><strong>Description:</strong> ${sessionDescription}</p>
+                    </div>
+                `;
+            }
+            
+            // Generate code button click
+            generateCodeBtn.addEventListener('click', function() {
+                const newCode = generateSessionCode();
+                sessionCodeInput.value = newCode;
+                generateQRCode(newCode);
+                updateSessionPreview();
+            });
+            
+            // Update preview when inputs change
+            const formInputs = [sessionNameInput, practicalModuleSelect, sessionDateInput, sessionTimeInput, sessionDescriptionInput];
+            formInputs.forEach(input => {
+                input.addEventListener('input', updateSessionPreview);
+                input.addEventListener('change', updateSessionPreview);
+            });
+            
+            // Generate initial code if not already set
+            if (!sessionCodeInput.value) {
+                generateCodeBtn.click();
+            } else {
+                generateQRCode(sessionCodeInput.value);
+                updateSessionPreview();
+            }
+        });
+    </script>
     <script>
         // Show/hide student selection based on radio button selection
         document.addEventListener('DOMContentLoaded', function() {
