@@ -105,7 +105,6 @@
                                     </div>
                                     <h4 class="mb-2">3D Model Coming Soon</h4>
                                     <p class="text-muted">Our team is currently working on the 3D model visualization.</p>
-                                    <div class="mt-3 badge bg-primary p-2">Under Development</div>
                                 </div>
                             </div>
                         </div>
@@ -113,7 +112,7 @@
                             <button class="btn btn-primary" id="rotateLeft"><i class="bi bi-arrow-counterclockwise"></i></button>
                             <button class="btn btn-primary" id="resetView"><i class="bi bi-aspect-ratio"></i></button>
                             <button class="btn btn-primary" id="rotateRight"><i class="bi bi-arrow-clockwise"></i></button>
-                            <button class="btn btn-success" id="viewAR"><i class="bi bi-phone"></i> View in AR</button>
+                            <button class="btn btn-success ar-button" id="viewAR" data-model="CompleteSystem.glb"><i class="bi bi-phone"></i> View in AR</button>
                         </div>
                     </div>
                 </div>
@@ -132,70 +131,83 @@
         <div class="row g-4">
             <div class="col-md-6 col-lg-3 mb-4" data-aos="fade-up" data-aos-duration="800">
                 <div class="card h-100 shadow-sm component-card" style="background-color: white; border-radius: 20px;">
-                    <div class="card-body text-center">
-                        <h3 class="card-title">1. Compressor</h3>
-                        <p class="card-text">Pumps and pressurizes the refrigerant.</p>
-                        <a href="/student/component/compressor" class="btn btn-primary" disabled>Under Development</a>
+                    <div class="card-body d-flex flex-column">
+                        <h3 class="card-title text-center fw-bold fs-5 mb-3">1. Compressor</h3>
+                        <p class="card-text text-center mb-4">Pumps and pressurizes the refrigerant.</p>
+                        <div class="mt-auto text-center">
+                            <a href="/student/component/compressor" class="btn btn-primary px-4" disabled>Under Development</a>
+                        </div>
                     </div>
                 </div>
             </div>
             
             <div class="col-md-6 col-lg-3 mb-4" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
                 <div class="card h-100 shadow-sm component-card" style="background-color: white; border-radius: 20px;">
-                    <div class="card-body text-center">
-                        <h3 class="card-title">2. Condenser</h3>
-                        <p class="card-text">Releases heat from the refrigerant.</p>
-                        <a href="/student/component/condenser" class="btn btn-primary" disabled>Under Development</a>
+                    <div class="card-body d-flex flex-column">
+                        <h3 class="card-title text-center fw-bold fs-5 mb-3">2. Condenser</h3>
+                        <p class="card-text text-center mb-4">Releases heat from the refrigerant.</p>
+                        <div class="mt-auto text-center">
+                            <a href="/student/component/condenser" class="btn btn-primary px-4" disabled>Under Development</a>
+                        </div>
                     </div>
                 </div>
             </div>
             
             <div class="col-md-6 col-lg-3 mb-4" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
                 <div class="card h-100 shadow-sm component-card" style="background-color: white; border-radius: 20px;">
-                    <div class="card-body text-center">
-                        <h3 class="card-title">3. Expansion Valve</h3>
-                        <p class="card-text">Thermal Expansion Valve controls refrigerant flow.</p>
-                        <a href="/student/component/txv" class="btn btn-primary" data-model="TXV.glb">View in 3D</a>
+                    <div class="card-body d-flex flex-column">
+                        <h3 class="card-title text-center fw-bold fs-5 mb-3">3. Expansion Valve</h3>
+                        <p class="card-text text-center mb-4">Thermal Expansion Valve controls refrigerant flow.</p>
+                        <div class="mt-auto text-center">
+                            <a href="/student/component/txv" class="btn btn-primary px-4">View</a>
+                        </div>
                     </div>
                 </div>
             </div>
             
             <div class="col-md-6 col-lg-3 mb-4" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
                 <div class="card h-100 shadow-sm component-card" style="background-color: white; border-radius: 20px;">
-                    <div class="card-body text-center">
-                        <h3 class="card-title">4. Evaporator</h3>
-                        <p class="card-text">Absorbs heat from the cabin air.</p>
-                        <a href="/student/component/cooling-coil" class="btn btn-primary" disabled>Under Development</a>
+                    <div class="card-body d-flex flex-column">
+                        <h3 class="card-title text-center fw-bold fs-5 mb-3">4. Evaporator</h3>
+                        <p class="card-text text-center mb-4">Absorbs heat from the cabin air.</p>
+                        <div class="mt-auto text-center">
+                            <a href="/student/component/cooling-coil" class="btn btn-primary px-4" disabled>Under Development</a>
+                        </div>
                     </div>
                 </div>
             </div>
             
             <div class="col-md-6 col-lg-3 mb-4" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
                 <div class="card h-100 shadow-sm component-card" style="background-color: white; border-radius: 20px;">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">5. Receiver Drier</h5>
-                        <p class="card-text">Removes moisture from the refrigerant.</p>
-                        <a href="/student/component/receiver-drier" class="btn btn-primary" data-model="ReceiverDrier.glb">View in 3D</a>
+                    <div class="card-body d-flex flex-column">
+                        <h3 class="card-title text-center fw-bold fs-5 mb-3">5. Receiver Drier</h3>
+                        <p class="card-text text-center mb-4">Removes moisture from the refrigerant.</p>
+                        <div class="mt-auto text-center">
+                            <a href="/student/component/receiver-drier" class="btn btn-primary px-4">View</a>
+                        </div>
                     </div>
                 </div>
             </div>
             
             <div class="col-md-6 col-lg-3 mb-4" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
                 <div class="card h-100 shadow-sm component-card" style="background-color: white; border-radius: 20px;">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">6. Sight Glass</h5>
-                        <p class="card-text">Allows visual inspection of refrigerant flow.</p>
-                        <a href="/student/component/sight-glass" class="btn btn-primary" data-model="SightGlass.glb">View in 3D</a>
+                    <div class="card-body d-flex flex-column">
+                        <h3 class="card-title text-center fw-bold fs-5 mb-3">6. Sight Glass</h3>
+                        <p class="card-text text-center mb-4">Allows visual inspection of refrigerant flow.</p>
+                        <div class="mt-auto text-center">
+                            <a href="/student/component/sight-glass" class="btn btn-primary px-4">View</a>                       </div>
                     </div>
                 </div>
             </div>
             
             <div class="col-md-6 col-lg-3 mb-4" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
                 <div class="card h-100 shadow-sm component-card" style="background-color: white; border-radius: 20px;">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">7. Pressure Switch</h5>
-                        <p class="card-text">Controls the compressor based on refrigerant pressure.</p>
-                        <a href="/student/component/pressure-switch" class="btn btn-primary" data-model="PressureSwitch.glb">View in 3D</a>
+                    <div class="card-body d-flex flex-column">
+                        <h3 class="card-title text-center fw-bold fs-5 mb-3">7. Pressure Switch</h3>
+                        <p class="card-text text-center mb-4">Controls the compressor based on refrigerant pressure.</p>
+                        <div class="mt-auto text-center">
+                            <a href="/student/component/pressure-switch" class="btn btn-primary px-4">View</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -363,6 +375,113 @@
                 </div>
             </div>
         </div>
+        
+        <!-- Repair Tools Section -->
+        <div class="row mt-5">
+            <div class="col-12 text-center" data-aos="fade-up" data-aos-duration="800">
+                <h2 class="display-5 fw-bold mb-3">Repair Tools</h2>
+                <div class="section-divider mb-4 mx-auto"></div>
+                <p class="lead mb-5">Essential tools for Car AC system maintenance and repair.</p>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-6 col-lg-3 mb-4" data-aos="fade-up" data-aos-duration="800">
+                <div class="card h-100 shadow-sm component-card" style="background-color: white; border-radius: 20px;">
+                    <div class="card-body d-flex flex-column">
+                        <h3 class="card-title text-center fw-bold fs-5 mb-3">1. Manifold Gauge Set</h3>
+                        <p class="card-text text-center mb-4">Measures system pressure and helps diagnose issues.</p>
+                        <div class="mt-auto text-center">
+                            <a href="#" class="btn btn-secondary px-4" disabled>Under Development</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-3 mb-4" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
+                <div class="card h-100 shadow-sm component-card" style="background-color: white; border-radius: 20px;">
+                    <div class="card-body d-flex flex-column">
+                        <h3 class="card-title text-center fw-bold fs-5 mb-3">2. Vacuum Pump</h3>
+                        <p class="card-text text-center mb-4">Removes air and moisture from the AC system.</p>
+                        <div class="mt-auto text-center">
+                            <a href="#" class="btn btn-secondary px-4" disabled>Under Development</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-3 mb-4" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
+                <div class="card h-100 shadow-sm component-card" style="background-color: white; border-radius: 20px;">
+                    <div class="card-body d-flex flex-column">
+                        <h3 class="card-title text-center fw-bold fs-5 mb-3">3. Refrigerant Recovery Machine</h3>
+                        <p class="card-text text-center mb-4">Safely removes and stores refrigerant.</p>
+                        <div class="mt-auto text-center">
+                            <a href="#" class="btn btn-secondary px-4" disabled>Under Development</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-3 mb-4" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
+                <div class="card h-100 shadow-sm component-card" style="background-color: white; border-radius: 20px;">
+                    <div class="card-body d-flex flex-column">
+                        <h3 class="card-title text-center fw-bold fs-5 mb-3">4. Leak Detector</h3>
+                        <p class="card-text text-center mb-4">Identifies refrigerant leaks in the system.</p>
+                        <div class="mt-auto text-center">
+                            <a href="#" class="btn btn-secondary px-4" disabled>Under Development</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-3 mb-4" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
+                <div class="card h-100 shadow-sm component-card" style="background-color: white; border-radius: 20px;">
+                    <div class="card-body d-flex flex-column">
+                        <h3 class="card-title text-center fw-bold fs-5 mb-3">5. Thermometer</h3>
+                        <p class="card-text text-center mb-4">Measures vent temperature for performance testing.</p>
+                        <div class="mt-auto text-center">
+                            <a href="#" class="btn btn-secondary px-4" disabled>Under Development</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-3 mb-4" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
+                <div class="card h-100 shadow-sm component-card" style="background-color: white; border-radius: 20px;">
+                    <div class="card-body d-flex flex-column">
+                        <h3 class="card-title text-center fw-bold fs-5 mb-3">6. O-Ring Kit</h3>
+                        <p class="card-text text-center mb-4">Contains various sizes of replacement seals.</p>
+                        <div class="mt-auto text-center">
+                            <a href="#" class="btn btn-secondary px-4" disabled>Under Development</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-3 mb-4" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
+                <div class="card h-100 shadow-sm component-card" style="background-color: white; border-radius: 20px;">
+                    <div class="card-body d-flex flex-column">
+                        <h3 class="card-title text-center fw-bold fs-5 mb-3">7. Charging Scale</h3>
+                        <p class="card-text text-center mb-4">Accurately measures refrigerant charge amount.</p>
+                        <div class="mt-auto text-center">
+                            <a href="#" class="btn btn-secondary px-4" disabled>Under Development</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-3 mb-4" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
+                <div class="card h-100 shadow-sm component-card" style="background-color: white; border-radius: 20px;">
+                    <div class="card-body d-flex flex-column">
+                        <h3 class="card-title text-center fw-bold fs-5 mb-3">8. Clutch Removal Tools</h3>
+                        <p class="card-text text-center mb-4">Special tools for compressor clutch service.</p>
+                        <div class="mt-auto text-center">
+                            <a href="#" class="btn btn-secondary px-4" disabled>Under Development</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Component Modal -->
@@ -402,8 +521,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.176.0/build/three.min.js"></script>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
     <script src="/js/firebase-init.js"></script>
     <script src="/js/student-app.js"></script>
+    <script src="/js/ar-viewer.js"></script>
     <!-- Import Three.js loaders and controls properly -->
     <script>
         // Initialize AOS animations
