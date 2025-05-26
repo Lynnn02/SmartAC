@@ -42,6 +42,14 @@
   --card-pink: #ff7eb9;
   --card-teal: #2dd4bf;
   --card-blue: #7eb9ff;
+  --card-orange: #ff9f7e;
+  --card-green: #70d68a;
+  --card-yellow: #ffd27e;
+  --card-red: #ff7e7e;
+  --card-indigo: #7e7eff;
+  --card-cyan: #7ee8ff;
+  --card-amber: #ffbf7e;
+  --card-lime: #bfff7e;
   
   /* Background gradient */
   --bg-gradient: linear-gradient(135deg, #e0e0ff, #f0f0ff);

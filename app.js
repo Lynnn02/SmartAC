@@ -3,10 +3,38 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const path = require('path');
+const admin = require('firebase-admin');
+const firebaseConfig = require('./config/firebase-config');
 require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Initialize Firebase Admin with the config
+try {
+  admin.initializeApp({
+    credential: admin.credential.cert({
+      projectId: firebaseConfig.projectId,
+      clientEmail: process.env.FIREBASE_CLIENT_EMAIL || 'firebase-adminsdk-dummy@smartac-28a3c.iam.gserviceaccount.com',
+      // In production, you would use a proper private key, not this placeholder
+      privateKey: (process.env.FIREBASE_PRIVATE_KEY || 'dummy-key').replace(/\\n/g, '\n')
+    }),
+    databaseURL: `https://${firebaseConfig.projectId}.firebaseio.com`,
+    storageBucket: firebaseConfig.storageBucket
+  });
+  console.log('Firebase Admin initialized successfully');
+} catch (error) {
+  // If initialization fails, log the error but continue running the app
+  console.error('Firebase Admin initialization error:', error);
+}
+
+// Get Firestore database reference (will be used if Firebase is initialized)
+let db;
+try {
+  db = admin.firestore();
+} catch (error) {
+  console.log('Firestore not available, continuing without it');
+}
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
