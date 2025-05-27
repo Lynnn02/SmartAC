@@ -166,13 +166,13 @@
     <div class="container-fluid p-0 d-flex flex-column min-vh-100">
         <%- include('../partials/student-header', {activePage: 'join-session'}) %>
 
-        <section class="dashboard-header py-5 text-center d-flex align-items-center">
-            <div class="container py-5 mt-5">
+        <section class="py-5 text-center d-flex align-items-center" style="background-color: var(--body-bg);">
+            <div class="container py-4 mt-4">
                 <div class="row align-items-center">
-                    <div class="col-lg-8 mx-auto text-center text-white" data-aos="fade-up" data-aos-duration="1000">
-                        <h1 class="display-4 fw-bold mb-3">Join a Session</h1>
-                        <div class="section-divider mb-4 mx-auto"></div>
-                        <p class="lead">Enter a session code or scan a QR code to join an interactive learning session</p>
+                    <div class="col-lg-8 mx-auto text-center" data-aos="fade-up" data-aos-duration="1000">
+                        <h1 class="display-4 fw-bold mb-3" style="color: #333;">Join a Session</h1>
+                        <div class="section-divider mb-3 mx-auto"></div>
+                        <p class="lead" style="color: #555;">Enter a session code or scan a QR code to join an interactive learning session</p>
                     </div>
                 </div>
             </div>
@@ -195,7 +195,7 @@
                 
                 <div class="tab-content" id="joinTabsContent">
                     <div class="tab-pane fade show active" id="code-tab-pane" role="tabpanel" aria-labelledby="code-tab" tabindex="0">
-                        <div class="card shadow-sm">
+                        <div class="card shadow-sm" style="border-radius: 16px; overflow: hidden;">
                             <div class="card-body p-4">
                                 <h3 class="card-title text-center mb-4">Enter Session Code</h3>
                                 

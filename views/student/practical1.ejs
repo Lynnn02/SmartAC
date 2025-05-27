@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Praktikal 1 - SmartAC</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/theme-toggle.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--body-bg);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .footer-wrapper {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .practical-card {
+            border-radius: 16px;
+            overflow: hidden;
+            background-color: white;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+        }
+        .step-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            padding: 0.75rem;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+        }
+        .step-item:hover {
+            background-color: #f0f0f0;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+        .step-item.active {
+            border-color: #3b5fe0;
+            background-color: rgba(59, 95, 224, 0.05);
+        }
+        .step-number {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #2dd4bf, #3b5fe0);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: bold;
+            margin-right: 12px;
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(59, 95, 224, 0.3);
+        }
+        .step-content {
+            font-weight: 500;
+            color: #333;
+        }
+        .btn-start {
+            background: linear-gradient(135deg, #2dd4bf, #3b5fe0);
+            border: none;
+            color: white;
+            font-weight: 600;
+            padding: 0.75rem 2.5rem;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(59, 95, 224, 0.3);
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+        .btn-start:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(59, 95, 224, 0.4);
+        }
+        .btn-start:active {
+            transform: translateY(-1px);
+        }
+        .practical-title {
+            color: #333;
+            font-weight: 700;
+        }
+        .practical-subtitle {
+            color: #555;
+            font-weight: 400;
+        }
+        .steps-container {
+            overflow-y: auto;
+            padding: 1.5rem;
+            flex-grow: 1;
+        }
+        .btn-nav {
+            padding: 0.5rem 1.25rem;
+            border-radius: 50px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+        .btn-complete {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 0.5rem 1.25rem;
+            border-radius: 50px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+        .btn-complete:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+        .progress-bar {
+            background: linear-gradient(135deg, #2dd4bf, #3b5fe0);
+            height: 8px;
+            border-radius: 4px;
+        }
+        .progress {
+            height: 8px;
+            border-radius: 4px;
+            background-color: #e9ecef;
+        }
+        .step-instruction {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+    </style>
+<body>
+    <div class="container-fluid p-0 d-flex flex-column min-vh-100">
+        <%- include('../partials/student-header', {activePage: 'practical'}) %>
+        
+        <section class="py-4 d-flex align-items-center" style="background-color: var(--body-bg); margin-top: 56px;">
+            <div class="container py-3">
+                <div class="row">
+                    <div class="col-lg-10 mx-auto">
+                        <% if (typeof startMode !== 'undefined' && startMode) { %>
+                            <!-- Start Mode View -->
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <a href="/student/practical/1" class="btn btn-outline-secondary btn-nav">
+                                    <i class="bi bi-arrow-left me-2"></i>Kembali
+                                </a>
+                                <div class="d-flex align-items-center">
+                                    <div class="me-3">
+                                        <span class="badge bg-primary">Langkah <span id="currentStep">1</span>/6</span>
+                                    </div>
+                                    <div style="width: 200px;">
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 16.6%" aria-valuenow="16.6" aria-valuemin="0" aria-valuemax="100" id="progressBar"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="practical-card animate__animated animate__fadeIn">
+                                <div class="text-center p-4 border-bottom">
+                                    <h2 class="practical-title mb-2">Praktikal 1</h2>
+                                    <p class="practical-subtitle mb-0">Pemasangan Hose Manifold Gauge & Vacuum Hose (Kaedah Manual)</p>
+                                </div>
+                                
+                                <!-- 3D Model Simulation -->
+                                <div class="px-4 pb-3">
+                                    <div class="simulation-container" style="position: relative; width: 100%; padding-top: 56.25%; background: linear-gradient(135deg, #f0f4ff, #e4edff); border-radius: 10px; overflow: hidden; margin-bottom: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+                                        <div id="simulation-placeholder" class="d-flex flex-column align-items-center justify-content-center" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+                                            <div style="width: 80px; height: 80px; background-color: rgba(59, 95, 224, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 15px;">
+                                                <i class="bi bi-cube" style="font-size: 36px; color: #3b5fe0;"></i>
+                                            </div>
+                                            <p class="mb-0" style="font-size: 16px; color: #555; font-weight: 500;">Simulasi 3D akan dipaparkan di sini</p>
+                                        </div>
+                                        <div id="simulation-step1" class="simulation-step" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+                                            <img src="https://placehold.co/1280x720/e4edff/3b5fe0?text=Simulasi+Langkah+1&font=montserrat" alt="Simulasi Langkah 1" style="width: 100%; height: 100%; object-fit: cover;">
+                                        </div>
+                                        <div id="simulation-step2" class="simulation-step d-none" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+                                            <img src="https://placehold.co/1280x720/e4edff/3b5fe0?text=Simulasi+Langkah+2&font=montserrat" alt="Simulasi Langkah 2" style="width: 100%; height: 100%; object-fit: cover;">
+                                        </div>
+                                        <div id="simulation-step3" class="simulation-step d-none" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+                                            <img src="https://placehold.co/1280x720/e4edff/3b5fe0?text=Simulasi+Langkah+3&font=montserrat" alt="Simulasi Langkah 3" style="width: 100%; height: 100%; object-fit: cover;">
+                                        </div>
+                                        <div id="simulation-step4" class="simulation-step d-none" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+                                            <img src="https://placehold.co/1280x720/e4edff/3b5fe0?text=Simulasi+Langkah+4&font=montserrat" alt="Simulasi Langkah 4" style="width: 100%; height: 100%; object-fit: cover;">
+                                        </div>
+                                        <div id="simulation-step5" class="simulation-step d-none" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+                                            <img src="https://placehold.co/1280x720/e4edff/3b5fe0?text=Simulasi+Langkah+5&font=montserrat" alt="Simulasi Langkah 5" style="width: 100%; height: 100%; object-fit: cover;">
+                                        </div>
+                                        <div id="simulation-step6" class="simulation-step d-none" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+                                            <img src="https://placehold.co/1280x720/e4edff/3b5fe0?text=Simulasi+Langkah+6&font=montserrat" alt="Simulasi Langkah 6" style="width: 100%; height: 100%; object-fit: cover;">
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Step Instructions -->
+                                <div class="p-4" id="stepInstructions">
+                                    <div class="step-instruction animate__animated animate__fadeIn" id="instruction1">
+                                        <div class="d-flex align-items-center mb-3">
+                                            <div class="step-number">1</div>
+                                            <h5 class="mb-0 ms-2">Sediakan peralatan yang diperlukan</h5>
+                                        </div>
+                                        <p>Pastikan anda mempunyai semua peralatan berikut:</p>
+                                        <ul>
+                                            <li>Manifold Gauge</li>
+                                            <li>Hos Vakum (Hitam)</li>
+                                            <li>Hos Tekanan Rendah (Biru)</li>
+                                            <li>Hos Tekanan Tinggi (Merah)</li>
+                                            <li>Pam Vakum</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="step-instruction animate__animated animate__fadeIn d-none" id="instruction2">
+                                        <div class="d-flex align-items-center mb-3">
+                                            <div class="step-number">2</div>
+                                            <h5 class="mb-0 ms-2">Pastikan enjin kenderaan dimatikan</h5>
+                                        </div>
+                                        <p>Sebelum memulakan kerja, pastikan:</p>
+                                        <ul>
+                                            <li>Enjin kenderaan dimatikan sepenuhnya</li>
+                                            <li>Kunci kenderaan telah dikeluarkan</li>
+                                            <li>Sistem penghawa dingin tidak beroperasi</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="step-instruction animate__animated animate__fadeIn d-none" id="instruction3">
+                                        <div class="d-flex align-items-center mb-3">
+                                            <div class="step-number">3</div>
+                                            <h5 class="mb-0 ms-2">Kenal pasti port servis tekanan tinggi dan rendah</h5>
+                                        </div>
+                                        <p>Cari dan kenal pasti:</p>
+                                        <ul>
+                                            <li>Port servis tekanan rendah (biasanya bersaiz lebih besar)</li>
+                                            <li>Port servis tekanan tinggi (biasanya bersaiz lebih kecil)</li>
+                                            <li>Pastikan anda dapat membezakan antara kedua-duanya</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="step-instruction animate__animated animate__fadeIn d-none" id="instruction4">
+                                        <div class="d-flex align-items-center mb-3">
+                                            <div class="step-number">4</div>
+                                            <h5 class="mb-0 ms-2">Sambungkan hos biru ke port servis tekanan rendah</h5>
+                                        </div>
+                                        <p>Langkah-langkah sambungan:</p>
+                                        <ul>
+                                            <li>Ambil hos biru dari set manifold gauge</li>
+                                            <li>Pastikan sambungan bersih dan tiada kotoran</li>
+                                            <li>Sambungkan hos biru ke port servis tekanan rendah</li>
+                                            <li>Pastikan sambungan ketat dan selamat</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="step-instruction animate__animated animate__fadeIn d-none" id="instruction5">
+                                        <div class="d-flex align-items-center mb-3">
+                                            <div class="step-number">5</div>
+                                            <h5 class="mb-0 ms-2">Sambungkan hos merah ke port servis tekanan tinggi</h5>
+                                        </div>
+                                        <p>Langkah-langkah sambungan:</p>
+                                        <ul>
+                                            <li>Ambil hos merah dari set manifold gauge</li>
+                                            <li>Pastikan sambungan bersih dan tiada kotoran</li>
+                                            <li>Sambungkan hos merah ke port servis tekanan tinggi</li>
+                                            <li>Pastikan sambungan ketat dan selamat</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="step-instruction animate__animated animate__fadeIn d-none" id="instruction6">
+                                        <div class="d-flex align-items-center mb-3">
+                                            <div class="step-number">6</div>
+                                            <h5 class="mb-0 ms-2">Sambungkan hos kuning ke pam vakum</h5>
+                                        </div>
+                                        <p>Langkah-langkah sambungan:</p>
+                                        <ul>
+                                            <li>Ambil hos kuning dari set manifold gauge</li>
+                                            <li>Pastikan sambungan bersih dan tiada kotoran</li>
+                                            <li>Sambungkan hos kuning ke port masukan pam vakum</li>
+                                            <li>Pastikan sambungan ketat dan selamat</li>
+                                        </ul>
+                                        <div class="alert alert-success mt-3">
+                                            <i class="bi bi-check-circle-fill me-2"></i> Tahniah! Anda telah berjaya menyelesaikan semua langkah dalam Praktikal 1.
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="d-flex justify-content-between p-4 mt-auto border-top">
+                                    <button class="btn btn-outline-secondary btn-nav" id="prevBtn" disabled>
+                                        <i class="bi bi-arrow-left me-2"></i>Langkah Sebelumnya
+                                    </button>
+                                    <button class="btn btn-success btn-nav" id="completeBtn" style="display: none;">
+                                        <i class="bi bi-check-circle me-2"></i>Selesai
+                                    </button>
+                                    <button class="btn btn-primary btn-nav" id="nextBtn">
+                                        Langkah Seterusnya<i class="bi bi-arrow-right ms-2"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        <% } else { %>
+                            <!-- Overview Mode View -->
+                            <div class="practical-card animate__animated animate__fadeIn">
+                                <div class="text-center p-4 border-bottom">
+                                    <h2 class="practical-title mb-2">Praktikal 1</h2>
+                                    <p class="practical-subtitle mb-0">Pemasangan Hose Manifold Gauge & Vacuum Hose (Kaedah Manual)</p>
+                                </div>
+                                
+                                <div class="steps-container">
+                                    <div class="step-item">
+                                        <div class="step-number">1</div>
+                                        <div class="step-content">Sediakan peralatan yang diperlukan</div>
+                                    </div>
+                                    <div class="step-item">
+                                        <div class="step-number">2</div>
+                                        <div class="step-content">Pastikan enjin kenderaan dimatikan</div>
+                                    </div>
+                                    <div class="step-item">
+                                        <div class="step-number">3</div>
+                                        <div class="step-content">Kenal pasti port servis tekanan tinggi dan rendah</div>
+                                    </div>
+                                    <div class="step-item">
+                                        <div class="step-number">4</div>
+                                        <div class="step-content">Sambungkan hos biru ke port servis tekanan rendah</div>
+                                    </div>
+                                    <div class="step-item">
+                                        <div class="step-number">5</div>
+                                        <div class="step-content">Sambungkan hos merah ke port servis tekanan tinggi</div>
+                                    </div>
+                                    <div class="step-item">
+                                        <div class="step-number">6</div>
+                                        <div class="step-content">Sambungkan hos kuning ke pam vakum</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="text-center p-4 mt-auto border-top">
+                                    <a href="/student/practical/1/start" class="btn btn-start animate__animated animate__pulse animate__infinite">
+                                        <i class="bi bi-play-fill me-2"></i>Mula Praktikal 1
+                                    </a>
+                                </div>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <%- include('../partials/student-footer') %>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Only run this script in start mode
+        if (document.getElementById('stepInstructions')) {
+            let currentStep = 1;
+            const totalSteps = 6;
+            
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const completeBtn = document.getElementById('completeBtn');
+            const currentStepElement = document.getElementById('currentStep');
+            const progressBar = document.getElementById('progressBar');
+            
+            // Function to update UI based on current step
+            function updateUI() {
+                // Update step indicator
+                currentStepElement.textContent = currentStep;
+                
+                // Update progress bar
+                const progress = (currentStep / totalSteps) * 100;
+                progressBar.style.width = `${progress}%`;
+                progressBar.setAttribute('aria-valuenow', progress);
+                
+                // Hide all instructions
+                for (let i = 1; i <= totalSteps; i++) {
+                    const instruction = document.getElementById(`instruction${i}`);
+                    if (instruction) {
+                        instruction.classList.add('d-none');
+                    }
+                    
+                    // Hide all simulation steps
+                    const simulationStep = document.getElementById(`simulation-step${i}`);
+                    if (simulationStep) {
+                        simulationStep.classList.add('d-none');
+                    }
+                }
+                
+                // Show current instruction
+                const currentInstruction = document.getElementById(`instruction${currentStep}`);
+                if (currentInstruction) {
+                    currentInstruction.classList.remove('d-none');
+                    currentInstruction.classList.add('animate__fadeIn');
+                }
+                
+                // Show current simulation step
+                const currentSimulation = document.getElementById(`simulation-step${currentStep}`);
+                if (currentSimulation) {
+                    currentSimulation.classList.remove('d-none');
+                }
+                
+                // Hide placeholder when a step is shown
+                const placeholder = document.getElementById('simulation-placeholder');
+                if (placeholder) {
+                    placeholder.style.display = 'none';
+                }
+                
+                // Update buttons
+                prevBtn.disabled = currentStep === 1;
+                
+                if (currentStep === totalSteps) {
+                    nextBtn.style.display = 'none';
+                    completeBtn.style.display = 'block';
+                } else {
+                    nextBtn.style.display = 'block';
+                    completeBtn.style.display = 'none';
+                }
+            }
+            
+            // Event listeners for navigation buttons
+            prevBtn.addEventListener('click', () => {
+                if (currentStep > 1) {
+                    currentStep--;
+                    updateUI();
+                }
+            });
+            
+            nextBtn.addEventListener('click', () => {
+                if (currentStep < totalSteps) {
+                    currentStep++;
+                    updateUI();
+                }
+            });
+            
+            completeBtn.addEventListener('click', () => {
+                // Show completion message
+                alert('Tahniah! Anda telah berjaya menyelesaikan Praktikal 1.');
+                // Redirect back to the list steps page
+                window.location.href = '/student/practical/1';
+            });
+            
+            // Initialize UI
+            updateUI();
+        }
+    </script>
+</body>
+</html>

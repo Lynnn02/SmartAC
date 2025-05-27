@@ -7,6 +7,11 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="/css/theme-toggle.css">
+    <!-- Import the model-viewer component for AR support -->
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
     <style>
         body {
             min-height: 100vh;
@@ -58,6 +63,39 @@
             flex-direction: column;
             min-height: 100vh;
         }
+        
+        /* AR Experience Styles */
+        model-viewer {
+            --poster-color: transparent;
+            background-color: #f8f9fa;
+        }
+        
+        .ar-prompt {
+            position: absolute;
+            left: 50%;
+            bottom: 175px;
+            transform: translateX(-50%);
+            width: 80%;
+            max-width: 400px;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            padding: 20px;
+            text-align: center;
+            z-index: 1000;
+        }
+        
+        .ar-prompt__title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+        
+        .ar-prompt__subtitle {
+            font-size: 14px;
+            color: #666;
+        }
     </style>
 </head>
 <body>
@@ -82,28 +120,76 @@
     <div class="container mb-5">
         <div class="row">
             <div class="col-lg-8">
-                <div class="card shadow-sm mb-4">
-                    <div class="card-header">
+                <div class="card shadow-sm mb-4" style="border-radius: 20px; overflow: hidden;">
+                    <div class="card-header p-4">
                         <h4 class="mb-0"><i class="bi bi-cube me-2"></i>3D Model Viewer</h4>
                     </div>
-                    <div class="card-body p-0">
-                        <div class="model-container" id="componentModelContainer" data-model="<%= modelFile %>">
-                            <div class="d-flex justify-content-center align-items-center h-100">
-                                <div class="text-center">
-                                    <div class="spinner-border text-primary mb-3" role="status">
-                                        <span class="visually-hidden">Loading...</span>
+                    <div class="card-body p-4">
+                        <div class="model-container rounded-4 overflow-hidden mb-4" id="componentModelContainer" data-model="<%= modelFile %>" style="border: 1px solid rgba(0,0,0,0.1);">
+                            <!-- Three.js model viewer (default) -->
+                            <div id="threeJsContainer" class="h-100">
+                                <div class="d-flex justify-content-center align-items-center h-100">
+                                    <div class="text-center">
+                                        <div class="spinner-border text-primary mb-3" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                        <p>Loading 3D model...</p>
                                     </div>
-                                    <p>Loading 3D model...</p>
                                 </div>
                             </div>
+                            
+                            <!-- Model Viewer for AR (hidden by default) -->
+                            <model-viewer id="arModelViewer" 
+                                src="/models/<%= modelFile %>" 
+                                alt="<%= componentName %> 3D Model"
+                                ar 
+                                ar-modes="webxr scene-viewer quick-look" 
+                                ar-scale="auto"
+                                camera-controls 
+                                touch-action="pan-y"
+                                shadow-intensity="1" 
+                                auto-rotate 
+                                rotation-per-second="30deg"
+                                environment-image="neutral"
+                                exposure="0.8"
+                                camera-orbit="0deg 75deg 2m"
+                                field-of-view="30deg"
+                                min-camera-orbit="auto auto auto"
+                                max-camera-orbit="auto auto auto"
+                                interaction-prompt="auto"
+                                style="width: 100%; height: 100%; display: none;" 
+                                ar-status="not-presenting"
+                                ar-placement="floor"
+                                seamless-poster>
+                                <button slot="ar-button" id="arActivateButton" class="rounded-pill">Activate AR</button>
+                                <div class="ar-prompt" slot="ar-prompt">
+                                    <div class="ar-prompt__content rounded-4 p-3">
+                                        <div class="ar-prompt__title">👋 Place the component in your space</div>
+                                        <div class="ar-prompt__subtitle">Move your device around to place the 3D model in your environment</div>
+                                    </div>
+                                </div>
+                                <!-- Loading UI -->
+                                <div slot="poster" class="d-flex justify-content-center align-items-center h-100">
+                                    <div class="text-center p-4 rounded-4 bg-light bg-opacity-75">
+                                        <div class="spinner-border text-primary mb-3" role="status">
+                                            <span class="visually-hidden">Loading AR model...</span>
+                                        </div>
+                                        <p>Preparing AR experience...</p>
+                                    </div>
+                                </div>
+                                <!-- Progress bar for model loading -->
+                                <div slot="progress-bar" class="progress position-absolute bottom-0 w-100 mx-auto" style="height: 8px; max-width: 95%;">
+                                    <div class="progress-bar bg-primary rounded-pill" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </model-viewer>
                         </div>
-                        <div class="model-controls p-3 d-flex justify-content-between align-items-center">
+                        <div class="model-controls p-4 d-flex justify-content-between align-items-center bg-light rounded-4">
                             <div>
-                                <button class="btn btn-outline-primary me-2" id="rotateLeft"><i class="bi bi-arrow-counterclockwise"></i></button>
-                                <button class="btn btn-outline-primary me-2" id="resetView"><i class="bi bi-aspect-ratio"></i></button>
-                                <button class="btn btn-outline-primary" id="rotateRight"><i class="bi bi-arrow-clockwise"></i></button>
+                                <button class="btn btn-outline-primary me-3 rounded-pill" id="rotateLeft"><i class="bi bi-arrow-counterclockwise"></i></button>
+                                <button class="btn btn-outline-primary me-3 rounded-pill" id="resetView"><i class="bi bi-aspect-ratio"></i></button>
+                                <button class="btn btn-outline-primary rounded-pill" id="rotateRight"><i class="bi bi-arrow-clockwise"></i></button>
                             </div>
-                            <button class="btn btn-success" id="viewAR"><i class="bi bi-phone me-1"></i> View in AR</button>
+                            <a href="/student/ar-viewer?model=<%= modelFile %>&name=<%= componentName %>" class="btn btn-lg rounded-pill px-4" id="viewAR" target="_blank" style="background: linear-gradient(135deg, #31877b, #3b5fe0); color: white; border: none;"><i class="bi bi-phone me-2"></i> View in AR</a>
                         </div>
                     </div>
                 </div>
@@ -122,36 +208,6 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="card shadow-sm">
-                    <div class="card-header">
-                        <h4 class="mb-0"><i class="bi bi-link-45deg me-2"></i>Related Components</h4>
-                    </div>
-                    <div class="card-body">
-                        <ul class="list-group list-group-flush">
-                            <% if (componentId !== 'pressure-switch') { %>
-                                <li class="list-group-item">
-                                    <a href="/student/component/pressure-switch">Pressure Switch</a>
-                                </li>
-                            <% } %>
-                            <% if (componentId !== 'receiver-drier') { %>
-                                <li class="list-group-item">
-                                    <a href="/student/component/receiver-drier">Receiver Drier</a>
-                                </li>
-                            <% } %>
-                            <% if (componentId !== 'sight-glass') { %>
-                                <li class="list-group-item">
-                                    <a href="/student/component/sight-glass">Sight Glass</a>
-                                </li>
-                            <% } %>
-                            <% if (componentId !== 'txv') { %>
-                                <li class="list-group-item">
-                                    <a href="/student/component/txv">Thermal Expansion Valve (TXV)</a>
-                                </li>
-                            <% } %>
-                        </ul>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -167,16 +223,6 @@
     <script>
         // Initialize the 3D model viewer
         document.addEventListener('DOMContentLoaded', function() {
-            initModelViewer();
-            
-            // Set up AR view button
-            const arButton = document.getElementById('viewAR');
-            if (arButton) {
-                arButton.addEventListener('click', function() {
-                    alert('AR functionality will be implemented in a future update.');
-                });
-            }
-            
             // Component information data
             const componentInfo = {
                 'PressureSwitch': {
@@ -220,15 +266,40 @@
                     function: 'Absorbs heat from the cabin air, cooling it before it enters the passenger compartment',
                     location: 'Located inside the dashboard, as part of the HVAC system',
                     maintenance: 'Check for leaks, clean periodically to prevent mold and mildew'
+                },
+                'SightGlass': {
+                    name: 'Sight Glass',
+                    description: 'The sight glass is a transparent section of the refrigerant line that allows visual inspection of the refrigerant condition. It helps in determining if the system is properly charged or if there is moisture in the system.',
+                    function: 'Provides a visual indication of refrigerant flow and helps diagnose charge level and moisture presence',
+                    location: 'Typically installed in the liquid line between the condenser and the expansion valve',
+                    maintenance: 'Inspect for bubbles or discoloration during system service to assess refrigerant charge and moisture levels'
                 }
             };
             
             // Populate component information
-            const componentId = window.location.pathname.split('/').pop();
+            const componentPath = window.location.pathname;
+            const componentId = componentPath.split('/').pop();
             const componentInfoDiv = document.getElementById('componentInfo');
             
+            // Debug information
+            console.log('Component path:', componentPath);
+            console.log('Component ID:', componentId);
+            
             if (componentInfoDiv && componentId) {
-                const info = componentInfo[componentId.replace(/-/g, '').replace(/^\w/, c => c.toUpperCase())];
+                // Map URL paths to component info keys
+                const componentMap = {
+                    'pressure-switch': 'PressureSwitch',
+                    'receiver-drier': 'ReceiverDrier',
+                    'sight-glass': 'SightGlass',
+                    'txv': 'TXV',
+                    'compressor': 'Compressor',
+                    'condenser': 'Condenser',
+                    'cooling-coil': 'EvaporatorCoil'
+                };
+                
+                const infoKey = componentMap[componentId] || componentId;
+                console.log('Looking for component info with key:', infoKey);
+                const info = componentInfo[infoKey];
                 
                 if (info) {
                     componentInfoDiv.innerHTML = `
@@ -238,7 +309,7 @@
                             <h6><i class="bi bi-gear-fill me-2"></i>Function</h6>
                             <p>${info.function}</p>
                             
-                            <h6><i class="bi bi-geo-alt-fill me-2"></i>Location</h6>
+                            <h6><i class="bi bi-geo-alt-fill me-2"></i>Component Placement</h6>
                             <p>${info.location}</p>
                             
                             <h6><i class="bi bi-tools me-2"></i>Maintenance</h6>
@@ -250,161 +321,237 @@
                 }
             }
             
-            // Initialize 3D model viewer
-            initModelViewer();
-        });
-        
-        function initModelViewer() {
-            const container = document.getElementById('componentModelContainer');
-            if (!container) return;
-            
-            const modelFile = container.getAttribute('data-model');
-            if (!modelFile) {
-                console.error('No model file specified');
-                return;
-            }
-            
-            const modelPath = `/models/${modelFile}`;
-            
-            // Set up the scene
-            const scene = new THREE.Scene();
-            scene.background = new THREE.Color(0xf0f0f0);
-            
-            // Set up the camera
-            const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
-            camera.position.z = 5;
-            
-            // Set up the renderer
-            const renderer = new THREE.WebGLRenderer({ antialias: true });
-            renderer.setSize(container.clientWidth, container.clientHeight);
-            renderer.setPixelRatio(window.devicePixelRatio);
-            container.innerHTML = '';
-            container.appendChild(renderer.domElement);
-            
-            // Add ambient light
-            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-            scene.add(ambientLight);
-            
-            // Add directional light
-            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-            directionalLight.position.set(1, 1, 1);
-            scene.add(directionalLight);
-            
-            // Add controls
-            const controls = new THREE.OrbitControls(camera, renderer.domElement);
-            controls.enableDamping = true;
-            controls.dampingFactor = 0.25;
-            controls.screenSpacePanning = false;
-            controls.maxPolarAngle = Math.PI / 1.5;
-            
-            // Set up the GLTF loader
-            const loader = new THREE.GLTFLoader();
-            
-            // Set up loading manager
-            const loadingManager = new THREE.LoadingManager();
-            
-            loadingManager.onError = function(url) {
-                console.error('Error loading model:', url);
-                container.innerHTML = '';
-                const errorDiv = document.createElement('div');
-                errorDiv.className = 'position-absolute top-0 start-0 p-3 bg-danger text-white';
-                errorDiv.style.zIndex = '10';
-                errorDiv.innerHTML = `<i class="bi bi-exclamation-triangle"></i> Error loading model: ${modelFile}`;
-                container.appendChild(errorDiv);
-            };
-            
-            // Try to load the model
-            let model = null;
-            loader.load(modelPath, (gltf) => {
-                model = gltf.scene;
+            // Function to initialize 3D model viewer
+            function initModelViewer() {
+                const container = document.getElementById('componentModelContainer');
+                if (!container) return;
                 
-                // Center the model
-                const box = new THREE.Box3().setFromObject(model);
-                const center = box.getCenter(new THREE.Vector3());
-                const size = box.getSize(new THREE.Vector3());
+                const modelFile = container.getAttribute('data-model');
+                if (!modelFile) {
+                    console.error('No model file specified');
+                    return;
+                }
                 
-                // Adjust model position to center it
-                model.position.x = -center.x;
-                model.position.y = -center.y;
-                model.position.z = -center.z;
+                const modelPath = `/models/${modelFile}`;
                 
-                // Adjust camera position based on model size
-                const maxDim = Math.max(size.x, size.y, size.z);
-                const fov = camera.fov * (Math.PI / 180);
-                let cameraZ = Math.abs(maxDim / 2 / Math.tan(fov / 2));
-                cameraZ *= 1.5; // Add some margin
-                camera.position.z = cameraZ;
+                // Set up the scene
+                const scene = new THREE.Scene();
+                scene.background = new THREE.Color(0xf0f0f0);
                 
-                // Update camera near and far planes
-                camera.near = cameraZ / 100;
-                camera.far = cameraZ * 100;
-                camera.updateProjectionMatrix();
+                // Set up the camera
+                const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+                camera.position.z = 5;
                 
-                // Add the model to the scene
-                scene.add(model);
-                
-                // Reset controls target to center of model
-                controls.target.set(0, 0, 0);
-                controls.update();
-            }, undefined, loadingManager.onError);
-            
-            // Animation loop
-            function animate() {
-                requestAnimationFrame(animate);
-                controls.update();
-                renderer.render(scene, camera);
-            }
-            animate();
-            
-            // Handle window resize
-            window.addEventListener('resize', () => {
-                camera.aspect = container.clientWidth / container.clientHeight;
-                camera.updateProjectionMatrix();
+                // Set up the renderer
+                const renderer = new THREE.WebGLRenderer({ antialias: true });
                 renderer.setSize(container.clientWidth, container.clientHeight);
-            });
-            
-            // Set up control buttons
-            const rotateLeftBtn = document.getElementById('rotateLeft');
-            const resetViewBtn = document.getElementById('resetView');
-            const rotateRightBtn = document.getElementById('rotateRight');
-
-            if (rotateLeftBtn) {
-                rotateLeftBtn.addEventListener('click', function() {
-                    controls.rotateLeft(Math.PI / 8);
+                renderer.setPixelRatio(window.devicePixelRatio);
+                
+                // Add renderer to the container
+                const threeJsContainer = document.getElementById('threeJsContainer');
+                if (threeJsContainer) {
+                    threeJsContainer.innerHTML = '';
+                    threeJsContainer.appendChild(renderer.domElement);
+                }
+                
+                // Add ambient light
+                const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+                scene.add(ambientLight);
+                
+                // Add directional light
+                const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+                directionalLight.position.set(1, 1, 1);
+                scene.add(directionalLight);
+                
+                // Add controls
+                const controls = new THREE.OrbitControls(camera, renderer.domElement);
+                controls.enableDamping = true;
+                controls.dampingFactor = 0.25;
+                controls.screenSpacePanning = false;
+                controls.maxPolarAngle = Math.PI / 1.5;
+                
+                // Set up the GLTF loader
+                const loader = new THREE.GLTFLoader();
+                
+                // Set up loading manager
+                const loadingManager = new THREE.LoadingManager();
+                
+                loadingManager.onError = function(url) {
+                    console.error('Error loading model:', url);
+                    if (threeJsContainer) {
+                        const errorDiv = document.createElement('div');
+                        errorDiv.className = 'position-absolute top-0 start-0 p-3 bg-danger text-white';
+                        errorDiv.style.zIndex = '10';
+                        errorDiv.innerHTML = `<i class="bi bi-exclamation-triangle"></i> Error loading model: ${modelFile}`;
+                        threeJsContainer.appendChild(errorDiv);
+                    }
+                };
+                
+                // Try to load the model
+                let model = null;
+                loader.load(modelPath, (gltf) => {
+                    model = gltf.scene;
+                    
+                    // Center the model
+                    const box = new THREE.Box3().setFromObject(model);
+                    const center = box.getCenter(new THREE.Vector3());
+                    const size = box.getSize(new THREE.Vector3());
+                    
+                    // Adjust model position to center it
+                    model.position.x = -center.x;
+                    model.position.y = -center.y;
+                    model.position.z = -center.z;
+                    
+                    // Adjust camera position based on model size
+                    const maxDim = Math.max(size.x, size.y, size.z);
+                    const fov = camera.fov * (Math.PI / 180);
+                    let cameraZ = Math.abs(maxDim / 2 / Math.tan(fov / 2));
+                    cameraZ *= 1.5; // Add some margin
+                    camera.position.z = cameraZ;
+                    
+                    // Update camera near and far planes
+                    camera.near = cameraZ / 100;
+                    camera.far = cameraZ * 100;
+                    camera.updateProjectionMatrix();
+                    
+                    // Add the model to the scene
+                    scene.add(model);
+                    
+                    // Reset controls target to center of model
+                    controls.target.set(0, 0, 0);
+                    controls.update();
+                }, undefined, loadingManager.onError);
+                
+                // Animation loop
+                function animate() {
+                    requestAnimationFrame(animate);
+                    controls.update();
+                    renderer.render(scene, camera);
+                }
+                animate();
+                
+                // Handle window resize
+                window.addEventListener('resize', () => {
+                    if (container) {
+                        camera.aspect = container.clientWidth / container.clientHeight;
+                        camera.updateProjectionMatrix();
+                        renderer.setSize(container.clientWidth, container.clientHeight);
+                    }
                 });
-            }
+                
+                // Set up control buttons
+                const rotateLeftBtn = document.getElementById('rotateLeft');
+                const resetViewBtn = document.getElementById('resetView');
+                const rotateRightBtn = document.getElementById('rotateRight');
 
-            if (resetViewBtn) {
-                resetViewBtn.addEventListener('click', function() {
-                    controls.reset();
-                });
-            }
+                if (rotateLeftBtn) {
+                    rotateLeftBtn.addEventListener('click', function() {
+                        if (controls.rotateLeft) {
+                            controls.rotateLeft(Math.PI / 8);
+                        }
+                    });
+                }
 
-            if (rotateRightBtn) {
-                rotateRightBtn.addEventListener('click', function() {
-                    controls.rotateLeft(-Math.PI / 8);
-                });
-            }
-        }
-        
-        // Add responsive behavior for the 3D model viewer
-        function adjustModelViewerForScreenSize() {
-            const container = document.getElementById('componentModelContainer');
-            if (container) {
-                // Adjust height based on screen width
-                if (window.innerWidth < 768) {
-                    container.style.height = '300px';
-                } else if (window.innerWidth < 992) {
-                    container.style.height = '400px';
-                } else {
-                    container.style.height = '500px';
+                if (resetViewBtn) {
+                    resetViewBtn.addEventListener('click', function() {
+                        if (controls.reset) {
+                            controls.reset();
+                        }
+                    });
+                }
+
+                if (rotateRightBtn) {
+                    rotateRightBtn.addEventListener('click', function() {
+                        if (controls.rotateLeft) {
+                            controls.rotateLeft(-Math.PI / 8);
+                        }
+                    });
                 }
             }
-        }
-        
-        // Call on load and on resize
-        adjustModelViewerForScreenSize();
-        window.addEventListener('resize', adjustModelViewerForScreenSize);
+            
+            // Function to adjust model viewer size based on screen size
+            function adjustModelViewerForScreenSize() {
+                const container = document.getElementById('componentModelContainer');
+                if (container) {
+                    // Adjust height based on screen width
+                    if (window.innerWidth < 768) {
+                        container.style.height = '300px';
+                    } else if (window.innerWidth < 992) {
+                        container.style.height = '400px';
+                    } else {
+                        container.style.height = '500px';
+                    }
+                }
+            }
+            
+            // Initialize 3D model viewer
+            initModelViewer();
+            
+            // Adjust model viewer size and set up resize listener
+            adjustModelViewerForScreenSize();
+            window.addEventListener('resize', adjustModelViewerForScreenSize);
+            
+            // Simplified AR setup
+            const viewARButton = document.getElementById('viewAR');
+            const arModelViewer = document.getElementById('arModelViewer');
+            const threeJsContainer = document.getElementById('threeJsContainer');
+            
+            // Check if we're on a mobile device
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            console.log('Is mobile device:', isMobile);
+            
+            if (viewARButton && arModelViewer && threeJsContainer) {
+                // Show a message if not on mobile
+                if (!isMobile) {
+                    viewARButton.title = 'AR requires a mobile device with AR support';
+                }
+                
+                viewARButton.addEventListener('click', function() {
+                    console.log('View in AR button clicked');
+                    
+                    if (!isMobile) {
+                        alert('AR viewing requires a mobile device with AR support. Please open this page on a mobile device with AR capabilities.');
+                        return;
+                    }
+                    
+                    // Switch to model-viewer display
+                    threeJsContainer.style.display = 'none';
+                    arModelViewer.style.display = 'block';
+                    
+                    // Add a visible button to return to 3D view
+                    const returnButton = document.createElement('button');
+                    returnButton.id = 'returnTo3DButton';
+                    returnButton.className = 'btn btn-primary position-absolute top-0 end-0 m-3';
+                    returnButton.innerHTML = '<i class="bi bi-arrow-left"></i> Return to 3D View';
+                    returnButton.addEventListener('click', function() {
+                        // Switch back to Three.js viewer
+                        arModelViewer.style.display = 'none';
+                        threeJsContainer.style.display = 'block';
+                        this.remove();
+                    });
+                    document.querySelector('.model-container').appendChild(returnButton);
+                    
+                    // Let the user tap the AR button directly
+                    // This is more reliable across different devices and browsers
+                    alert('Tap the "Enter AR" button that appears to view the component in your space.');
+                });
+                
+                // Listen for AR session events
+                arModelViewer.addEventListener('ar-status', (event) => {
+                    console.log('AR status changed:', event.detail.status);
+                    
+                    if (event.detail.status === 'not-presenting') {
+                        console.log('AR session ended');
+                        // No need to add another return button as we already added one when clicking the AR button
+                    } else if (event.detail.status === 'session-started') {
+                        console.log('AR session started');
+                        // Remove return button during AR session if it exists
+                        const returnButton = document.getElementById('returnTo3DButton');
+                        if (returnButton) returnButton.remove();
+                    }
+                });
+            }
+        });
     </script>
     <script src="/js/responsive.js"></script>
 </body>

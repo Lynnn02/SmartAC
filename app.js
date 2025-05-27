@@ -281,7 +281,14 @@ app.get('/student/dashboard', isAuthenticated, authorize(['student']), (req, res
 
 app.get('/student/practical/:id', isAuthenticated, authorize(['student']), (req, res) => {
   const practicalId = req.params.id;
-  res.render('student/practical', { user: req.session.user, practicalId });
+  res.render(`student/practical${practicalId}`, { user: req.session.user });
+});
+
+// Routes for starting practical sessions
+app.get('/student/practical/:id/start', isAuthenticated, authorize(['student']), (req, res) => {
+  const practicalId = req.params.id;
+  // In a real implementation, you would load the practical steps from a database
+  res.render(`student/practical${practicalId}`, { user: req.session.user, startMode: true });
 });
 
 app.get('/student/components', isAuthenticated, authorize(['student']), (req, res) => {
@@ -322,6 +329,19 @@ app.get('/student/component/:componentId', isAuthenticated, authorize(['student'
     componentId: componentId,
     modelFile: modelFile,
     componentName: componentName
+  });
+});
+
+// AR Viewer route - temporarily without authentication for testing
+app.get('/student/ar-viewer', (req, res) => {
+  // Get model file from query parameter
+  const modelFile = req.query.model || '';
+  const modelName = req.query.name || 'AR Model';
+  
+  res.render('student/ar-viewer', { 
+    user: req.session.user || { name: 'Guest' },
+    modelFile: modelFile,
+    modelName: modelName
   });
 });
 

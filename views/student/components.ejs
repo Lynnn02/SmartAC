@@ -72,47 +72,39 @@
     <div class="container-fluid p-0 d-flex flex-column min-vh-100">
         <%- include('../partials/student-header', {activePage: 'components'}) %>
 
-    <section class="dashboard-header py-5 text-center d-flex align-items-center">
-        <div class="container py-5 mt-5">
+    <section class="py-5 text-center d-flex align-items-center" style="background-color: var(--body-bg);">
+        <div class="container py-4 mt-4">
             <div class="row align-items-center">
                 <div class="col-lg-8 mx-auto text-center" data-aos="fade-up" data-aos-duration="1000">
-                    <h1 class="display-4 fw-bold mb-3">Car AC Components</h1>
-                    <div class="section-divider mb-4 mx-auto"></div>
-                    <p class="lead">Explore the components of a car air conditioning system in 3D</p>
+                    <h1 class="display-4 fw-bold mb-3" style="color: #333;">Car AC Components</h1>
+                    <div class="section-divider mb-3 mx-auto"></div>
+                    <p class="lead" style="color: #555;">Explore the components of a car air conditioning system in 3D</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <div class="row mt-5">
-        <div class="col-12 text-center" data-aos="fade-up" data-aos-duration="800">
-            <h2 class="display-5 fw-bold mb-3">Complete Car AC System</h2>
-            <div class="section-divider mb-4 mx-auto"></div>
-            <p class="lead">View the complete car air conditioning system and click on individual components to learn more.</p>
-        </div>
-    </div>
-
     <div class="container py-5 ">
         <div class="row mb-5">
             <div class="col-12">
-                <div class="card shadow-sm" data-aos="fade-up" data-aos-duration="800">
-                    <div class="card-body">
-                        <div class="model-container" id="completeSystemContainer">
+                <div class="card shadow-sm" data-aos="fade-up" data-aos-duration="800" style="border-radius: 20px; overflow: hidden;">
+                    <div class="card-body p-4">
+                        <div class="model-container rounded-4 overflow-hidden mb-4" id="completeSystemContainer" style="border: 1px solid rgba(0,0,0,0.1);">
                             <div class="d-flex justify-content-center align-items-center h-100" style="min-height: 300px;">
-                                <div class="text-center">
-                                    <div class="bg-light rounded-circle p-4 mb-3 mx-auto" style="width: 120px; height: 120px;">
-                                        <i class="bi bi-tools text-primary" style="font-size: 3rem;"></i>
+                                <div class="text-center p-5">
+                                    <div class="bg-light rounded-circle p-4 mb-4 mx-auto shadow-sm" style="width: 130px; height: 130px;">
+                                        <i class="bi bi-tools text-primary" style="font-size: 3.5rem;"></i>
                                     </div>
-                                    <h4 class="mb-2">3D Model Coming Soon</h4>
-                                    <p class="text-muted">Our team is currently working on the 3D model visualization.</p>
+                                    <h3 class="mb-3">3D Model Coming Soon</h3>
+                                    <p class="text-muted fs-5">Our team is currently working on the 3D model visualization.</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="model-controls text-center">
-                            <button class="btn btn-primary" id="rotateLeft"><i class="bi bi-arrow-counterclockwise"></i></button>
-                            <button class="btn btn-primary" id="resetView"><i class="bi bi-aspect-ratio"></i></button>
-                            <button class="btn btn-primary" id="rotateRight"><i class="bi bi-arrow-clockwise"></i></button>
-                            <button class="btn btn-success ar-button" id="viewAR" data-model="CompleteSystem.glb"><i class="bi bi-phone"></i> View in AR</button>
+                        <div class="model-controls p-4 d-flex justify-content-center align-items-center bg-light rounded-4 gap-3">
+                            <button class="btn btn-outline-primary rounded-pill px-3" id="rotateLeft"><i class="bi bi-arrow-counterclockwise"></i></button>
+                            <button class="btn btn-outline-primary rounded-pill px-3" id="resetView"><i class="bi bi-aspect-ratio"></i></button>
+                            <button class="btn btn-outline-primary rounded-pill px-3" id="rotateRight"><i class="bi bi-arrow-clockwise"></i></button>
+                            <button class="btn btn-lg rounded-pill px-4 ms-4 ar-button" id="viewAR" data-model="CompleteSystem.glb" style="background: linear-gradient(135deg, #31877b, #3b5fe0); color: white; border: none;"><i class="bi bi-phone me-2"></i> View in AR</button>
                         </div>
                     </div>
                 </div>
