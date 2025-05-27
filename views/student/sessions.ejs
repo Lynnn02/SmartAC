@@ -51,12 +51,61 @@
             z-index: 1;
         }
         .session-card {
-            border-radius: 16px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.06);
             transition: all 0.3s ease;
             border: none;
             overflow: hidden;
             height: 100%;
+            background: white;
+            margin-bottom: 20px;
+        }
+        
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+            .session-card {
+                margin-bottom: 15px;
+                border-radius: 16px;
+            }
+            
+            .session-card .card-header {
+                padding: 0.8rem 1.2rem;
+            }
+            
+            .session-card .card-body {
+                padding: 1rem;
+            }
+            
+            .session-footer {
+                padding: 0.8rem 1.2rem;
+            }
+            
+            .dashboard-header {
+                padding: 1.5rem 0;
+                margin-bottom: 1.5rem;
+            }
+            
+            .dashboard-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .dashboard-header p {
+                font-size: 1rem;
+            }
+            
+            .session-search {
+                margin-bottom: 1.5rem;
+            }
+            
+            .session-search input {
+                height: 45px;
+                font-size: 0.9rem;
+            }
+            
+            .join-session-btn {
+                padding: 0.5rem 1.2rem;
+                font-size: 0.9rem;
+            }
         }
         .session-card:hover {
             transform: translateY(-5px);

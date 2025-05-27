@@ -18,6 +18,43 @@
             flex-direction: column;
             background-color: var(--body-bg);
             color: var(--text-color);
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+        
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+            .container {
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+            
+            .dashboard-header {
+                padding: 1.5rem 0;
+                margin-bottom: 1.5rem;
+            }
+            
+            .dashboard-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .dashboard-header p {
+                font-size: 1rem;
+            }
+            
+            .card {
+                margin-bottom: 15px;
+            }
+            
+            .quick-actions {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+            
+            .quick-action-card {
+                height: 120px;
+            }
         }
         .dashboard-header {
             background: linear-gradient(135deg, #2dd4bf, #3b5fe0);
@@ -421,76 +458,8 @@
         </div>
     </main>
 
-    <footer class="footer mt-auto">
-        <div class="container">
-            <div class="row gy-4">
-                <div class="col-md-3 col-sm-6 mb-4 mb-md-0">
-                    <div class="footer-brand mb-4">
-                        <h4 class="footer-logo">SmartAC</h4>
-                        <p class="footer-desc">SmartAC is an innovative educational platform designed to provide comprehensive training on car air conditioning systems with interactive 3D models and AR visualization.</p>
-                    </div>
-                    <div class="social-links mb-3">
-                        <a href="#"><i class="bi bi-facebook"></i></a>
-                        <a href="#"><i class="bi bi-twitter"></i></a>
-                        <a href="#"><i class="bi bi-instagram"></i></a>
-                        <a href="#"><i class="bi bi-youtube"></i></a>
-                    </div>
-                </div>
-                
-                <div class="col-md-2 col-sm-6 mb-4 mb-md-0">
-                    <h5>Quick Links</h5>
-                    <ul class="footer-links">
-                        <li><a href="/">Home</a></li>
-                        <li><a href="/student/dashboard">Dashboard</a></li>
-                        <li><a href="/student/components">Components</a></li>
-                        <li><a href="/student/practical/1">Practicals</a></li>
-                    </ul>
-                </div>
-                
-                <div class="col-md-2 col-sm-6 mb-4 mb-md-0">
-                    <h5>Practicals</h5>
-                    <ul class="footer-links">
-                        <li><a href="/student/practical/1">Praktikal 1</a></li>
-                        <li><a href="/student/practical/2">Praktikal 2</a></li>
-                        <li><a href="/student/practical/3">Praktikal 3</a></li>
-                    </ul>
-                </div>
-                
-                <div class="col-md-3 col-sm-6 mb-4 mb-md-0">
-                    <h5>Contact</h5>
-                    <div class="contact-info">
-                        <div class="contact-item">
-                            <div class="contact-icon">
-                                <i class="bi bi-envelope-fill"></i>
-                            </div>
-                            <div class="contact-text">
-                                <p class="mb-0">Email</p>
-                                <a href="mailto:info@smartac.edu" class="contact-link">info@smartac.edu</a>
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <div class="contact-icon">
-                                <i class="bi bi-telephone-fill"></i>
-                            </div>
-                            <div class="contact-text">
-                                <p class="mb-0">Phone</p>
-                                <a href="tel:+1234567890" class="contact-link">+123 456 7890</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <hr class="my-4">
-            <div class="row align-items-center">
-                <div class="col-md-6">
-                    <p class="mb-md-0 text-center text-md-start">&copy; 2025 SmartAC. All rights reserved.</p>
-                </div>
-                <div class="col-md-6 text-center text-md-end">
-                    <p class="mb-0">Designed with <i class="bi bi-heart-fill text-danger"></i> for automotive education</p>
-                </div>
-            </div>
-        </div>
-    </footer>
+    <!-- Include student footer partial -->
+    <%- include('../partials/student-footer') %>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>

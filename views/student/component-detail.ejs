@@ -20,6 +20,44 @@
             background-color: var(--body-bg);
             color: var(--text-color);
             padding-top: 60px; /* Adjusted padding for fixed header */
+            -webkit-tap-highlight-color: transparent; /* Removes tap highlight on mobile */
+            touch-action: manipulation; /* Improves touch response */
+        }
+        
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+            .container {
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .lead {
+                font-size: 1rem;
+            }
+            
+            .card {
+                margin-bottom: 1rem;
+            }
+            
+            .model-controls {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .model-controls > div {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+            }
+            
+            #viewAR {
+                width: 100%;
+                justify-content: center;
+            }
         }
         .component-header {
             padding: 2rem 0;

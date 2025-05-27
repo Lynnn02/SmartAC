@@ -349,6 +349,20 @@ app.get('/student/profile', isAuthenticated, authorize(['student']), (req, res) 
   res.render('student/profile', { user: req.session.user });
 });
 
+// Practical modules routes
+app.get('/student/practicals', isAuthenticated, authorize(['student']), (req, res) => {
+  res.render('student/practicals', { user: req.session.user });
+});
+
+app.get('/student/practical/:id', isAuthenticated, authorize(['student']), (req, res) => {
+  const practicalId = req.params.id;
+  // Validate practical ID
+  if (!['1', '2', '3'].includes(practicalId)) {
+    return res.redirect('/student/practicals');
+  }
+  res.render(`student/practical${practicalId}`, { user: req.session.user });
+});
+
 // =====================================================================
 // STUDENT SESSION FLOW - DUMMY IMPLEMENTATION
 // =====================================================================

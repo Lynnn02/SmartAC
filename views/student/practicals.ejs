@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practical Modules - SmartAC</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/theme-toggle.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--body-bg);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .practical-selection-header {
+            background: linear-gradient(135deg, #2dd4bf, #3b5fe0);
+            color: white;
+            padding: 2rem 0 3rem;
+            position: relative;
+            overflow: hidden;
+            border-radius: 0 0 20px 20px;
+            margin-bottom: -30px;
+        }
+        
+        .practical-selection-header::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .practical-selection-header::after {
+            content: '';
+            position: absolute;
+            bottom: -80px;
+            left: -80px;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .practical-card {
+            border-radius: 16px;
+            overflow: hidden;
+            background-color: white;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            height: 100%;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .practical-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+        }
+        
+        .practical-card .card-img-top {
+            height: 180px;
+            object-fit: cover;
+        }
+        
+        .practical-card .card-body {
+            padding: 1.5rem;
+        }
+        
+        .practical-card .card-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+        
+        .practical-card .card-text {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .practical-card .btn-primary {
+            background: linear-gradient(135deg, #2dd4bf, #3b5fe0);
+            border: none;
+            border-radius: 30px;
+            padding: 0.6rem 1.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(59, 95, 224, 0.2);
+        }
+        
+        .practical-card .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px rgba(59, 95, 224, 0.3);
+        }
+        
+        .practical-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: linear-gradient(135deg, #2dd4bf, #3b5fe0);
+            color: white;
+            font-size: 0.8rem;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-weight: 500;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Mobile specific styles */
+        @media (max-width: 767.98px) {
+            .practical-selection-header {
+                padding: 1.5rem 0 2.5rem;
+                margin-bottom: -20px;
+            }
+            
+            .practical-selection-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .practical-selection-header p {
+                font-size: 0.9rem;
+            }
+            
+            .practical-card {
+                margin-bottom: 20px;
+            }
+            
+            .practical-card .card-img-top {
+                height: 140px;
+            }
+            
+            .practical-card .card-body {
+                padding: 1.2rem;
+            }
+            
+            .practical-card .card-title {
+                font-size: 1.2rem;
+            }
+            
+            .practical-card .btn-primary {
+                width: 100%;
+                padding: 0.5rem 1rem;
+            }
+            
+            .container {
+                padding-bottom: 70px; /* Space for bottom nav */
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Include student header partial -->
+    <%- include('../partials/student-header', { user: user, activePage: 'practical' }) %>
+    
+    <div class="practical-selection-header text-center">
+        <div class="container">
+            <h1 class="display-5 fw-bold mb-2" data-aos="fade-up" data-aos-duration="800">Practical Modules</h1>
+            <p class="lead" data-aos="fade-up" data-aos-delay="100" data-aos-duration="800">
+                Select a practical module to start learning
+            </p>
+        </div>
+    </div>
+    
+    <div class="container py-5">
+        <div class="row g-4">
+            <!-- Practical 1 -->
+            <div class="col-md-4" data-aos="fade-up" data-aos-duration="800">
+                <div class="practical-card">
+                    <span class="practical-badge">Module 1</span>
+                    <img src="/images/practical1.jpg" class="card-img-top" alt="Practical 1" onerror="this.src='/images/placeholder.jpg'">
+                    <div class="card-body">
+                        <h5 class="card-title">Praktikal 1</h5>
+                        <p class="card-text">Learn the fundamentals of air conditioning systems and their components.</p>
+                        <a href="/student/practical/1" class="btn btn-primary">Start Learning</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Practical 2 -->
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="100" data-aos-duration="800">
+                <div class="practical-card">
+                    <span class="practical-badge">Module 2</span>
+                    <img src="/images/practical2.jpg" class="card-img-top" alt="Practical 2" onerror="this.src='/images/placeholder.jpg'">
+                    <div class="card-body">
+                        <h5 class="card-title">Praktikal 2</h5>
+                        <p class="card-text">Explore advanced concepts in air conditioning maintenance and troubleshooting.</p>
+                        <a href="/student/practical/2" class="btn btn-primary">Start Learning</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Practical 3 -->
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="200" data-aos-duration="800">
+                <div class="practical-card">
+                    <span class="practical-badge">Module 3</span>
+                    <img src="/images/practical3.jpg" class="card-img-top" alt="Practical 3" onerror="this.src='/images/placeholder.jpg'">
+                    <div class="card-body">
+                        <h5 class="card-title">Praktikal 3</h5>
+                        <p class="card-text">Master installation techniques and energy efficiency optimization.</p>
+                        <a href="/student/practical/3" class="btn btn-primary">Start Learning</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Include student footer partial -->
+    <%- include('../partials/student-footer') %>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize AOS
+            AOS.init({
+                once: true
+            });
+        });
+    </script>
+</body>
+</html>

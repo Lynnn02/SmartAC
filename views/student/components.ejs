@@ -66,6 +66,45 @@
             flex-direction: column;
             min-height: 100vh;
         }
+        
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+            body {
+                -webkit-tap-highlight-color: transparent;
+                touch-action: manipulation;
+            }
+            
+            .container {
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+            
+            .display-4 {
+                font-size: 2rem;
+            }
+            
+            .lead {
+                font-size: 1rem;
+            }
+            
+            .model-controls {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .model-controls button {
+                margin: 5px !important;
+            }
+            
+            #viewAR {
+                width: 100%;
+                margin-top: 10px !important;
+            }
+            
+            .row > div {
+                margin-bottom: 20px;
+            }
+        }
     </style>
 </head>
 <body class="animate__animated animate__fadeIn" style="background-color: var(--body-bg); color: var(--text-color);">

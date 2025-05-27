@@ -29,6 +29,32 @@
             border: 2px solid var(--border-color);
         }
         
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+            .session-code-input {
+                font-size: 1.5rem;
+                height: 60px;
+            }
+            
+            .join-session-container {
+                padding: 0 15px;
+            }
+            
+            .tab-content {
+                padding: 1rem 0;
+            }
+            
+            h3.card-title {
+                font-size: 1.3rem;
+            }
+            
+            .avatar-option {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+        }
+        
         .session-code-input:focus {
             border-color: #3b5fe0;
             box-shadow: 0 0 0 0.25rem rgba(59, 95, 224, 0.25);
@@ -109,15 +135,39 @@
             border: none;
         }
         
-        .nav-tabs .nav-link.active::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
+        /* Tab styling */
+        .tab-header {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+        
+        .nav-pills {
+            background-color: #f0f4ff;
+            border-radius: 12px;
+            padding: 5px;
+        }
+        
+        .nav-pills .nav-link {
+            border-radius: 10px;
+            color: #6c757d;
+            padding: 10px 15px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-pills .nav-link.active {
             background: linear-gradient(135deg, #2dd4bf, #3b5fe0);
-            border-radius: 3px;
+            color: white;
+            box-shadow: 0 4px 10px rgba(59, 95, 224, 0.2);
+        }
+        
+        .tab-indicator {
+            height: 4px;
+            background: linear-gradient(135deg, #2dd4bf, #3b5fe0);
+            border-radius: 2px;
+            margin-top: 10px;
+            width: 50px;
+            margin: 0 auto;
         }
         
         .waiting-room {
@@ -166,32 +216,35 @@
     <div class="container-fluid p-0 d-flex flex-column min-vh-100">
         <%- include('../partials/student-header', {activePage: 'join-session'}) %>
 
-        <section class="py-5 text-center d-flex align-items-center" style="background-color: var(--body-bg);">
-            <div class="container py-4 mt-4">
+        <section class="py-3 text-center d-flex align-items-center" style="background-color: var(--body-bg);">
+            <div class="container py-2">
                 <div class="row align-items-center">
-                    <div class="col-lg-8 mx-auto text-center" data-aos="fade-up" data-aos-duration="1000">
-                        <h1 class="display-4 fw-bold mb-3" style="color: #333;">Join a Session</h1>
-                        <div class="section-divider mb-3 mx-auto"></div>
-                        <p class="lead" style="color: #555;">Enter a session code or scan a QR code to join an interactive learning session</p>
+                    <div class="col-lg-8 mx-auto text-center" data-aos="fade-up" data-aos-duration="800">
+                        <h1 class="display-5 fw-bold mb-2" style="color: #333;">Join a Session</h1>
+                        <div class="section-divider mb-2 mx-auto"></div>
+                        <p class="lead" style="color: #555; font-size: 1rem;">Enter a session code or scan a QR code to join an interactive learning session</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <div class="container py-5">
+        <div class="container py-2">
             <div class="join-session-container" data-aos="fade-up" data-aos-duration="800">
-                <ul class="nav nav-tabs justify-content-center mb-4" id="joinTabs" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="code-tab" data-bs-toggle="tab" data-bs-target="#code-tab-pane" type="button" role="tab" aria-controls="code-tab-pane" aria-selected="true">
-                            <i class="bi bi-123 me-2"></i>Enter Code
-                        </button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="qr-tab" data-bs-toggle="tab" data-bs-target="#qr-tab-pane" type="button" role="tab" aria-controls="qr-tab-pane" aria-selected="false">
-                            <i class="bi bi-qr-code-scan me-2"></i>Scan QR
-                        </button>
-                    </li>
-                </ul>
+                <div class="tab-header mb-4">
+                    <ul class="nav nav-pills nav-fill" id="joinTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="code-tab" data-bs-toggle="tab" data-bs-target="#code-tab-pane" type="button" role="tab" aria-controls="code-tab-pane" aria-selected="true">
+                                <i class="bi bi-123 me-2"></i>Enter Code
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="qr-tab" data-bs-toggle="tab" data-bs-target="#qr-tab-pane" type="button" role="tab" aria-controls="qr-tab-pane" aria-selected="false">
+                                <i class="bi bi-qr-code-scan me-2"></i>Scan QR
+                            </button>
+                        </li>
+                    </ul>
+                    <div class="tab-indicator"></div>
+                </div>
                 
                 <div class="tab-content" id="joinTabsContent">
                     <div class="tab-pane fade show active" id="code-tab-pane" role="tabpanel" aria-labelledby="code-tab" tabindex="0">

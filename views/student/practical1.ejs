@@ -19,6 +19,27 @@
             display: flex;
             flex-direction: column;
         }
+        
+        /* Mobile optimizations */
+        @media (max-width: 767.98px) {
+            body {
+                padding-bottom: 60px; /* Space for bottom nav */
+            }
+            
+            .container {
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+            
+            h1.display-4 {
+                font-size: 1.8rem;
+                margin-bottom: 0.5rem;
+            }
+            
+            p.lead {
+                font-size: 1rem;
+            }
+        }
         .footer-wrapper {
             display: flex;
             flex-direction: column;
@@ -34,6 +55,23 @@
             transition: all 0.3s ease;
             margin-bottom: 30px;
         }
+        
+        /* Mobile optimizations for practical cards */
+        @media (max-width: 767.98px) {
+            .practical-card {
+                border-radius: 12px;
+                margin-bottom: 20px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
+            }
+            
+            .practical-card .card-header {
+                padding: 12px 15px;
+            }
+            
+            .practical-card .card-body {
+                padding: 15px;
+            }
+        }
         .step-item {
             display: flex;
             align-items: center;
@@ -43,6 +81,26 @@
             background-color: #f8f9fa;
             transition: all 0.2s ease;
             border: 1px solid transparent;
+        }
+        
+        /* Mobile optimizations for step items */
+        @media (max-width: 767.98px) {
+            .step-item {
+                padding: 0.6rem;
+                margin-bottom: 0.6rem;
+                border-radius: 6px;
+            }
+            
+            .step-content {
+                font-size: 0.9rem;
+            }
+            
+            .step-number {
+                width: 28px;
+                height: 28px;
+                font-size: 0.85rem;
+                margin-right: 10px;
+            }
         }
         .step-item:hover {
             background-color: #f0f0f0;
@@ -82,6 +140,63 @@
             transition: all 0.3s ease;
             font-size: 1.1rem;
         }
+        
+        /* Additional mobile optimizations */
+        @media (max-width: 767.98px) {
+            .btn-start {
+                padding: 0.6rem 1.8rem;
+                font-size: 0.95rem;
+                width: 100%;
+                margin-top: 10px;
+            }
+            
+            .btn-start:hover {
+                transform: translateY(-2px);
+            }
+            
+            .practical-header {
+                padding: 1.5rem 0;
+            }
+            
+            .practical-header h2 {
+                font-size: 1.5rem;
+            }
+            
+            .practical-header .breadcrumb {
+                font-size: 0.85rem;
+            }
+            
+            .content-section {
+                padding: 1.2rem;
+            }
+            
+            .content-section h3 {
+                font-size: 1.3rem;
+                margin-bottom: 0.8rem;
+            }
+            
+            .content-section p {
+                font-size: 0.95rem;
+                line-height: 1.5;
+            }
+            
+            /* Ensure proper spacing at the bottom for fixed nav */
+            .footer-wrapper {
+                padding-bottom: 60px;
+            }
+            
+            /* Make images responsive */
+            img {
+                max-width: 100%;
+                height: auto;
+            }
+            
+            /* Improve touch targets */
+            a, button, .step-item {
+                min-height: 44px;
+            }
+        }
+        
         .btn-start:hover {
             transform: translateY(-3px);
             box-shadow: 0 6px 20px rgba(59, 95, 224, 0.4);

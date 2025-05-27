@@ -1,15 +1,27 @@
 <!-- Student Footer Partial -->
-<footer class="footer mt-auto py-4 bg-light">
+<footer class="footer mt-auto py-3 bg-light d-none d-md-block">
     <div class="container">
         <div class="row">
-            <div class="col-md-6">
-                <p class="mb-0">&copy; <%= new Date().getFullYear() %> SmartAC. All rights reserved.</p>
-            </div>
-            <div class="col-md-6 text-md-end">
-                <a href="#" class="text-decoration-none text-muted me-3">Terms of Service</a>
-                <a href="#" class="text-decoration-none text-muted me-3">Privacy Policy</a>
-                <a href="#" class="text-decoration-none text-muted">Help</a>
+            <div class="col-12 text-center">
+                <p class="mb-0 small text-muted">&copy; <%= new Date().getFullYear() %> SmartAC. All rights reserved.</p>
             </div>
         </div>
     </div>
 </footer>
+
+<!-- Mobile-specific footer styles -->
+<style>
+    @media (max-width: 768px) {
+        .footer {
+            padding: 10px 0;
+            font-size: 0.75rem;
+            background-color: #f8f9fa;
+            border-top: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        /* Ensure the mobile footer doesn't overlap with the bottom navigation */
+        body:not(.ar-view) .footer {
+            margin-bottom: 48px;
+        }
+    }
+</style>
