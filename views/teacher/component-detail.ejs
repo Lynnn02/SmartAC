@@ -139,13 +139,13 @@
 </head>
 <body class="animate__animated animate__fadeIn" style="background-color: #121212; color: #ffffff;">
     <div class="container-fluid p-0 footer-wrapper">
-        <!-- Include student header partial -->
-        <%- include('../partials/student-header', { user: user, activePage: 'components' }) %>
+        <!-- Include teacher header partial -->
+        <%- include('../partials/teacher-header', { user: user, activePage: 'components' }) %>
 
         <div class="component-header">
             <div class="container">
                 <div class="d-flex align-items-center">
-                    <a href="/student/components" class="btn btn-primary rounded-pill px-4 py-2 shadow-sm me-3">
+                    <a href="/teacher/components" class="btn btn-primary rounded-pill px-4 py-2 shadow-sm me-3">
                         <i class="bi bi-arrow-left me-1"></i> Back to Components
                     </a>
                     <div>
@@ -224,7 +224,7 @@
                         </div>
                         <div class="model-controls p-4 d-flex justify-content-between align-items-center bg-dark rounded-4">
                             
-                            <a href="/student/ar-viewer?model=<%= modelFile %>&name=<%= componentName %>" class="btn btn-lg rounded-pill px-5 py-3 shadow mx-auto" id="viewAR" target="_blank" style="background: linear-gradient(135deg, #FF5F6D, #FFC371); color: white; border: none; font-weight: bold; min-width: 240px; display: flex; justify-content: center; align-items: center;"><i class="bi bi-phone me-2"></i>Lihat dalam AR</a>
+                            <a href="/teacher/ar-viewer?model=<%= modelFile %>&name=<%= componentName %>" class="btn btn-lg rounded-pill px-5 py-3 shadow mx-auto" id="viewAR" target="_blank" style="background: linear-gradient(135deg, #FF5F6D, #FFC371); color: white; border: none; font-weight: bold; min-width: 240px; display: flex; justify-content: center; align-items: center;"><i class="bi bi-phone me-2"></i>Lihat dalam AR</a>
                         </div>
                     </div>
                 </div>
@@ -247,8 +247,8 @@
         </div>
     </div>
 
-    <!-- Include student footer partial -->
-    <%- include('../partials/student-footer') %>
+    <!-- Include teacher footer partial -->
+    <%- include('../partials/teacher-footer') %>
     </div> <!-- End of footer-wrapper -->
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

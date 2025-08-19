@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SmartAC - Car AC Training Platform</title>
+    <title>SmartAC VTU - Car AC Training Platform</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/theme-toggle.css">
     <meta name="theme-color" content="#000000">
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
     <div class="container-fluid p-0 footer-wrapper">
@@ -18,7 +20,7 @@
             <nav class="navbar navbar-expand-lg navbar-dark py-2">
                 <div class="container-fluid px-4">
                     <a class="navbar-brand d-flex align-items-center" href="/">
-                        <span class="fw-bold fs-2 logo-text">SmartAC</span>
+                        <span class="fw-bold fs-2 logo-text">SmartAC VTU</span>
                     </a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                         <span class="navbar-toggler-icon"></span>
@@ -26,16 +28,19 @@
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav mx-auto">
                             <li class="nav-item">
+                                <a class="nav-link px-3 mx-1" href="#overview">Overview</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link px-3 mx-1" href="#features">Features</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link px-3 mx-1" href="#about">About</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link px-3 mx-1" href="#components">Components</a>
+                                <a class="nav-link px-3 mx-1" href="#resources">Resources</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link px-3 mx-1" href="#resources">Resources</a>
+                                <a class="nav-link px-3 mx-1" href="#pricing">Pricing</a>
                             </li>
                         </ul>
                         <div class="d-flex align-items-center">
@@ -50,22 +55,33 @@
             </nav>
         </header>
         <main>
-            <section class="hero-section py-5 text-center d-flex align-items-center">
+            <section id="overview" class="hero-section py-5 text-center d-flex align-items-center">
                 <div class="container py-5 mt-5">
                     <div class="row align-items-center">
                         <div class="col-lg-6 text-lg-start" data-aos="fade-right" data-aos-duration="1000">
-                            <h1 class="display-3 fw-bold mb-3">Smart<span class="text-primary">AC</span></h1>
-                            <h2 class="h2 mb-4">Car AC Training Platform</h2>
-                            <p class="lead mb-5">
-                                A comprehensive platform for learning car air conditioning systems maintenance and repair with interactive 3D models and AR visualization.
-                            </p>
-                            <a href="/login" class="btn btn-primary btn-lg px-5 py-3 fw-semibold">
-                                Get Started <i class="bi bi-arrow-right ms-2"></i>
-                            </a>
+                            <h1 class="display-4 fw-bold mb-3">SmartAC Vehicle Training Unit <span class="text-primary">—</span> <span class="text-white" style="font-size: 0.85em;">Physical Meets Digital</span></h1>
+                            <p class="lead mb-5">A modern training ecosystem combining a physical vehicle AC unit with interactive digital learning, AR simulations, and AI-driven student engagement.</p>
+                            <div class="d-flex flex-wrap gap-3 mb-4">
+                                <a href="/contact" class="btn btn-primary btn-lg px-4 py-3 fw-semibold">Request a Demo</a>
+                                <a href="#video" class="btn btn-outline-light btn-lg px-4 py-3 fw-semibold">Watch Preview</a>
+                            </div>
+                            <p class="mt-4 text-muted"><small>Trusted by leading TVET institutions</small></p>
                         </div>
                         <div class="col-lg-6 d-none d-lg-block" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
-                            <div class="hero-image">
-                                <img src="/images/ac-illustration.svg" alt="Car AC System" class="img-fluid" onerror="this.src='/images/ac-placeholder.png'; this.onerror=null;">
+                            <div class="hero-image model-container">
+                                <model-viewer src="/models/normal.glb" alt="AC Training Unit" auto-rotate camera-controls ar shadow-intensity="1" camera-orbit="0deg 75deg 2m" exposure="0.5" style="width: 100%; height: 400px; background-color: white;">
+                                    <div class="progress-bar hide" slot="progress-bar">
+                                        <div class="update-bar"></div>
+                                    </div>
+                                    <button slot="ar-button" id="ar-button">
+                                        View in AR
+                                    </button>
+                                    <div class="model-controls">
+                                        <button class="btn btn-sm btn-light rounded-circle" id="rotate-left" title="Rotate Left"><i class="bi bi-arrow-counterclockwise"></i></button>
+                                        <button class="btn btn-sm btn-light rounded-circle" id="zoom-in" title="Zoom In"><i class="bi bi-plus"></i></button>
+                                        <button class="btn btn-sm btn-light rounded-circle" id="zoom-out" title="Zoom Out"><i class="bi bi-dash"></i></button>
+                                    </div>
+                                </model-viewer>
                             </div>
                         </div>
                     </div>
@@ -76,33 +92,40 @@
                     <div class="section-header text-center mb-5" data-aos="fade-up" data-aos-duration="800">
                         <h2 class="display-5 fw-bold mb-3">Key Features</h2>
                         <div class="section-divider mb-4"></div>
-                        <p class="lead text-secondary">Explore what makes SmartAC the perfect learning platform</p>
                     </div>
                     <div class="row">
-                        <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
+                        <div class="col-md-6 mb-4" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
                             <div class="modern-card pink-card h-100">
                                 <div class="card-body">
                                     <div class="card-icon">
-                                        <i class="bi bi-book"></i>
+                                        <i class="bi bi-tools"></i>
                                     </div>
-                                    <h3 class="card-title fw-bold">Practical Modules</h3>
-                                    <p class="card-text">Learn through detailed step-by-step practical modules with clear instructions in Bahasa Melayu.</p>
-                                    <div class="mt-4">
-                                        <a href="/login" class="btn btn-light">Explore Modules</a>
-                                    </div>
+                                    <h3 class="card-title fw-bold">AC Training Unit</h3>
+                                    <p class="card-text">Real components with fault controls.</p>
+                                    <ul class="feature-list">
+                                        <li><i class="bi bi-check-circle-fill text-light me-2"></i> Refrigerant recovery</li>
+                                        <li><i class="bi bi-check-circle-fill text-light me-2"></i> System evacuation</li>
+                                        <li><i class="bi bi-check-circle-fill text-light me-2"></i> Component fault simulation</li>
+                                        <li><i class="bi bi-check-circle-fill text-light me-2"></i> Hands-on diagnostics</li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
+                        <div class="col-md-6 mb-4" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
                             <div class="modern-card purple-card h-100">
                                 <div class="card-body">
                                     <div class="card-icon">
-                                        <i class="bi bi-gear-wide-connected"></i>
+                                        <i class="bi bi-laptop"></i>
                                     </div>
-                                    <h3 class="card-title fw-bold">Interactive 3D Models</h3>
-                                    <p class="card-text">Explore car AC components with interactive 3D models to understand their functions and relationships.</p>
+                                    <h3 class="card-title fw-bold">Learning Website</h3>
+                                    <p class="card-text">Online platform for structured teaching and self-paced learning.</p>
+                                    <ul class="feature-list">
+                                        <li><i class="bi bi-check-circle-fill text-light me-2"></i> Digital step-by-step modules</li>
+                                        <li><i class="bi bi-check-circle-fill text-light me-2"></i> Interactive diagrams</li>
+                                        <li><i class="bi bi-check-circle-fill text-light me-2"></i> Quizzes and exercises</li>
+                                    </ul>
                                     <div class="mt-4">
-                                        <a href="/login" class="btn btn-light">View Models</a>
+                                        <a href="/login" class="btn btn-light">Explore Platform</a>
                                     </div>
                                 </div>
                             </div>
@@ -110,13 +133,53 @@
                         <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-duration="800" data-aos-delay="300">
                             <div class="modern-card teal-card h-100">
                                 <div class="card-body">
+                                    <h3 class="card-title fw-bold">3D Models</h3>
+                                    <p class="card-text">High-quality 3D representations of AC components.</p>
+                                    <ul class="feature-list">
+                                        <li><i class="bi bi-check-circle-fill text-light me-2"></i> Rotate and inspect parts</li>
+                                        <li><i class="bi bi-check-circle-fill text-light me-2"></i> Exploded view diagrams</li>
+                                        <li><i class="bi bi-check-circle-fill text-light me-2"></i> Enhanced visual learning</li>
+                                    </ul>
+                                    <div class="mt-4">
+                                        <a href="/login" class="btn btn-light">View Models</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-duration="800" data-aos-delay="400">
+                            <div class="modern-card orange-card h-100">
+                                <div class="card-body">
                                     <div class="card-icon">
                                         <i class="bi bi-phone"></i>
                                     </div>
                                     <h3 class="card-title fw-bold">AR Visualization</h3>
-                                    <p class="card-text">Experience augmented reality visualization of car AC components and procedures for immersive learning.</p>
+                                    <p class="card-text">Augmented Reality with real-time response.</p>
+                                    <ul class="feature-list">
+                                        <li><i class="bi bi-check-circle-fill text-light me-2"></i> Refrigerant flow visualization</li>
+                                        <li><i class="bi bi-check-circle-fill text-light me-2"></i> Real-time fault simulation</li>
+                                        <li><i class="bi bi-check-circle-fill text-light me-2"></i> Diagnostic explanations</li>
+                                    </ul>
                                     <div class="mt-4">
-                                        <a href="/login" class="btn btn-light">Try AR Features</a>
+                                        <a href="/login" class="btn btn-white" style="background-color: white; color: #050300;">Try AR</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-duration="800" data-aos-delay="500">
+                            <div class="modern-card blue-card h-100">
+                                <div class="card-body">
+                                    <div class="card-icon">
+                                        <i class="bi bi-robot"></i>
+                                    </div>
+                                    <h3 class="card-title fw-bold">AI Assistant</h3>
+                                    <p class="card-text">Detects student confusion and assists instructors.</p>
+                                    <ul class="feature-list">
+                                        <li><i class="bi bi-check-circle-fill text-light me-2"></i> Real-time engagement tracking</li>
+                                        <li><i class="bi bi-check-circle-fill text-light me-2"></i> Enhanced learning experience</li>
+                                        <li><i class="bi bi-check-circle-fill text-light me-2"></i> AI-driven instructor feedback</li>
+                                    </ul>
+                                    <div class="mt-4">
+                                        <a href="/login" class="btn btn-light">Learn More</a>
                                     </div>
                                 </div>
                             </div>
@@ -146,61 +209,6 @@
                                 <li class="mb-3"><i class="bi bi-check-circle-fill text-primary me-2"></i> Test their knowledge with quizzes and assessments</li>
                             </ul>
                             <a href="/login" class="btn btn-outline-primary mt-3">Start Learning Now</a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            
-            <!-- Components Section -->
-            <section id="components" class="py-5 bg-light">
-                <div class="container py-5">
-                    <div class="section-header text-center mb-5" data-aos="fade-up" data-aos-duration="800">
-                        <h2 class="display-5 fw-bold mb-3">AC System Components</h2>
-                        <div class="section-divider mb-4"></div>
-                        <p class="lead text-secondary">Explore the key components and tools used in air conditioning systems</p>
-                    </div>
-                    <div class="row g-4">
-                        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-                            <div class="modern-card h-100">
-                                <div class="card-body">
-                                    <div class="card-icon">
-                                        <i class="bi bi-gear-fill"></i>
-                                    </div>
-                                    <h4 class="card-title">Core Components</h4>
-                                    <p class="card-text">Essential mechanical parts including compressors, condensers, evaporators, and expansion valves that form the foundation of AC systems.</p>
-                                    <div class="card-footer border-0 bg-transparent pt-0">
-                                        <a href="/login" class="btn btn-outline-primary">Explore Components</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-                            <div class="modern-card h-100">
-                                <div class="card-body">
-                                    <div class="card-icon">
-                                        <i class="bi bi-lightning-fill"></i>
-                                    </div>
-                                    <h4 class="card-title">Electric Components</h4>
-                                    <p class="card-text">Electrical systems including sensors, control modules, relays, and wiring that regulate and monitor AC operation and performance.</p>
-                                    <div class="card-footer border-0 bg-transparent pt-0">
-                                        <a href="/login" class="btn btn-outline-primary">Explore Components</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
-                            <div class="modern-card h-100">
-                                <div class="card-body">
-                                    <div class="card-icon">
-                                        <i class="bi bi-tools"></i>
-                                    </div>
-                                    <h4 class="card-title">Repair Tools</h4>
-                                    <p class="card-text">Specialized tools and equipment for diagnosing, maintaining, and repairing air conditioning systems including gauges, leak detectors, and recovery machines.</p>
-                                    <div class="card-footer border-0 bg-transparent pt-0">
-                                        <a href="/login" class="btn btn-outline-primary">Explore Tools</a>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -286,90 +294,329 @@
                     </div>
                 </div>
             </section>
+
+            <!-- Pricing Section -->
+            <section id="pricing" class="py-5 text-white">
+                <div class="container py-5">
+                    <div class="section-header text-center mb-5" data-aos="fade-up" data-aos-duration="800">
+                        <h2 class="display-5 fw-bold mb-3" style="color: #d4af37;">Compare Plans and Pricing</h2>
+                        <div class="section-divider mb-4 mx-auto" style="width: 80px; height: 4px; background-color: #d4af37;"></div>
+                        <p class="lead mb-0 text-white">Choose the right solution for your training needs</p>
+                    </div>
+
+                    <!-- Pricing Tabs Navigation -->
+                    <div class="text-center mb-5">
+                        <div class="pricing-tabs d-inline-flex" style="background-color: #000; border-radius: 50px; overflow: hidden; border: 1px solid #d4af37;">
+                            <button id="digital-tab" class="btn px-4 py-3 fw-bold active-tab" style="min-width: 200px; border-radius: 0; background-color: #d4af37; color: #000; border: none;">Digital Access</button>
+                            <button id="physical-tab" class="btn px-4 py-3 fw-bold" style="min-width: 200px; border-radius: 0; background-color: transparent; color: #d4af37; border: none;">Training Units</button>
+                        </div>
+                    </div>
+
+                    <!-- Tab Content -->                    
+                    <div class="tab-content mb-5">
+                        <!-- Digital Access Plans Tab -->
+                        <div id="digital-content" class="tab-pane active">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-10">
+                                    <h3 class="fw-bold mb-4 text-center" style="color: #d4af37;">Digital Access Plans</h3>
+                                    <div class="row g-4">
+                                        <div class="col-md-6 mb-4">
+                                            <div class="pricing-card h-100 p-4" style="background-color: #121212; border-radius: 15px;">
+                                                <div class="text-center mb-3">
+                                                    <div class="feature-icon bg-dark rounded-circle p-3 mx-auto" style="width: 70px; height: 70px; display: flex; align-items: center; justify-content: center;">
+                                                        <i class="bi bi-phone-fill" style="font-size: 1.8rem; color: #d4af37;"></i>
+                                                    </div>
+                                                </div>
+                                                <h4 class="fw-bold mb-2 text-center" style="color: #d4af37;">SmartAC VTU PLUS</h4>
+                                                <p class="text-white mb-4 text-center">High-quality digital learning experience</p>
+                                                <ul class="list-unstyled mb-4">
+                                                    <li class="mb-3 text-white"><i class="bi bi-check-circle-fill text-success me-2"></i> Full access to website and mobile app</li>
+                                                    <li class="mb-3 text-white"><i class="bi bi-check-circle-fill text-success me-2"></i> AR Learning Mode</li>
+                                                    <li class="mb-3 text-white"><i class="bi bi-check-circle-fill text-success me-2"></i> 3D Component Viewer</li>
+                                                </ul>
+                                                <div class="pricing-amount mb-4 text-center">
+                                                    <h3 class="fw-bold" style="color: #d4af37;">RM 10</h3>
+                                                </div>
+                                                <a href="/login" class="btn w-100 py-2 fw-bold text-dark" style="background-color: #d4af37;">View Models</a>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+                                            <div class="pricing-card h-100 p-4" style="background-color: #121212; border-radius: 15px;">
+                                                <div class="text-center mb-3">
+                                                    <div class="feature-icon bg-dark rounded-circle p-3 mx-auto" style="width: 70px; height: 70px; display: flex; align-items: center; justify-content: center;">
+                                                        <i class="bi bi-mortarboard-fill" style="font-size: 1.8rem; color: #d4af37;"></i>
+                                                    </div>
+                                                </div>
+                                                <h4 class="fw-bold mb-2 text-center" style="color: #d4af37;">SmartAC VTU PRO</h4>
+                                                <p class="text-white mb-4 text-center">Advanced features for professional training</p>
+                                                <ul class="list-unstyled mb-4">
+                                                    <li class="mb-3 text-white"><i class="bi bi-check-circle-fill text-success me-2"></i> Includes all features in the Plus version</li>
+                                                    <li class="mb-3 text-white"><i class="bi bi-check-circle-fill text-success me-2"></i> AI Facial Recognition</li>
+                                                    <li class="mb-3 text-white"><i class="bi bi-check-circle-fill text-success me-2"></i> Enhanced visual learning</li>
+                                                </ul>
+                                                <div class="pricing-amount mb-4 text-center">
+                                                    <h3 class="fw-bold" style="color: #d4af37;">RM 15</h3>
+                                                </div>
+                                                <a href="/login" class="btn w-100 py-2 fw-bold text-dark" style="background-color: #d4af37;">View Models</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Hands-On Training Units Tab (Hidden by default) -->                        
+                        <div id="physical-content" class="tab-pane" style="display: none;">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-10">
+                                    <h3 class="fw-bold mb-4 text-center" style="color: #d4af37;">Hands-On Training Units</h3>
+                                    <div class="row g-4">
+                                        <div class="col-md-4 mb-4">
+                                            <div class="pricing-card h-100 p-4" style="background-color: #121212; border-radius: 15px;">
+                                                <div class="text-center mb-3">
+                                                    <div class="feature-icon bg-dark rounded-circle p-3 mx-auto" style="width: 70px; height: 70px; display: flex; align-items: center; justify-content: center;">
+                                                        <i class="bi bi-tools" style="font-size: 1.8rem; color: #d4af37;"></i>
+                                                    </div>
+                                                </div>
+                                                <h5 class="fw-bold mb-2 text-center" style="color: #d4af37;">Standard Training Unit</h5>
+                                                <p class="text-white mb-4 text-center">Basic hands-on training equipment</p>
+                                                <ul class="list-unstyled mb-4">
+                                                    <li class="mb-3 text-white"><i class="bi bi-check-circle-fill text-success me-2"></i> Actual vehicle AC component</li>
+                                                    <li class="mb-3 text-white"><i class="bi bi-check-circle-fill text-success me-2"></i> Safe and compact design</li>
+                                                </ul>
+                                                <div class="pricing-amount mb-4 text-center">
+                                                    <h3 class="fw-bold" style="color: #d4af37;">RM 5000</h3>
+                                                </div>
+                                                <a href="/contact" class="btn w-100 py-2 fw-bold text-dark" style="background-color: #d4af37;">View Models</a>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-4">
+                                            <div class="pricing-card h-100 p-4" style="background-color: #121212; border-radius: 15px;">
+                                                <div class="text-center mb-3">
+                                                    <div class="feature-icon bg-dark rounded-circle p-3 mx-auto" style="width: 70px; height: 70px; display: flex; align-items: center; justify-content: center;">
+                                                        <i class="bi bi-gear-fill" style="font-size: 1.8rem; color: #d4af37;"></i>
+                                                    </div>
+                                                </div>
+                                                <h5 class="fw-bold mb-2 text-center" style="color: #d4af37;">Fault System Unit</h5>
+                                                <p class="text-white mb-4 text-center">Advanced diagnostic training</p>
+                                                <ul class="list-unstyled mb-4">
+                                                    <li class="mb-3 text-white"><i class="bi bi-check-circle-fill text-success me-2"></i> Includes standard features</li>
+                                                    <li class="mb-3 text-white"><i class="bi bi-check-circle-fill text-success me-2"></i> Adds fault simulation</li>
+                                                    <li class="mb-3 text-white"><i class="bi bi-check-circle-fill text-success me-2"></i> Diagnostic practice</li>
+                                                </ul>
+                                                <div class="pricing-amount mb-4 text-center">
+                                                    <h3 class="fw-bold" style="color: #d4af37;">RM 8000</h3>
+                                                </div>
+                                                <a href="/contact" class="btn w-100 py-2 fw-bold text-dark" style="background-color: #d4af37;">View Models</a>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-4">
+                                            <div class="pricing-card h-100 p-4" style="background-color: #121212; border-radius: 15px;">
+                                                <div class="text-center mb-3">
+                                                    <div class="feature-icon bg-dark rounded-circle p-3 mx-auto" style="width: 70px; height: 70px; display: flex; align-items: center; justify-content: center;">
+                                                        <i class="bi bi-mortarboard-fill" style="font-size: 1.8rem; color: #d4af37;"></i>
+                                                    </div>
+                                                </div>
+                                                <h5 class="fw-bold mb-2 text-center" style="color: #d4af37;">Full Training System</h5>
+                                                <p class="text-white mb-4 text-center">Complete educational solution</p>
+                                                <ul class="list-unstyled mb-4">
+                                                    <li class="mb-3 text-white"><i class="bi bi-check-circle-fill text-success me-2"></i> Combines physical & digital</li>
+                                                    <li class="mb-3 text-white"><i class="bi bi-check-circle-fill text-success me-2"></i> Includes training unit</li>
+                                                    <li class="mb-3 text-white"><i class="bi bi-check-circle-fill text-success me-2"></i> Access for 200 students</li>
+                                                </ul>
+                                                <div class="pricing-amount mb-4 text-center">
+                                                    <h3 class="fw-bold" style="color: #d4af37;">RM 10000</h3>
+                                                </div>
+                                                <a href="/contact" class="btn w-100 py-2 fw-bold text-dark" style="background-color: #d4af37;">View Models</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Comparison Table -->
+                    <div class="mt-5 pt-3">
+                        <h3 class="text-center fw-bold mb-4" style="color: #d4af37;">Feature Comparison</h3>
+                        <div class="table-responsive">
+                            <table class="table table-dark table-hover" style="border-radius: 10px; overflow: hidden; border-collapse: separate;">
+                                <thead>
+                                    <tr class="bg-black">
+                                        <th scope="col" style="border-color: #333;">Features</th>
+                                        <th scope="col" class="text-center" style="border-color: #333;">SmartAC VTU PLUS<br><span class="badge text-dark" style="background-color: #d4af37;">RM 10</span></th>
+                                        <th scope="col" class="text-center" style="border-color: #333;">SmartAC VTU PRO<br><span class="badge text-dark" style="background-color: #d4af37;">RM 15</span></th>
+                                        <th scope="col" class="text-center" style="border-color: #333;">Standard Training Unit<br><span class="badge text-dark" style="background-color: #d4af37;">RM 5000</span></th>
+                                        <th scope="col" class="text-center" style="border-color: #333;">Training Unit with Fault System<br><span class="badge text-dark" style="background-color: #d4af37;">RM 8000</span></th>
+                                        <th scope="col" class="text-center" style="border-color: #333;">Full Training System<br><span class="badge text-dark" style="background-color: #d4af37;">RM 10000</span></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="background-color: rgba(212,175,55,0.1);">
+                                        <th colspan="6" style="border-color: #333; color: #d4af37;">Digital Access Features</th>
+                                    </tr>
+                                    <tr style="border-color: #333;">
+                                        <td style="border-color: #333;">Full access to website and mobile app</td>
+                                        <td class="text-center" style="border-color: #333;"><i class="bi bi-check-circle-fill text-success"></i></td>
+                                        <td class="text-center" style="border-color: #333;"><i class="bi bi-check-circle-fill text-success"></i></td>
+                                        <td class="text-center" style="border-color: #333;"><i class="bi bi-x-circle-fill text-danger"></i></td>
+                                        <td class="text-center" style="border-color: #333;"><i class="bi bi-x-circle-fill text-danger"></i></td>
+                                        <td class="text-center" style="border-color: #333;"><i class="bi bi-check-circle-fill text-success"></i></td>
+                                    </tr>
+                                    <tr style="border-color: #333;">
+                                        <td style="border-color: #333;">AR Learning Mode</td>
+                                        <td class="text-center" style="border-color: #333;"><i class="bi bi-check-circle-fill text-success"></i></td>
+                                        <td class="text-center" style="border-color: #333;"><i class="bi bi-check-circle-fill text-success"></i></td>
+                                        <td class="text-center" style="border-color: #333;"><i class="bi bi-x-circle-fill text-danger"></i></td>
+                                        <td class="text-center" style="border-color: #333;"><i class="bi bi-x-circle-fill text-danger"></i></td>
+                                        <td class="text-center" style="border-color: #333;"><i class="bi bi-check-circle-fill text-success"></i></td>
+                                    </tr>
+                                    <tr style="border-color: #333;">
+                                        <td style="border-color: #333;">3D Component Viewer</td>
+                                        <td class="text-center" style="border-color: #333;"><i class="bi bi-check-circle-fill text-success"></i></td>
+                                        <td class="text-center" style="border-color: #333;"><i class="bi bi-check-circle-fill text-success"></i></td>
+                                        <td class="text-center" style="border-color: #333;"><i class="bi bi-x-circle-fill text-danger"></i></td>
+                                        <td class="text-center" style="border-color: #333;"><i class="bi bi-x-circle-fill text-danger"></i></td>
+                                        <td class="text-center" style="border-color: #333;"><i class="bi bi-check-circle-fill text-success"></i></td>
+                                    </tr>
+                                    <tr style="border-color: #333;">
+                                        <td style="border-color: #333;">AI Facial Recognition</td>
+                                        <td class="text-center" style="border-color: #333;"><i class="bi bi-x-circle-fill text-danger"></i></td>
+                                        <td class="text-center" style="border-color: #333;"><i class="bi bi-check-circle-fill text-success"></i></td>
+                                        <td class="text-center" style="border-color: #333;"><i class="bi bi-x-circle-fill text-danger"></i></td>
+                                        <td class="text-center" style="border-color: #333;"><i class="bi bi-x-circle-fill text-danger"></i></td>
+                                        <td class="text-center" style="border-color: #333;"><i class="bi bi-check-circle-fill text-success"></i></td>
+                                    </tr>
+                                    <tr style="background-color: rgba(212,175,55,0.1);">
+                                        <th colspan="6" style="border-color: #333; color: #d4af37;">Hardware Features</th>
+                                    </tr>
+                                    <tr style="border-color: #333;">
+                                        <td style="border-color: #333;">Actual vehicle AC component</td>
+                                        <td class="text-center" style="border-color: #333;"><i class="bi bi-x-circle-fill text-danger"></i></td>
+                                        <td class="text-center" style="border-color: #333;"><i class="bi bi-x-circle-fill text-danger"></i></td>
+                                        <td class="text-center" style="border-color: #333;"><i class="bi bi-check-circle-fill text-success"></i></td>
+                                        <td class="text-center" style="border-color: #333;"><i class="bi bi-check-circle-fill text-success"></i></td>
+                                        <td class="text-center" style="border-color: #333;"><i class="bi bi-check-circle-fill text-success"></i></td>
+                                    </tr>
+                                    <tr style="border-color: #333;">
+                                        <td style="border-color: #333;">Safe and compact design</td>
+                                        <td class="text-center" style="border-color: #333;"><i class="bi bi-x-circle-fill text-danger"></i></td>
+                                        <td class="text-center" style="border-color: #333;"><i class="bi bi-x-circle-fill text-danger"></i></td>
+                                        <td class="text-center" style="border-color: #333;"><i class="bi bi-check-circle-fill text-success"></i></td>
+                                        <td class="text-center" style="border-color: #333;"><i class="bi bi-check-circle-fill text-success"></i></td>
+                                        <td class="text-center" style="border-color: #333;"><i class="bi bi-check-circle-fill text-success"></i></td>
+                                    </tr>
+                                    <tr style="border-color: #333;">
+                                        <td style="border-color: #333;">Fault simulation</td>
+                                        <td class="text-center" style="border-color: #333;"><i class="bi bi-x-circle-fill text-danger"></i></td>
+                                        <td class="text-center" style="border-color: #333;"><i class="bi bi-x-circle-fill text-danger"></i></td>
+                                        <td class="text-center" style="border-color: #333;"><i class="bi bi-x-circle-fill text-danger"></i></td>
+                                        <td class="text-center" style="border-color: #333;"><i class="bi bi-check-circle-fill text-success"></i></td>
+                                        <td class="text-center" style="border-color: #333;"><i class="bi bi-check-circle-fill text-success"></i></td>
+                                    </tr>
+                                    <tr style="background-color: rgba(212,175,55,0.1);">
+                                        <th colspan="6" style="border-color: #333; color: #d4af37;">Additional Benefits</th>
+                                    </tr>
+                                    <tr style="border-color: #333;">
+                                        <td style="border-color: #333;">Technical support</td>
+                                        <td class="text-center" style="border-color: #333;">Basic</td>
+                                        <td class="text-center" style="border-color: #333;">Priority</td>
+                                        <td class="text-center" style="border-color: #333;">Standard</td>
+                                        <td class="text-center" style="border-color: #333;">Premium</td>
+                                        <td class="text-center" style="border-color: #333;">Premium</td>
+                                    </tr>
+                                    <tr style="border-color: #333;">
+                                        <td style="border-color: #333;">Updates</td>
+                                        <td class="text-center" style="border-color: #333;">Monthly</td>
+                                        <td class="text-center" style="border-color: #333;">Weekly</td>
+                                        <td class="text-center" style="border-color: #333;">Quarterly</td>
+                                        <td class="text-center" style="border-color: #333;">Quarterly</td>
+                                        <td class="text-center" style="border-color: #333;">Monthly</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-5">
+                        <a href="/contact" class="btn btn-lg text-dark fw-bold" style="background-color: #d4af37;">Contact Us for Custom Solutions</a>
+                    </div>
+                </div>
+            </section>
         </main>
-        <footer class="footer">
+        <footer class="footer bg-dark text-white py-5">
             <div class="container">
-                <div class="row gy-4">
-                    <div class="col-lg-2 col-md-6">
-                        <h5>Quick Links</h5>
-                        <ul class="footer-links">
-                            <li><a href="/login">Login</a></li>
-                            <li><a href="#features">Features</a></li>
-                            <li><a href="#about">About Us</a></li>
-                            <li><a href="#contact">Contact</a></li>
+                <div class="row g-4">
+                    <div class="col-lg-3 col-md-6">
+                        <h5 style="color: #d4af37; border-bottom: 1px solid #d4af37;" class="pb-2 mb-3">Quick Links</h5>
+                        <ul class="footer-links ps-0">
+                            <li><a href="/login" class="text-white text-decoration-none py-1 d-block">Login</a></li>
+                            <li><a href="#features" class="text-white text-decoration-none py-1 d-block">Features</a></li>
+                            <li><a href="#about" class="text-white text-decoration-none py-1 d-block">About Us</a></li>
+                            <li><a href="#contact" class="text-white text-decoration-none py-1 d-block">Contact</a></li>
                         </ul>
                     </div>
                     
-                    <div class="col-md-2 col-sm-6 mb-4 mb-md-0">
-                        <h5>Features</h5>
-                        <ul class="footer-links">
-                            <li><a href="#">3D Models</a></li>
-                            <li><a href="#">AR Visualization</a></li>
-                            <li><a href="#">Practical Guides</a></li>
-                            <li><a href="#">Assessments</a></li>
+                    <div class="col-lg-3 col-md-6">
+                        <h5 style="color: #d4af37; border-bottom: 1px solid #d4af37;" class="pb-2 mb-3">Features</h5>
+                        <ul class="footer-links ps-0">
+                            <li><a href="#" class="text-white text-decoration-none py-1 d-block">3D Models</a></li>
+                            <li><a href="#" class="text-white text-decoration-none py-1 d-block">AR Visualization</a></li>
+                            <li><a href="#" class="text-white text-decoration-none py-1 d-block">Practical Guides</a></li>
+                            <li><a href="#" class="text-white text-decoration-none py-1 d-block">Assessments</a></li>
                         </ul>
                     </div>
                     
-                    <div class="col-md-2 col-sm-6 mb-4 mb-md-0">
-                        <h5>Components</h5>
-                        <ul class="footer-links">
-                            <li><a href="#">Compressor</a></li>
-                            <li><a href="#">Condenser</a></li>
-                            <li><a href="#">TXV</a></li>
-                            <li><a href="#">Cooling Coil</a></li>
+                    <div class="col-lg-3 col-md-6">
+                        <h5 style="color: #d4af37; border-bottom: 1px solid #d4af37;" class="pb-2 mb-3">Resources</h5>
+                        <ul class="footer-links ps-0">
+                            <li><a href="#" class="text-white text-decoration-none py-1 d-block">Tutorials</a></li>
+                            <li><a href="#" class="text-white text-decoration-none py-1 d-block">Documentation</a></li>
+                            <li><a href="#" class="text-white text-decoration-none py-1 d-block">Videos</a></li>
+                            <li><a href="#" class="text-white text-decoration-none py-1 d-block">Downloads</a></li>
                         </ul>
                     </div>
                     
-                    <div class="col-md-2 col-sm-6 mb-4 mb-md-0">
-                        <h5>Resources</h5>
-                        <ul class="footer-links">
-                            <li><a href="#">Tutorials</a></li>
-                            <li><a href="#">Documentation</a></li>
-                            <li><a href="#">Videos</a></li>
-                            <li><a href="#">Downloads</a></li>
-                        </ul>
-                    </div>
-                    
-                    <div class="col-md-3 col-sm-6 mb-4 mb-md-0">
-                        <h5>Contact</h5>
+                    <div class="col-lg-3 col-md-6">
+                        <h5 style="color: #d4af37; border-bottom: 1px solid #d4af37;" class="pb-2 mb-3">Contact</h5>
                         <div class="contact-info">
-                            <div class="contact-item">
-                                <div class="contact-icon">
-                                    <i class="bi bi-envelope-fill"></i>
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="me-3">
+                                    <i class="bi bi-envelope-fill fs-5" style="color: #d4af37;"></i>
                                 </div>
-                                <div class="contact-text">
-                                    <p class="mb-0">Email</p>
-                                    <a href="mailto:info@smartac.edu" class="contact-link">info@smartac.edu</a>
-                                </div>
-                            </div>
-                            <div class="contact-item">
-                                <div class="contact-icon">
-                                    <i class="bi bi-telephone-fill"></i>
-                                </div>
-                                <div class="contact-text">
-                                    <p class="mb-0">Phone</p>
-                                    <a href="tel:+1234567890" class="contact-link">+123 456 7890</a>
+                                <div>
+                                    <p class="mb-0 text-white small">Email</p>
+                                    <a href="mailto:info@smartac.edu" class="text-white text-decoration-none">info@smartac.edu</a>
                                 </div>
                             </div>
-                            <div class="contact-item">
-                                <div class="contact-icon">
-                                    <i class="bi bi-geo-alt-fill"></i>
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="me-3">
+                                    <i class="bi bi-telephone-fill fs-5" style="color: #d4af37;"></i>
                                 </div>
-                                <div class="contact-text">
-                                    <p class="mb-0">Address</p>
-                                    <p class="contact-address">123 Education Street, Learning City</p>
+                                <div>
+                                    <p class="mb-0 text-white small">Phone</p>
+                                    <a href="tel:+1234567890" class="text-white text-decoration-none">+123 456 7890</a>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <div class="me-3">
+                                    <i class="bi bi-geo-alt-fill fs-5" style="color: #d4af37;"></i>
+                                </div>
+                                <div>
+                                    <p class="mb-0 text-white small">Address</p>
+                                    <p class="mb-0 text-white">123 Education Street, Learning City</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <hr class="my-4">
+                <hr class="my-4 border-secondary">
                 <div class="row align-items-center">
                     <div class="col-md-6">
-                        <p class="mb-md-0 text-center text-md-start">&copy; 2023 SmartAC. All rights reserved.</p>
+                        <p class="mb-md-0 text-center text-md-start text-white">&copy; 2025 SmartAC VTU. All rights reserved.</p>
                     </div>
                     <div class="col-md-6 text-center text-md-end">
-                        <p class="mb-0">Designed with <i class="bi bi-heart-fill text-danger"></i> for automotive education</p>
+                        <p class="mb-0 text-white">Designed with <i class="bi bi-heart-fill text-danger"></i> for automotive education</p>
                     </div>
                 </div>
             </div>
@@ -379,8 +626,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script src="/js/custom.js"></script>
-    <script src="/js/responsive.js"></script>
-    <script src="/js/theme-toggle.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/aos.js"></script>
+    <script src="/js/model-viewer.js"></script>
     <script>
         // Initialize AOS animations
         AOS.init();

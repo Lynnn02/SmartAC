@@ -3,145 +3,505 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teacher Dashboard - SmartAC</title>
+    <title>Dashboard - SmartAC VTU Plus</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/theme-toggle.css">
+    <meta name="theme-color" content="#000000">
+    <style>
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: #121212;
+            color: #ffffff;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+            .container {
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+            
+            .dashboard-header {
+                padding: 1.5rem 0;
+                margin-bottom: 1.5rem;
+            }
+            
+            .dashboard-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .dashboard-header p {
+                font-size: 1rem;
+            }
+            
+            .card {
+                margin-bottom: 15px;
+            }
+            
+            .quick-actions {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+            
+            .quick-action-card {
+                height: 120px;
+            }
+        }
+        .dashboard-header {
+            background: linear-gradient(135deg, #121212, #1a1a1a);
+            color: white;
+            padding: 2.5rem 0;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 2px solid #d4af37;
+        }
+        .dashboard-header::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .dashboard-header::after {
+            content: '';
+            position: absolute;
+            bottom: -80px;
+            left: -80px;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .dashboard-header .container {
+            position: relative;
+            z-index: 1;
+        }
+        .modern-card {
+            border-radius: 16px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border: none;
+            overflow: hidden;
+            height: 100%;
+            background-color: var(--card-bg-color);
+            color: var(--text-color);
+        }
+        
+        [data-theme="dark"] .modern-card {
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        [data-theme="dark"] .btn-light {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+            border-color: transparent;
+        }
+        
+        [data-theme="dark"] .btn-light:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #fff;
+        }
+        .modern-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+        }
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--color-primary);
+        }
+        .blue-card .card-icon {
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--color-primary);
+        }
+        .green-card .card-icon {
+            background: rgba(45, 212, 191, 0.1);
+            color: #2dd4bf;
+        }
+        .yellow-card .card-icon {
+            background: rgba(255, 170, 0, 0.1);
+            color: #ffaa00;
+        }
+        .pink-card .card-icon {
+            background: rgba(236, 72, 153, 0.1);
+            color: #ec4899;
+        }
+        .section-title {
+            position: relative;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(135deg, #d4af37, #bb9a30);
+            border-radius: 3px;
+        }
+        
+        .section-divider {
+            height: 3px;
+            width: 80px;
+            background: linear-gradient(135deg, #d4af37, #bb9a30);
+            margin: 0 auto;
+            border-radius: 3px;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #d4af37, #bb9a30);
+            border: none;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+        }
+        .navbar {
+            background-color: var(--navbar-bg) !important;
+        }
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            font-weight: 600;
+        }
+        .session-card {
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+            background-color: var(--card-bg-color);
+        }
+        .session-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        footer {
+            margin-top: auto;
+            background-color: var(--footer-bg);
+            color: var(--footer-text);
+            padding: 60px 0 30px;
+        }
+        .footer-logo {
+            font-weight: 700;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        .footer-desc {
+            opacity: 0.8;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+        .footer-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+        .footer-links a {
+            color: inherit;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            opacity: 0.8;
+        }
+        .footer-links a:hover {
+            opacity: 1;
+            color: var(--primary-color);
+        }
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: inherit;
+            margin-right: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        .social-links a:hover {
+            background-color: var(--primary-color);
+            color: #fff;
+            transform: translateY(-3px);
+        }
+        .contact-item {
+            display: flex;
+            margin-bottom: 1rem;
+        }
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+        }
+        .contact-link {
+            color: inherit;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+        .contact-link:hover {
+            opacity: 1;
+            color: var(--primary-color);
+        }
+        
+        /* Component styles */
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .feature-list li {
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            color: var(--text-color);
+        }
+        
+        .component-icon-large {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(187, 154, 48, 0.2));
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .dashboard-header {
+                padding: 2rem 0;
+            }
+            .card-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .dashboard-header {
+                padding: 1.5rem 0;
+            }
+            .dashboard-header h1 {
+                font-size: 1.8rem;
+            }
+            .dashboard-header p {
+                font-size: 1rem;
+            }
+            .card-body {
+                padding: 1.25rem;
+            }
+            .card-icon {
+                width: 45px;
+                height: 45px;
+                font-size: 1.2rem;
+                margin-bottom: 0.75rem;
+            }
+            .card-title {
+                font-size: 1.1rem;
+            }
+            .card-text {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
 </head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div class="container">
-            <a class="navbar-brand" href="/teacher/dashboard">SmartAC Teacher</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/teacher/dashboard">Dashboard</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/teacher/create-session">Create Session</a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <span class="user-avatar me-2"><%= user.name.charAt(0) %></span>
-                            <%= user.name %>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="/teacher/profile">Profile</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="/logout">Logout</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+<body style="background-color: #121212; color: #ffffff;">
+    <div class="container-fluid p-0 footer-wrapper">
+        <!-- Include teacher header partial -->
+        <%- include('../partials/teacher-header', { user: user, activePage: 'dashboard' }) %>
 
-    <div class="dashboard-header">
-        <div class="container">
-            <h1 class="mb-0">Teacher Dashboard</h1>
-            <p class="lead">Manage your teaching sessions and practical modules</p>
-        </div>
-    </div>
-
-    <div class="container mb-5">
-        <div class="row mb-4">
-            <div class="col-12">
-                <div class="d-flex justify-content-between align-items-center">
-                    <h2>Your Teaching Sessions</h2>
-                    <a href="/teacher/create-session" class="btn btn-primary">
-                        <i class="bi bi-plus-circle me-2"></i>Create New Session
+    <section class="hero-section py-5 text-center d-flex align-items-center" style="background: linear-gradient(135deg, #121212, #1a1a1a); color: var(--bs-white);">
+        <div class="container py-5 mt-5">
+            <div class="row align-items-center">
+                <div class="col-lg-8 mx-auto text-center" data-aos="fade-up" data-aos-duration="1000">
+                    <h1 class="display-4 fw-bold mb-3" style="color: var(--bs-white);">Selamat Datang ke <span style="background: linear-gradient(135deg, #d4af37, #e6c158); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">SmartAC VTU Plus</span></h1>
+                    <div class="section-divider mb-4 mx-auto"></div>
+                    <p class="lead mb-5" style="color: var(--bs-light);">Akses bahan pembelajaran dan jejaki kemajuan anda dalam penyelenggaraan dan pembaikan AC kereta dengan model 3D interaktif dan modul praktikal kami</p>
+                    <a href="/teacher/practical/1" class="btn btn-lg px-5 py-3 fw-semibold" style="background: linear-gradient(135deg, #d4af37, #e6c158); color: #121212; border: none; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);">
+                        Mula Belajar <i class="bi bi-arrow-right ms-2"></i>
                     </a>
                 </div>
             </div>
         </div>
+    </section>
 
-        <div class="row">
-            <% if (sessions.length === 0) { %>
-                <div class="col-12">
-                    <div class="alert alert-info" role="alert">
-                        <i class="bi bi-info-circle me-2"></i>You haven't created any teaching sessions yet. Click the "Create New Session" button to get started.
-                    </div>
+    <main class="flex-grow-1">
+        <section id="resources" class="features-section py-5">
+            <div class="container py-5">
+                <div class="section-header text-center mb-5" data-aos="fade-up" data-aos-duration="800">
+                    <h2 class="display-5 fw-bold mb-3" style="background: linear-gradient(135deg, #d4af37, #e6c158); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">Sumber Pembelajaran</h2>
+                    <div class="section-divider mb-4 mx-auto"></div>
+                    <p class="lead" style="color: #e0e0e0;">Terokai bahan pembelajaran komprehensif dan modul praktikal kami</p>
                 </div>
-            <% } else { %>
-                <% sessions.forEach(session => { %>
-                    <div class="col-md-6 col-lg-4 mb-4">
-                        <div class="card h-100 shadow-sm session-card">
+                
+                <div class="row g-5">
+                    <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
+                        <div class="modern-card h-100" style="background: linear-gradient(145deg, #1a1a1a, #212121); color: #ffffff; border-left: 4px solid #d4af37;">
                             <div class="card-body">
-                                <h5 class="card-title"><%= session.name %></h5>
-                                <p class="card-text">
-                                    <strong>Practical:</strong> <%= session.practical %><br>
-                                    <strong>Date:</strong> <%= session.date %><br>
-                                    <strong>Time:</strong> <%= session.time %>
-                                </p>
-                                <div class="d-flex justify-content-between align-items-center mt-3">
-                                    <a href="/teacher/session/<%= session.id %>" class="btn btn-outline-primary">View Details</a>
-                                    <a href="/teacher/session/<%= session.id %>/edit" class="btn btn-outline-secondary">
-                                        <i class="bi bi-pencil-square"></i>
-                                    </a>
+                                <div class="card-icon mb-4" style="background: rgba(212, 175, 55, 0.15);">
+                                    <i class="bi bi-journal-text" style="color: #d4af37;"></i>
+                                </div>
+                                <h3 class="card-title h4 mb-3">Modul Praktikal</h3>
+                                <p class="card-text mb-4">Akses modul praktikal langkah demi langkah untuk penyelenggaraan dan pembaikan AC kereta dengan panduan interaktif.</p>
+                                <div class="card-action">
+                                    <a href="/teacher/practical/1" class="btn" style="background: linear-gradient(135deg, #d4af37, #bb9a30); color: #121212;">Mula Praktikal 1</a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                <% }); %>
-            <% } %>
-        </div>
+                    
+                    <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
+                        <div class="modern-card h-100" style="background: linear-gradient(145deg, #1a1a1a, #212121); color: #ffffff; border-left: 4px solid #d4af37;">
+                            <div class="card-body">
+                                <div class="card-icon mb-4" style="background: rgba(212, 175, 55, 0.15);">
+                                    <i class="bi bi-gear" style="color: #d4af37;"></i>
+                                </div>
+                                <h3 class="card-title h4 mb-3">Komponen AC</h3>
+                                <p class="card-text mb-4">Terokai maklumat terperinci tentang komponen AC kereta dan fungsinya dengan model 3D.</p>
+                                <div class="card-action">
+                                    <a href="/teacher/components" class="btn" style="background: linear-gradient(135deg, #d4af37, #bb9a30); color: #121212;">Lihat Komponen</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-duration="800" data-aos-delay="300">
+                        <div class="modern-card h-100" style="background: linear-gradient(145deg, #1a1a1a, #212121); color: #ffffff; border-left: 4px solid #d4af37;">
+                            <div class="card-body">
+                                <div class="card-icon mb-4" style="background: rgba(212, 175, 55, 0.15);">
+                                    <i class="bi bi-question-circle" style="color: #d4af37;"></i>
+                                </div>
+                                <h3 class="card-title h4 mb-3">Kuiz Pengetahuan</h3>
+                                <p class="card-text mb-4">Uji pengetahuan anda tentang sistem AC kereta dengan kuiz interaktif dan dapatkan maklum balas segera.</p>
+                                <div class="card-action">
+                                    <a href="/teacher/quiz" class="btn" style="background: linear-gradient(135deg, #d4af37, #bb9a30); color: #121212;">Mula Kuiz</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-duration="800" data-aos-delay="400">
+                        <div class="modern-card h-100" style="background: linear-gradient(145deg, #1a1a1a, #212121); color: #ffffff; border-left: 4px solid #d4af37;">
+                            <div class="card-body">
+                                <div class="card-icon mb-4" style="background: rgba(212, 175, 55, 0.15);">
+                                    <i class="bi bi-person" style="color: #d4af37;"></i>
+                                </div>
+                                <h3 class="card-title h4 mb-3">Profil Saya</h3>
+                                <p class="card-text mb-4">Lihat dan kemaskini maklumat profil anda dan jejaki kemajuan pembelajaran anda di satu tempat.</p>
+                                <div class="card-action">
+                                    <a href="/teacher/profile" class="btn" style="background: linear-gradient(135deg, #d4af37, #bb9a30); color: #121212;">Ke Profil</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        <div class="row mt-5">
-            <div class="col-12">
-                <h2 class="mb-4">Available Practical Modules</h2>
+            <!-- Car AC Components Section -->
+            <div class="section-header text-center mb-4 mt-5" data-aos="fade-up" data-aos-duration="800">
+                <h2 class="display-5 fw-bold mb-3" style="background: linear-gradient(135deg, #d4af37, #e6c158); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">Komponen AC Kereta</h2>
+                <div class="section-divider mb-3 mx-auto"></div>
+                <p class="lead" style="color: #e0e0e0;">Terokai komponen sistem penyaman udara kereta dalam 3D</p>
             </div>
             
-            <div class="col-md-6 col-lg-4 mb-4">
-                <div class="card h-100 shadow-sm practical-card">
-                    <div class="card-body">
-                        <h5 class="card-title">Praktikal 1</h5>
-                        <p class="card-text">Pemasangan Hose Manifold Gauge & Vacuum Hose (Kaedah Manual)</p>
-                        <a href="/teacher/practical/1" class="btn btn-outline-primary">View Module</a>
+            <div class="row g-3 mb-4 align-items-center justify-content-center ps-md-4">
+                <div class="col-lg-6 ps-lg-4" data-aos="fade-right" data-aos-duration="1000">
+                    <div class="modern-card h-100 p-4 mx-auto" style="max-width: 90%;">
+                        <div class="card-body">
+                            <h3 class="h4 mb-4">Komponen 3D Interaktif</h3>
+                            <p class="card-text mb-4">Terokai komponen sistem penyaman udara kereta dalam 3D.</p>
+                            <p class="card-text mb-4">Pelajari tentang fungsi setiap bahagian dan bagaimana ia berfungsi bersama dalam persekitaran interaktif.</p>
+                            <ul class="feature-list mb-4">
+                                <li><i class="bi bi-check-circle-fill me-2" style="color: #d4af37;"></i> Pemampat</li>
+                                <li><i class="bi bi-check-circle-fill me-2" style="color: #d4af37;"></i> Pemeluwap</li>
+                                <li><i class="bi bi-check-circle-fill me-2" style="color: #d4af37;"></i> Injap Pengembangan</li>
+                                <li><i class="bi bi-check-circle-fill me-2" style="color: #d4af37;"></i> Penyejat</li>
+                            </ul>
+                            <div class="mt-4 d-flex gap-3">
+                                <a href="/teacher/components" class="btn btn-lg px-4" style="background: linear-gradient(135deg, #d4af37, #bb9a30); color: #121212; border: none; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);">
+                                    <i class="bi bi-box me-2"></i>Lihat Komponen
+                                </a>
+                                <a href="/teacher/quiz" class="btn btn-lg px-4" style="background: linear-gradient(135deg, #121212, #212121); color: #d4af37; border: 1px solid #d4af37; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);">
+                                    <i class="bi bi-question-circle me-2"></i>Kuiz
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6 pe-lg-4" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
+                    <div class="component-image-container text-center p-3 me-lg-3 mx-auto" style="max-width: 90%;">
+                        <div class="component-icon-large d-flex align-items-center justify-content-center mx-auto mb-3" style="height: 120px; background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(187, 154, 48, 0.15));">
+                            <i class="bi bi-gear-wide-connected display-1" style="color: #d4af37;"></i>
+                        </div>
+                        <h4 class="mb-2">Model 3D Interaktif</h4>
+                        <p class="mb-0">Putar, zum dan terokai setiap komponen secara terperinci</p>
                     </div>
                 </div>
             </div>
-            
-            <div class="col-md-6 col-lg-4 mb-4">
-                <div class="card h-100 shadow-sm practical-card">
-                    <div class="card-body">
-                        <h5 class="card-title">Praktikal 2</h5>
-                        <p class="card-text">Proses Vacuum System Selepas Baik-Pulih (Kaedah Manual)</p>
-                        <a href="/teacher/practical/2" class="btn btn-outline-primary">View Module</a>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-md-6 col-lg-4 mb-4">
-                <div class="card h-100 shadow-sm practical-card">
-                    <div class="card-body">
-                        <h5 class="card-title">Praktikal 3</h5>
-                        <p class="card-text">Proses Charging Gas Dalam System Selepas Baik-Pulih (Kaedah Manual)</p>
-                        <a href="/teacher/practical/3" class="btn btn-outline-primary">View Module</a>
-                    </div>
-                </div>
             </div>
         </div>
-    </div>
+    </main>
 
-    <footer class="bg-dark text-white py-4 mt-auto">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <h5>SmartAC</h5>
-                    <p>A project to help TVET students understand more about practical car AC maintenance and repair.</p>
-                </div>
-                <div class="col-md-6 text-md-end">
-                    <p>&copy; 2025 SmartAC. All rights reserved.</p>
-                </div>
-            </div>
-        </div>
-    </footer>
+    <!-- Include teacher footer partial -->
+    <%- include('../partials/teacher-footer') %>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="/js/theme-toggle.js"></script>
+    
+    <script>
+        // Initialize AOS animations
+        AOS.init();
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add padding to body for fixed header
+            document.body.style.paddingTop = document.querySelector('header').offsetHeight + 'px';
+        });
+    </script>
+    </div>
 </body>
 </html>

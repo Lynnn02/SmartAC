@@ -3,66 +3,287 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teacher Profile - SmartAC</title>
+    <title>Student Profile - SmartAC</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/theme-toggle.css">
+    <meta name="theme-color" content="#000000">
+    <style>
+        :root {
+            --primary-color: #d4af37; /* Gold color */
+            --primary-dark: #b8860b; /* Darker gold */
+            --text-gold: #d4af37;
+        }
+        
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: #121212; /* Black background */
+            color: #ffffff; /* White text */
+            padding-top: 60px; /* Adjusted padding for fixed header */
+        }
+        
+        /* Mobile optimizations */
+        @media (max-width: 767.98px) {
+            body {
+                padding-bottom: 60px; /* Space for bottom nav */
+            }
+            
+            .container {
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+            
+            h1.display-5 {
+                font-size: 1.8rem;
+                margin-bottom: 0.5rem;
+            }
+            
+            p.lead {
+                font-size: 1rem;
+            }
+            
+            .profile-header {
+                padding: 1.5rem 0;
+            }
+            
+            .profile-header .py-4 {
+                padding-top: 1rem !important;
+                padding-bottom: 1rem !important;
+            }
+        }
+        .profile-header {
+            padding: 2rem 0;
+            margin-top: 0;
+            background: linear-gradient(135deg, #121212, #1a1a1a);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .profile-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--primary-dark));
+        }
+        .card {
+            border-radius: 16px;
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.15);
+            border: none;
+            overflow: hidden;
+            background-color: #1a1a1a; /* Dark card background */
+            color: #ffffff; /* White text */
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        /* Mobile optimizations for cards */
+        @media (max-width: 767.98px) {
+            .card {
+                border-radius: 12px;
+                box-shadow: 0 5px 15px rgba(0, 202, 188, 0.05);
+                margin-bottom: 1rem;
+            }
+            
+            .card-header {
+                padding: 1rem 1.25rem;
+            }
+            
+            .card-header h4 {
+                font-size: 1.2rem;
+            }
+            
+            .card-body {
+                padding: 1.25rem;
+            }
+            
+            .form-label {
+                font-size: 0.9rem;
+                margin-bottom: 0.3rem;
+                color: var(--primary-color);
+            }
+            
+            .form-control {
+                background-color: #2a2a2a;
+                border-color: rgba(212, 175, 55, 0.3);
+                color: #ffffff;
+                font-size: 0.95rem;
+                padding: 0.5rem 0.75rem;
+                margin-bottom: 0.75rem;
+            }
+            
+            .form-control:focus {
+                background-color: #333333;
+                border-color: var(--primary-color);
+                color: #ffffff;
+                box-shadow: 0 0 0 0.25rem rgba(212, 175, 55, 0.25);
+            }
+            
+            .btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.95rem;
+            }
+            
+            .list-group-item {
+                padding: 0.75rem 1.25rem;
+                font-size: 0.9rem;
+            }
+        }
+        .card-header {
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+            padding: 1.25rem 1.5rem;
+            background-color: #222222;
+            color: var(--primary-color);
+        }
+        .card-body {
+            padding: 1.5rem;
+        }
+        .list-group-item {
+            background-color: #1a1a1a;
+            border-color: rgba(212, 175, 55, 0.2);
+            color: #ffffff;
+            border-left: 4px solid var(--primary-color);
+            transition: all 0.3s ease;
+        }
+        
+        .list-group-item:hover {
+            background-color: #222222;
+        }
+        .user-avatar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: #121212; /* Black text on gold background */
+            font-weight: bold;
+        }
+        .user-avatar.large {
+            width: 100px;
+            height: 100px;
+            font-size: 2.5rem;
+        }
+        
+        /* Mobile optimizations for user avatar and layout */
+        @media (max-width: 767.98px) {
+            .user-avatar.large {
+                width: 80px;
+                height: 80px;
+                font-size: 2rem;
+                margin-bottom: 0.5rem;
+            }
+            
+            .section-divider {
+                width: 50px;
+                margin-bottom: 1rem;
+            }
+            
+            /* Adjust layout for mobile */
+            .row {
+                margin-left: -10px;
+                margin-right: -10px;
+            }
+            
+            .col-lg-8, .col-lg-4 {
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+            
+            /* Ensure proper spacing at the bottom for fixed nav */
+            .container.mb-5 {
+                margin-bottom: 5rem !important;
+            }
+            
+            /* Improve button styles for mobile */
+            .btn-primary, .btn {
+                background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+                border: none;
+                border-radius: 30px;
+                font-weight: 500;
+                padding: 0.6rem 1.2rem;
+                box-shadow: 0 4px 10px rgba(212, 175, 55, 0.2);
+                transition: all 0.3s ease;
+                color: #121212;
+            }
+            
+            .btn-primary:hover, .btn-primary:focus, .btn:hover, .btn:focus {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 15px rgba(212, 175, 55, 0.3);
+                background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
+                border: none;
+                color: #121212;
+            }
+        }
+        footer {
+            margin-top: auto;
+            background-color: var(--footer-bg);
+            color: var(--footer-text);
+            padding: 60px 0 30px;
+        }
+        .section-divider {
+            height: 4px;
+            width: 60px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            border-radius: 2px;
+            margin: 0 auto 1.5rem;
+        }
+        [data-theme="dark"] .card {
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        .text-muted {
+            color: #6c757d !important;
+        }
+        
+        .text-primary {
+            color: var(--primary-color) !important;
+        }
+        
+        .text-success {
+            color: var(--primary-color) !important;
+        }
+        
+        .text-gold {
+            color: var(--primary-color) !important;
+        }
+    </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div class="container">
-            <a class="navbar-brand" href="/teacher/dashboard">SmartAC Teacher</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/teacher/dashboard">Dashboard</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/teacher/create-session">Create Session</a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <span class="user-avatar me-2"><%= user.name.charAt(0) %></span>
-                            <%= user.name %>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item active" href="/teacher/profile">Profile</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="/logout">Logout</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <div class="container-fluid p-0 footer-wrapper">
+        <!-- Include teacher header partial -->
+        <%- include('../partials/teacher-header', { user: user, activePage: 'profile' }) %>
 
-    <div class="profile-header">
-        <div class="container">
+    <section class="profile-header py-4 text-center d-flex align-items-center" style="background: linear-gradient(135deg, #121212, #1a1a1a);">
+        <div class="container py-4">
             <div class="row align-items-center">
-                <div class="col-md-3 text-center">
-                    <div class="user-avatar mx-auto" style="width: 100px; height: 100px; font-size: 2.5rem; background-color: #0dcaf0;">
-                        <%= user.name.charAt(0) %>
+                <div class="col-lg-8 mx-auto text-center">
+                    <div style="width: 50px; height: 50px;"></div>
+                    <div class="user-avatar large mx-auto mb-3">
+                        <span><%= user.name.charAt(0) %></span>
                     </div>
-                </div>
-                <div class="col-md-9">
-                    <h1 class="mb-0"><%= user.name %></h1>
-                    <p class="lead text-muted">Teacher</p>
+                    <h1 class="display-5 fw-bold mb-3" style="color: var(--primary-color);"><%= user.name %></h1>
+                    <div class="section-divider mb-3 mx-auto"></div>
+                    <p class="lead mb-0" style="color: #ffffff;">Teacher Profile</p>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
     <div class="container mb-5">
         <div class="row">
             <div class="col-lg-8">
-                <div class="card shadow-sm mb-4">
-                    <div class="card-header bg-primary text-white">
-                        <h4 class="mb-0">Profile Information</h4>
+                <div class="card shadow-sm mb-4" data-aos="fade-up" data-aos-duration="800">
+                    <div style="width: 50px; height: 200px;"></div>
+                    <div class="card-header">
+                        <h4 class="mb-0 fw-bold">Profile Information</h4>
                     </div>
                     <div class="card-body">
                         <form action="/teacher/profile/update" method="POST">
@@ -76,22 +297,22 @@
                             </div>
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" name="email" value="teacher@smartac.com">
+                                <input type="email" class="form-control" id="email" name="email" value="student@smartac.com">
                             </div>
                             <div class="mb-3">
-                                <label for="specialization" class="form-label">Specialization</label>
-                                <input type="text" class="form-control" id="specialization" name="specialization" value="Car Air Conditioning Systems">
+                                <label for="studentId" class="form-label">Student ID</label>
+                                <input type="text" class="form-control" id="studentId" name="studentId" value="TVET-2025-001">
                             </div>
                             <div class="d-grid">
-                                <button type="submit" class="btn btn-primary">Update Profile</button>
+                                <button type="submit" class="btn" style="background: linear-gradient(135deg, var(--primary-color), var(--primary-dark)); color: #121212; font-weight: 500; border-radius: 30px; box-shadow: 0 4px 10px rgba(212, 175, 55, 0.3); transition: all 0.3s ease;">Update Profile</button>
                             </div>
                         </form>
                     </div>
                 </div>
 
-                <div class="card shadow-sm">
-                    <div class="card-header bg-primary text-white">
-                        <h4 class="mb-0">Change Password</h4>
+                <div class="card shadow-sm" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
+                    <div class="card-header">
+                        <h4 class="mb-0 fw-bold">Change Password</h4>
                     </div>
                     <div class="card-body">
                         <form action="/teacher/profile/change-password" method="POST">
@@ -108,52 +329,30 @@
                                 <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
                             </div>
                             <div class="d-grid">
-                                <button type="submit" class="btn btn-primary">Change Password</button>
+                                <button type="submit" class="btn" style="background: linear-gradient(135deg, var(--primary-color), var(--primary-dark)); color: #121212; font-weight: 500; border-radius: 30px; box-shadow: 0 4px 10px rgba(212, 175, 55, 0.3); transition: all 0.3s ease;">Change Password</button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
             <div class="col-lg-4">
-                <div class="card shadow-sm mb-4">
-                    <div class="card-header bg-primary text-white">
-                        <h4 class="mb-0">Account Information</h4>
+                <div class="card shadow-sm mb-4" data-aos="fade-up" data-aos-duration="800">
+                    <div class="card-header">
+                        <h4 class="mb-0 fw-bold">Account Information</h4>
                     </div>
                     <div class="card-body">
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <span>Role</span>
-                                <span class="badge bg-info">Teacher</span>
+                                <span style="color: var(--primary-color);">Role</span>
+                                <span class="badge" style="background: linear-gradient(135deg, var(--primary-color), var(--primary-dark)); color: #121212;">Teacher</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <span>Account ID</span>
-                                <span class="text-muted">#<%= user.id %></span>
+                                <span style="color: var(--primary-color);">Account ID</span>
+                                <span style="color: var(--primary-color);">#<%= user.id %></span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <span>Last Login</span>
-                                <span class="text-muted">Today, 6:00 AM</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="card shadow-sm mb-4">
-                    <div class="card-header bg-info text-white">
-                        <h4 class="mb-0">Teaching Stats</h4>
-                    </div>
-                    <div class="card-body">
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <span>Active Sessions</span>
-                                <span class="badge bg-primary rounded-pill">1</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <span>Total Sessions</span>
-                                <span class="badge bg-primary rounded-pill">1</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <span>Students Taught</span>
-                                <span class="badge bg-primary rounded-pill">1</span>
+                                <span style="color: var(--primary-color);">Last Login</span>
+                                <span style="color: var(--primary-color);">Today, 6:00 AM</span>
                             </li>
                         </ul>
                     </div>
@@ -162,20 +361,22 @@
         </div>
     </div>
 
-    <footer class="bg-dark text-white py-4 mt-auto">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <h5>SmartAC</h5>
-                    <p>A project to help TVET students understand more about practical car AC maintenance and repair.</p>
-                </div>
-                <div class="col-md-6 text-md-end">
-                    <p>&copy; 2025 SmartAC. All rights reserved.</p>
-                </div>
-            </div>
-        </div>
-    </footer>
+    <!-- Include teacher footer partial -->
+    <%- include('../partials/teacher-footer') %>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="/js/theme-toggle.js"></script>
+    
+    <script>
+        // Initialize AOS animations
+        AOS.init();
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add padding to body for fixed header
+            document.body.style.paddingTop = document.querySelector('header').offsetHeight + 'px';
+        });
+    </script>
 </body>
 </html>

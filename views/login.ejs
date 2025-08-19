@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - SmartAC</title>
+    <title>Login - SmartAC VTU</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -38,10 +38,10 @@
         }
         .login-card {
             border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             overflow: hidden;
-            background-color: var(--card-bg-color);
-            border: none;
+            background-color: #121212;
+            border: 2px solid #d4af37;
             margin-bottom: 20px;
         }
         .card-header {
@@ -49,7 +49,7 @@
             padding: 20px 15px;
             position: relative;
             overflow: hidden;
-            background: linear-gradient(135deg, #2dd4bf, #3b5fe0) !important;
+            background: linear-gradient(135deg, #121212, #1a1a1a) !important;
             text-align: center;
         }
         .card-header h3 {
@@ -94,9 +94,10 @@
             margin-bottom: 5px;
         }
         .custom-input-group .input-group-text {
-            background-color: var(--card-bg-color);
-            color: var(--primary);
+            background-color: #222222;
+            color: #d4af37;
             border-right: none;
+            border-color: #333333;
             width: 42px;
             display: flex;
             justify-content: center;
@@ -104,23 +105,24 @@
         .custom-input-group .form-control {
             border-left: none;
             padding-left: 0;
-            background-color: var(--card-bg-color);
-            border-color: var(--border-color);
+            background-color: #222222;
+            border-color: #333333;
+            color: #ffffff;
         }
         .custom-input-group .form-control:focus {
             box-shadow: none;
             border-color: var(--border-color);
         }
         .toggle-password {
-            background-color: var(--card-bg-color);
-            border-color: var(--border-color);
+            background-color: #222222;
+            border-color: #333333;
             border-left: none;
-            color: var(--text-muted);
+            color: #d4af37;
             padding: 0 10px;
         }
         .toggle-password:hover {
-            color: var(--primary);
-            background-color: var(--card-bg-color);
+            color: #d4af37;
+            background-color: #333333;
         }
         .invalid-feedback {
             color: #dc3545;
@@ -139,8 +141,8 @@
             font-size: 14px;
         }
         .custom-checkbox .form-check-input:checked {
-            background-color: var(--primary);
-            border-color: var(--primary);
+            background-color: #d4af37;
+            border-color: #d4af37;
         }
         .btn-primary {
             height: 45px;
@@ -155,6 +157,22 @@
         .btn-primary:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(59, 95, 224, 0.4);
+        }
+        .btn-yellow {
+            height: 45px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            background-color: #d4af37;
+            color: #000;
+            border: none;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+        .btn-yellow:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+            background-color: #d4af37;
         }
         .info-banner {
             background-color: var(--card-bg-color);
@@ -179,8 +197,8 @@
             align-items: center;
             justify-content: center;
             border-radius: 50%;
-            background: linear-gradient(135deg, rgba(45, 212, 191, 0.2), rgba(59, 95, 224, 0.2));
-            color: var(--primary);
+            background: rgba(212, 175, 55, 0.2);
+            color: #d4af37;
             margin-right: 12px;
         }
         
@@ -193,10 +211,10 @@
             color: var(--text-color);
         }
         [data-theme="dark"] .custom-input-group .input-group-text {
-            color: var(--primary);
+            color: #d4af37;
         }
         [data-theme="dark"] .toggle-password {
-            color: var(--text-muted);
+            color: #d4af37;
         }
         
         /* Responsive adjustments */
@@ -255,44 +273,42 @@
         }
     </style>
 </head>
-<body>
+<body style="background-color: #121212; color: #ffffff;">
     <div class="login-page">
         <header class="fixed-top">
             <nav class="navbar navbar-expand-lg navbar-dark py-2">
-                <div class="container-fluid px-3">
+                <div class="container-fluid px-4">
                     <a class="navbar-brand d-flex align-items-center" href="/">
-                        <span class="fw-bold logo-text">SmartAC</span>
+                        <span class="fw-bold fs-2 logo-text">SmartAC VTU</span>
                     </a>
-                    <div class="d-flex align-items-center order-lg-2">
-                        <!-- Theme toggle will be added here by JavaScript -->
-                        <div class="theme-toggle-container me-2 me-lg-3"></div>
-                        <a class="btn login-btn px-3 active d-none d-lg-inline-block" href="/login">
-                            <i class="bi bi-box-arrow-in-right me-1"></i> Login
-                        </a>
-                        <button class="navbar-toggler ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                    </div>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav mx-auto">
                             <li class="nav-item">
-                                <a class="nav-link px-2 py-2" href="/#features">Features</a>
+                                <a class="nav-link px-3 mx-1" href="/#overview">Overview</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link px-2 py-2" href="/#about">About</a>
+                                <a class="nav-link px-3 mx-1" href="/#features">Features</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link px-2 py-2" href="/#components">Components</a>
+                                <a class="nav-link px-3 mx-1" href="/#about">About</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link px-2 py-2" href="/#resources">Resources</a>
+                                <a class="nav-link px-3 mx-1" href="/#resources">Resources</a>
                             </li>
-                            <li class="nav-item d-lg-none mt-2">
-                                <a class="btn btn-primary w-100" href="/login">
-                                    <i class="bi bi-box-arrow-in-right me-1"></i> Login
-                                </a>
+                            <li class="nav-item">
+                                <a class="nav-link px-3 mx-1" href="/#pricing">Pricing</a>
                             </li>
                         </ul>
+                        <div class="d-flex align-items-center">
+                            <!-- Theme toggle will be added here by JavaScript -->
+                            <div class="theme-toggle-container me-3"></div>
+                            <a class="btn login-btn px-4 active" href="/login">
+                                <i class="bi bi-box-arrow-in-right me-1"></i> Login
+                            </a>
+                        </div>
                     </div>
                 </div>
             </nav>
@@ -301,10 +317,10 @@
         <div class="login-content">
             <div class="login-form-container">
                 <div class="login-card">
-                    <div class="card-header text-center bg-primary text-white">
-                        <h3 class="mb-0 fw-bold">Welcome Back</h3>
+                    <div class="card-header text-center" style="background-color: #d4af37; color: #000;">
+                        <h3 class="mb-0 fw-bold" style="color: #000;">Welcome Back</h3>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body" style="background-color: #1a1a1a;">
                         <% if (typeof error !== 'undefined') { %>
                             <div class="alert alert-danger d-flex align-items-center" role="alert">
                                 <i class="bi bi-exclamation-triangle-fill me-2"></i>
@@ -313,7 +329,7 @@
                         <% } %>
                         <form action="/login" method="POST" class="fade-in">
                             <div class="mb-4">
-                                <label for="username" class="form-label fw-medium mb-2">Username</label>
+                                <label for="username" class="form-label fw-medium mb-2" style="color: #d4af37;">Username</label>
                                 <div class="input-group custom-input-group">
                                     <span class="input-group-text">
                                         <i class="bi bi-person"></i>
@@ -327,8 +343,8 @@
                             </div>
                             <div class="mb-4">
                                 <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <label for="password" class="form-label fw-medium">Password</label>
-                                    <a href="#" class="text-decoration-none small text-primary">Forgot Password?</a>
+                                    <label for="password" class="form-label fw-medium" style="color: #d4af37;">Password</label>
+                                    <a href="#" class="text-decoration-none small" style="color: #d4af37;">Forgot Password?</a>
                                 </div>
                                 <div class="input-group custom-input-group">
                                     <span class="input-group-text">
@@ -347,12 +363,12 @@
                             <div class="mb-4">
                                 <div class="form-check custom-checkbox">
                                     <input class="form-check-input" type="checkbox" id="rememberMe" name="rememberMe">
-                                    <label class="form-check-label" for="rememberMe">Remember me</label>
+                                    <label class="form-check-label" for="rememberMe" style="color: #d4af37;">Remember me</label>
                                 </div>
                             </div>
                             <div class="d-grid mt-4">
-                                <button type="submit" class="btn btn-primary btn-lg">
-                                    <i class="bi bi-box-arrow-in-right me-2"></i> Sign In
+                                <button type="submit" class="btn btn-lg" style="background-color: #d4af37; color: #000;">
+                                    OK
                                 </button>
                             </div>
                         </form>

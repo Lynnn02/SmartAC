@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paparan 3D - SmartAC</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/theme-toggle.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+</head>
+<body style="background-color: #121212; color: #ffffff;" class="animate__animated animate__fadeIn">
+    <%- include('../partials/teacher-header', {activePage: 'modules'}) %>
+
+
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card bg-dark text-white shadow-lg mb-4">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2 class="mb-0"><i class="bi bi-cube-fill me-2"></i>Paparan 3D - Practical <%= practicalNumber %></h2>
+                        <a href="/teacher/practical/<%= practicalNumber %>" class="btn btn-outline-light">
+                            <i class="bi bi-arrow-left me-2"></i>Kembali
+                        </a>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <!-- 3D Model Display Area -->
+                            <div class="card bg-black shadow-sm mb-4">
+                                <div class="card-body p-0 position-relative" style="height: 70vh; overflow: hidden;">
+                                    <!-- 3D Model Container -->
+                                    <div class="d-flex flex-column align-items-center justify-content-center h-100" id="model-container">
+                                        <i class="bi bi-cube-fill text-primary" style="font-size: 120px;"></i>
+                                        <h3 class="text-warning mt-3">Model 3D - Langkah <%= stepNumber %></h3>
+                                        <p class="text-muted">Visualisasi interaktif untuk Praktikum <%= practicalNumber %></p>
+                                        <div class="alert alert-info mt-3">
+                                            <i class="bi bi-info-circle me-2"></i>
+                                            Gunakan tetikus untuk memutar model dan butang zoom untuk melihat dengan lebih dekat.
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Navigation controls -->
+                                    <div class="position-absolute bottom-0 start-0 end-0 p-3 bg-dark bg-opacity-75">
+                                        <div class="d-flex justify-content-between">
+                                            <button id="prevStep" class="btn btn-outline-light">
+                                                <i class="bi bi-arrow-left me-2"></i>Langkah Sebelumnya
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-light me-2" id="zoomIn"><i class="bi bi-zoom-in"></i></button>
+                                            <button class="btn btn-sm btn-outline-light me-2" id="zoomOut"><i class="bi bi-zoom-out"></i></button>
+                                            <button class="btn btn-sm btn-outline-light" id="resetView"><i class="bi bi-arrow-counterclockwise"></i></button>
+                                            <button id="nextStep" class="btn btn-outline-light">
+                                                Langkah Seterusnya<i class="bi bi-arrow-right ms-2"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-4">
+                            <!-- Step Information Card -->
+                            <div class="card bg-dark shadow-sm mb-4" style="border: 2px solid #3a3a3a; border-radius: 12px; overflow: hidden;">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="step-number d-flex align-items-center justify-content-center me-3" style="background: linear-gradient(135deg, #d4af37, #e6c158); color: #121212; width: 40px; height: 40px; border-radius: 50%; font-weight: bold; box-shadow: 0 4px 8px rgba(0,0,0,0.2);"><%= stepNumber %></div>
+                                        <h4 class="card-title mb-0">Langkah <%= stepNumber %></h4>
+                                    </div>
+                                    
+                                    <div class="p-3 mb-3" style="background-color: #222222; color: #ffffff; border-left: 4px solid #ffc107; border-radius: 8px; box-shadow: 0 3px 10px rgba(0,0,0,0.1);">
+                                        <div class="d-flex">
+                                            <div class="me-3 text-primary">
+                                                <i class="bi bi-info-circle-fill fs-4"></i>
+                                            </div>
+                                            <div class="step-description">
+                                                <p class="mb-0"><%= stepDescription %></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Tips Card -->
+                            <div class="card bg-dark shadow-sm mb-4" style="border: 2px solid #3a3a3a; border-radius: 12px; overflow: hidden;">
+                                <div class="card-header bg-dark text-white">
+                                    <h5 class="mb-0"><i class="bi bi-lightbulb-fill me-2 text-warning"></i>Petua</h5>
+                                </div>
+                                <div class="card-body">
+                                    <ul class="mb-0 ps-3" style="padding-left: 1.5rem; border-radius: 4px;">
+                                        <li class="mb-2">Guna butang navigasi untuk bergerak antara langkah</li>
+                                        <li class="mb-2">Klik dan seret untuk putarkan model 3D</li>
+                                        <li class="mb-2">Guna roda tetikus atau butang zum untuk melihat dengan lebih dekat/jauh</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const currentPractical = "<%= practicalNumber %>";
+        const currentStep = "<%= stepNumber %>";
+        
+        // Get next and previous step information
+        let steps = [];
+        
+        // Define steps for each practical
+        if (currentPractical === "1") {
+            steps = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13"];
+        } else if (currentPractical === "2") {
+            steps = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
+        } else if (currentPractical === "3") {
+            steps = ["1", "2", "3", "4", "5", "6", "7", "8A", "8B", "8C", "9", "10"];
+        }
+        
+        // Find current step index
+        const currentIndex = steps.indexOf(currentStep);
+        
+        // Setup navigation buttons
+        const prevButton = document.getElementById('prevStep');
+        const nextButton = document.getElementById('nextStep');
+        
+        // Handle previous button
+        if (currentIndex > 0) {
+            const prevStep = steps[currentIndex - 1];
+            prevButton.addEventListener('click', function() {
+                window.location.href = `/teacher/3d-view?practical=${currentPractical}&step=${prevStep}`;
+            });
+        } else {
+            prevButton.disabled = true;
+            prevButton.classList.add('disabled');
+        }
+        
+        // Handle next button
+        if (currentIndex < steps.length - 1) {
+            const nextStep = steps[currentIndex + 1];
+            nextButton.addEventListener('click', function() {
+                window.location.href = `/teacher/3d-view?practical=${currentPractical}&step=${nextStep}`;
+            });
+        } else {
+            nextButton.disabled = true;
+            nextButton.classList.add('disabled');
+        }
+        
+        // 3D Model Interaction
+        const modelContainer = document.getElementById('model-container');
+        const zoomInBtn = document.getElementById('zoomIn');
+        const zoomOutBtn = document.getElementById('zoomOut');
+        const resetViewBtn = document.getElementById('resetView');
+        
+        // Variables for 3D model interaction
+        let scale = 1;
+        let rotation = { x: 0, y: 0 };
+        let isDragging = false;
+        let previousMousePosition = { x: 0, y: 0 };
+        
+        // Apply transformations to the model
+        function updateModelTransform() {
+            modelContainer.style.transform = `scale(${scale}) rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`;
+        }
+        
+        // Zoom in button
+        zoomInBtn.addEventListener('click', function() {
+            scale += 0.1;
+            if (scale > 2) scale = 2; // Maximum zoom
+            updateModelTransform();
+        });
+        
+        // Zoom out button
+        zoomOutBtn.addEventListener('click', function() {
+            scale -= 0.1;
+            if (scale < 0.5) scale = 0.5; // Minimum zoom
+            updateModelTransform();
+        });
+        
+        // Reset view button
+        resetViewBtn.addEventListener('click', function() {
+            scale = 1;
+            rotation = { x: 0, y: 0 };
+            updateModelTransform();
+        });
+        
+        // Mouse events for rotation
+        modelContainer.addEventListener('mousedown', function(e) {
+            isDragging = true;
+            previousMousePosition = {
+                x: e.clientX,
+                y: e.clientY
+            };
+        });
+        
+        document.addEventListener('mousemove', function(e) {
+            if (!isDragging) return;
+            
+            const deltaMove = {
+                x: e.clientX - previousMousePosition.x,
+                y: e.clientY - previousMousePosition.y
+            };
+            
+            rotation.y += deltaMove.x * 0.5;
+            rotation.x -= deltaMove.y * 0.5;
+            
+            previousMousePosition = {
+                x: e.clientX,
+                y: e.clientY
+            };
+            
+            updateModelTransform();
+        });
+        
+        document.addEventListener('mouseup', function() {
+            isDragging = false;
+        });
+        
+        // Mouse wheel for zoom
+        modelContainer.addEventListener('wheel', function(e) {
+            e.preventDefault();
+            if (e.deltaY < 0) {
+                // Zoom in
+                scale += 0.05;
+                if (scale > 2) scale = 2;
+            } else {
+                // Zoom out
+                scale -= 0.05;
+                if (scale < 0.5) scale = 0.5;
+            }
+            updateModelTransform();
+        });
+        
+        // Initialize with loading message
+        const loadingMessage = document.createElement('div');
+        loadingMessage.className = 'position-absolute top-50 start-50 translate-middle text-center';
+        loadingMessage.innerHTML = `
+            <div class="spinner-border text-primary mb-3" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <h5 class="text-white">Memuatkan Model 3D...</h5>
+        `;
+        
+        // Simulate loading of 3D model
+        setTimeout(function() {
+            // Remove loading message when model is loaded
+            if (modelContainer.contains(loadingMessage)) {
+                modelContainer.removeChild(loadingMessage);
+            }
+        }, 1000);
+    });
+</script>
+
+    <!-- Bootstrap and other scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <%- include('../partials/teacher-footer') %>
+</body>
+</html>

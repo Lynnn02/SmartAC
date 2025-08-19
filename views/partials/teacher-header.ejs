@@ -1,0 +1,539 @@
+<!-- Teacher Header Partial -->
+<header class="fixed-top" style="z-index: 1030;">
+    <nav class="navbar navbar-expand-lg navbar-dark py-2">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand d-flex align-items-center" href="/teacher/dashboard">
+                <span class="fw-bold fs-2 logo-text">SmartAC VTU</span>
+                <span class="ms-2 text-white d-none d-sm-inline">Pro</span>
+            </a>
+        
+            <!-- Theme toggle and user profile for mobile -->
+            <div class="d-flex align-items-center order-lg-2">
+                <!-- Theme toggle will be added here by JavaScript -->
+                <div class="theme-toggle-container me-2 me-lg-3"></div>
+                
+                <div class="dropdown d-inline-block">
+                    <a class="nav-link dropdown-toggle d-flex align-items-center p-0" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <div class="user-avatar me-md-2">
+                            <span><%= user.name.charAt(0) %></span>
+                        </div>
+                        <span class="d-none d-md-inline-block"><%= user.name %></span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="userDropdown">
+                        <li><a class="dropdown-item" href="/teacher/profile"><i class="bi bi-person me-2"></i>Profile</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="/logout"><i class="bi bi-box-arrow-right me-2 text-danger"></i>Logout</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Hamburger button removed -->
+            </div>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link <%= activePage === 'dashboard' ? 'active' : '' %> px-3" href="/teacher/dashboard">
+                            <i class="bi bi-speedometer2 me-2"></i> Home
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle <%= activePage === 'modules' ? 'active' : '' %> px-3" href="#" id="modulesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-journal-text me-2"></i> Modules
+                        </a>
+                        <ul class="dropdown-menu shadow-sm" aria-labelledby="modulesDropdown">
+                            <li><a class="dropdown-item" href="/teacher/airflow">Airflow Module</a></li>
+                            <li class="dropdown-submenu">
+                                <a class="dropdown-item dropdown-toggle" href="#" id="practicalSubmenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Practical Module
+                                </a>
+                                <ul class="dropdown-menu dropdown-submenu shadow-sm" aria-labelledby="practicalSubmenu">
+                                    <li><a class="dropdown-item" href="/teacher/practical1">PRAKTIKAL 1: PEMASANGAN HOSE MANIFOLD GAUGE & VACUUM HOSE (KAEDAH MANUAL)</a></li>
+                                    <li><a class="dropdown-item" href="/teacher/practical2">PRAKTIKAL 2: PROSES VACUUM SYSTEM SELEPAS BAIK-PULIH (KAEDAH MANUAL)</a></li>
+                                    <li><a class="dropdown-item" href="/teacher/practical3">PRAKTIKAL 3: PROSES CHARGING GAS DALAM SYSTEM SELEPAS BAIK-PULIH (KAEDAH MANUAL)</a></li>
+                                </ul>
+                            </li>
+                            <li><a class="dropdown-item" href="/teacher/fault">Fault Module</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <%= activePage === 'components' ? 'active' : '' %> px-3" href="/teacher/components">
+                            <i class="bi bi-grid-3x3-gap me-2"></i> AC Components
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <%= activePage === 'quiz' ? 'active' : '' %> px-3" href="/teacher/quiz">
+                            <i class="bi bi-question-circle me-2"></i> Quiz
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <%= activePage === 'facial-recognition' ? 'active' : '' %> px-3" href="/teacher/facial-recognition">
+                            <i class="bi bi-camera me-2"></i> Facial Recognition
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Mobile Bottom Navigation -->
+    <div class="mobile-nav d-lg-none">
+        <div class="mobile-nav-container">
+            <a href="/teacher/dashboard" class="mobile-nav-item <%= activePage === 'dashboard' ? 'active' : '' %>">
+                <div class="nav-icon-container">
+                    <i class="bi bi-house-door"></i>
+                </div>
+                <span>Home</span>
+            </a>
+            <a href="/teacher/components" class="mobile-nav-item <%= activePage === 'components' ? 'active' : '' %>">
+                <div class="nav-icon-container">
+                    <i class="bi bi-grid"></i>
+                </div>
+                <span>Components</span>
+            </a>
+            <a href="/teacher/quiz" class="mobile-nav-item <%= activePage === 'quiz' ? 'active' : '' %>">
+                <div class="nav-icon-container">
+                    <i class="bi bi-question-circle"></i>
+                </div>
+                <span>Quiz</span>
+            </a>
+            <a href="/teacher/facial-recognition" class="mobile-nav-item <%= activePage === 'facial-recognition' ? 'active' : '' %>">
+                <div class="nav-icon-container">
+                    <i class="bi bi-camera"></i>
+                </div>
+                <span>Facial</span>
+            </a>
+            <a href="#" class="mobile-nav-item dropdown-toggle <%= activePage === 'modules' ? 'active' : '' %>" id="mobileModulesDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <div class="nav-icon-container">
+                    <i class="bi bi-journal"></i>
+                </div>
+                <span>Modules</span>
+            </a>
+        </div>
+    </div>
+    <!-- Mobile Modules Dropdown (will be positioned with JavaScript) -->
+    <div class="dropdown-menu shadow-sm mobile-modules-dropdown" aria-labelledby="mobileModulesDropdown">
+        <a class="dropdown-item" href="/teacher/airflow">Airflow Module</a>
+        <a class="dropdown-item" href="/teacher/practical1">Praktikal 1</a>
+        <a class="dropdown-item" href="/teacher/practical2">Praktikal 2</a>
+        <a class="dropdown-item" href="/teacher/practical3">Praktikal 3</a>
+        <a class="dropdown-item" href="/teacher/fault">Fault Module</a>
+    </div>
+</header>
+
+<style>
+    /* Nested dropdown styles */
+    .dropdown-submenu {
+        position: relative;
+    }
+    
+    .dropdown-submenu .dropdown-menu {
+        top: 0;
+        left: 100%;
+        margin-top: -1px;
+        border-radius: 0.25rem;
+    }
+    
+    .dropdown-submenu:hover > .dropdown-menu {
+        display: block;
+    }
+    
+    .dropdown-item.dropdown-toggle::after {
+        display: inline-block;
+        margin-left: 0.5em;
+        vertical-align: 0.255em;
+        content: "";
+        border-top: 0.3em solid transparent;
+        border-right: 0;
+        border-bottom: 0.3em solid transparent;
+        border-left: 0.3em solid;
+    }
+    
+    /* Mobile modules dropdown positioning */
+    .mobile-modules-dropdown {
+        width: 100%;
+        border-radius: 12px 12px 0 0;
+        margin-bottom: 48px;
+        position: fixed;
+        bottom: 48px;
+        left: 0;
+        z-index: 9998;
+    }
+    
+    /* Mobile navigation styles */
+    .mobile-nav {
+        position: fixed !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        background: #000000;
+        box-shadow: 0 -1px 6px rgba(212, 175, 55, 0.15);
+        z-index: 9999 !important; /* Extremely high z-index to ensure it stays on top */
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+        height: 48px;
+        transform: translateZ(0); /* Force hardware acceleration */
+        will-change: transform; /* Optimize for animations */
+        transition: transform 0.3s ease; /* Smooth transition if needed */
+        -webkit-backface-visibility: hidden; /* Prevent rendering issues */
+        backface-visibility: hidden;
+        -webkit-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+        -webkit-transform-style: preserve-3d;
+        transform-style: preserve-3d;
+    }
+    
+    /* Ensure the mobile nav stays fixed on all browsers */
+    body {
+        overscroll-behavior-y: none;
+    }
+    
+    .mobile-nav-container {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        height: 100%;
+    }
+    
+    .mobile-nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: #6c757d;
+        text-decoration: none;
+        font-size: 0.65rem;
+        position: relative;
+        flex: 1;
+        text-align: center;
+        height: 100%;
+    }
+    
+    .nav-icon-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 2px;
+    }
+    
+    .mobile-nav-item i {
+        font-size: 1rem;
+    }
+    
+    .mobile-nav-item.active {
+        color: var(--color-primary);
+    }
+    
+    .mobile-nav-item.active::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #d4af37, #bb9a30);
+    }
+    
+    /* Adjust body padding for mobile navigation */
+    @media (max-width: 991.98px) {
+        body {
+            padding-bottom: 48px;
+        }
+        
+        .footer-wrapper {
+            padding-bottom: 48px;
+        }
+    }
+</style>
+
+<style>
+        body {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        background-color: var(--body-bg);
+        color: var(--text-color);
+    }
+    .dashboard-header {
+        background: linear-gradient(135deg, #d4af37, #bb9a30);
+        color: white;
+        padding: 2.5rem 0;
+        margin-bottom: 2rem;
+        position: relative;
+        overflow: hidden;
+    }
+    .dashboard-header::before {
+        content: '';
+        position: absolute;
+        top: -50px;
+        right: -50px;
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.1);
+    }
+    .dashboard-header::after {
+        content: '';
+        position: absolute;
+        bottom: -80px;
+        left: -80px;
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.1);
+    }
+    .dashboard-header .container {
+        position: relative;
+        z-index: 1;
+    }
+    .modern-card {
+        border-radius: 16px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+        border: none;
+        overflow: hidden;
+        height: 100%;
+        background-color: var(--card-bg-color);
+        color: var(--text-color);
+    }
+    
+    [data-theme="dark"] .modern-card {
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+    
+    [data-theme="dark"] .btn-light {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: var(--text-color);
+        border-color: transparent;
+    }
+    
+    [data-theme="dark"] .btn-light:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+        color: #fff;
+    }
+    .modern-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+    }
+    .card-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+        background: rgba(212, 175, 55, 0.1);
+        color: var(--color-primary);
+    }
+    .blue-card .card-icon {
+        background: rgba(212, 175, 55, 0.1);
+        color: var(--color-primary);
+    }
+    .green-card .card-icon {
+        background: rgba(45, 212, 191, 0.1);
+        color: #2dd4bf;
+    }
+    .yellow-card .card-icon {
+        background: rgba(255, 170, 0, 0.1);
+        color: #ffaa00;
+    }
+    .pink-card .card-icon {
+        background: rgba(236, 72, 153, 0.1);
+        color: #ec4899;
+    }
+    .section-title {
+        position: relative;
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.5rem;
+    }
+    .section-title::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 50px;
+        height: 3px;
+        background: linear-gradient(135deg, #d4af37, #bb9a30);
+        border-radius: 3px;
+    }
+    .btn-primary {
+        background: linear-gradient(135deg, #d4af37, #bb9a30);
+        border: none;
+        box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+        transition: all 0.3s ease;
+    }
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+    }
+    .navbar {
+        background-color: #000000 !important;
+    }
+    .user-avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        font-weight: 600;
+    }
+    .session-card {
+        border-radius: 16px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        border: 1px solid var(--border-color);
+        background-color: var(--card-bg-color);
+    }
+    .session-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
+    footer {
+        margin-top: auto;
+        background-color: var(--footer-bg);
+        color: var(--footer-text);
+        padding: 60px 0 30px;
+    }
+    .footer-logo {
+        font-weight: 700;
+        margin-bottom: 1rem;
+        font-size: 1.5rem;
+    }
+    .footer-desc {
+        opacity: 0.8;
+        font-size: 0.9rem;
+        margin-bottom: 1.5rem;
+    }
+    .footer-links {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    .footer-links li {
+        margin-bottom: 0.75rem;
+    }
+    .footer-links a {
+        color: inherit;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        opacity: 0.8;
+    }
+    .footer-links a:hover {
+        opacity: 1;
+        color: var(--primary-color);
+    }
+    .social-links a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.1);
+        color: inherit;
+        margin-right: 0.5rem;
+        transition: all 0.3s ease;
+    }
+    .social-links a:hover {
+        background-color: var(--primary-color);
+        color: #fff;
+        transform: translateY(-3px);
+    }
+    .contact-item {
+        display: flex;
+        margin-bottom: 1rem;
+    }
+    .contact-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 1rem;
+    }
+    .contact-link {
+        color: inherit;
+        text-decoration: none;
+        opacity: 0.8;
+        transition: all 0.3s ease;
+    }
+    .contact-link:hover {
+        opacity: 1;
+        color: var(--primary-color);
+    }
+    
+    /* Component styles */
+    .feature-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .feature-list li {
+        margin-bottom: 0.75rem;
+        display: flex;
+        align-items: center;
+        color: var(--text-color);
+    }
+    
+    .component-icon-large {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(187, 154, 48, 0.2));
+        color: var(--primary-color);
+        margin-bottom: 1.5rem;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .dashboard-header {
+            padding: 2rem 0;
+        }
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            font-size: 1.5rem;
+        }
+        .section-title {
+            font-size: 1.5rem;
+        }
+    }
+    
+    @media (max-width: 576px) {
+        .dashboard-header {
+            padding: 1.5rem 0;
+        }
+        .dashboard-header h1 {
+            font-size: 1.8rem;
+        }
+        .dashboard-header p {
+            font-size: 1rem;
+        }
+    }
+.avatar-circle {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.nav-link.active {
+    color: var(--color-primary) !important;
+    font-weight: 500;
+}
+</style>
+
+<!-- Include dropdown handler script -->
+<script src="/js/dropdown-handler.js" defer></script>

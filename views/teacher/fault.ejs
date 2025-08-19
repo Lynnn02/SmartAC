@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kerosakan - SmartAC</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/theme-toggle.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+</head>
+<body style="background-color: #121212; color: #ffffff;" class="animate__animated animate__fadeIn">
+    <%- include('../partials/teacher-header', {activePage: 'modules'}) %>
+
+    <div class="dashboard-header position-relative overflow-hidden animate__animated animate__fadeIn" style="background: linear-gradient(135deg, #121212, #1a1a1a);">
+        <div class="container position-relative" style="z-index: 2;">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <div class="d-flex align-items-center mb-3 animate__animated animate__fadeInUp">
+                        <div class="badge-floating bg-danger text-white fs-5 me-3 d-flex align-items-center justify-content-center" style="width: 50px; height: 50px; border-radius: 12px; box-shadow: 0 4px 10px rgba(220,53,69,0.3);">
+                            <i class="bi bi-exclamation-triangle"></i>
+                        </div>
+                        <div>
+                            <h1 class="mb-0 display-5 fw-bold" style="color: var(--bs-white);">Kerosakan</h1>
+                            <div style="color: #d4af37;">Diagnosis Masalah Sistem Penyaman Udara</div>
+                        </div>
+                    </div>
+                    <p class="lead mb-4 animate__animated animate__fadeInUp animate__delay-1s">Modul ini meliputi kerosakan umum sistem penyaman udara dan teknik diagnosis.</p>
+                    <div class="d-flex flex-wrap gap-3 animate__animated animate__fadeInUp animate__delay-2s">
+                        <div class="card-neumorphic py-2 px-3 d-flex align-items-center">
+                            <i class="bi bi-tools text-danger me-2"></i>
+                            <span>4 Jenis Kerosakan</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 d-none d-lg-block">
+                    <div class="position-relative animate__animated animate__fadeInRight animate__delay-2s">
+                        <div class="position-absolute top-0 start-0 w-100 h-100 bg-danger rounded-circle" style="filter: blur(70px); opacity: 0.1; z-index: -1;"></div>
+                        <div class="text-center position-relative">
+                            <i class="bi bi-exclamation-triangle" style="font-size: 8rem; color: var(--danger-color); opacity: 0.2;"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="position-absolute top-0 end-0 w-50 h-100 d-none d-lg-block" style="background: linear-gradient(135deg, transparent 0%, rgba(220,53,69,0.03) 100%);"></div>
+    </div>
+
+    <div class="container mb-5">
+        <div class="row">
+            <div class="col-lg-4 order-lg-2 mb-4">
+                <div class="position-sticky" style="top: 2rem;">
+                    <!-- 3D View Card -->
+                    <div class="card shadow-sm animate__animated animate__fadeInRight animate__delay-1s" style="background-color: #1a1a1a; color: #ffffff;">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="bg-danger rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 40px; height: 40px;">
+                                    <i class="bi bi-phone-fill text-white"></i>
+                                </div>
+                                <h5 class="mb-0">Lihat Model</h5>
+                            </div>
+                            
+                            <div class="text-center p-4">
+                                <div class="display-4 mb-3">
+                                    <i class="bi bi-phone text-danger"></i>
+                                </div>
+                                <div class="d-grid gap-2">
+                                    <a href="/teacher/3d-view?module=fault&step=1" class="btn btn-danger">
+                                        <i class="bi bi-box me-2"></i> Lihat dalam 3D
+                                    </a>
+                                    <a href="/teacher/ar-viewer" class="btn btn-outline-danger">
+                                        <i class="bi bi-phone me-2"></i> Lihat dalam AR
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-8 order-lg-1">
+                <div id="kerosakan-section" class="animate__animated animate__fadeIn">
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="bg-danger rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 45px; height: 45px;">
+                            <i class="bi bi-exclamation-triangle text-white fs-5"></i>
+                        </div>
+                        <h3 class="mb-0">Jenis Kerosakan</h3>
+                        <div class="ms-auto">
+                            <button class="btn btn-sm btn-outline-danger me-2" id="expandAllFaults">
+                                <i class="bi bi-arrows-expand"></i> Expand All
+                            </button>
+                            <button class="btn btn-sm btn-outline-danger" id="collapseAllFaults">
+                                <i class="bi bi-arrows-collapse"></i> Collapse All
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card gradient-border mb-4 animate__animated animate__fadeInUp animate__delay-1s shadow-sm" id="faultCard">
+                    <div class="card-body">
+                        <div class="fault-steps-container">
+                            <!-- Fault 1 -->
+                            <div class="fault-step shadow-sm animate__animated animate__fadeInUp" data-fault="1">
+                                <div class="d-flex align-items-center p-3 fault-header" style="background: linear-gradient(135deg, #1a1a1a, #222222); border-radius: 10px; cursor: pointer;">
+                                    <div class="fault-number d-flex align-items-center justify-content-center" style="background: linear-gradient(135deg, #dc3545, #e35d6a); color: #ffffff; width: 35px; height: 35px; border-radius: 50%; font-weight: bold;">1</div>
+                                    <h5 class="mb-0 ms-3 fw-bold">Fault 1 – Compressor OFF</h5>
+                                    <div class="ms-auto">
+                                        <a href="/teacher/3d-view?module=fault&step=1" class="btn btn-sm btn-danger px-3 py-2 me-2">Lihat dalam 3D</a>
+                                        <a href="/teacher/ar-viewer" class="btn btn-sm btn-outline-danger px-3 py-2">Lihat dalam AR</a>
+                                    </div>
+                                </div>
+                                <div class="fault-content p-3" style="border-left: 3px solid #dc3545; background-color: #1e1e1e;">
+                                    <div class="card-neumorphic p-3 mb-3" style="background-color: #222222; color: #ffffff;">
+                                        <h6 class="mb-2"><i class="bi bi-exclamation-circle-fill text-danger me-2"></i>Simptom:</h6>
+                                        <ul class="mb-0">
+                                            <li>Tiada penyejukan, bacaan LP & HP menjadi sama.</li>
+                                        </ul>
+                                    </div>
+                                    <div class="card-neumorphic p-3 mb-3" style="background-color: #222222; color: #ffffff;">
+                                        <h6 class="mb-2"><i class="bi bi-question-circle-fill text-warning me-2"></i>Punca:</h6>
+                                        <ul class="mb-0">
+                                            <li>Compressor tidak berfungsi (sambungan elektrik, relay, fius atau gegelung magnet bermasalah).</li>
+                                        </ul>
+                                    </div>
+                                    <div class="card-neumorphic p-3 mb-0" style="background-color: #222222; color: #ffffff;">
+                                        <h6 class="mb-2"><i class="bi bi-tools text-primary me-2"></i>Pengujian:</h6>
+                                        <ul class="mb-0">
+                                            <li>Periksa sambungan elektrik, relay, fius atau gegelung magnet pada pemampat.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Fault 2 -->
+                            <div class="fault-step shadow-sm animate__animated animate__fadeInUp animate__delay-1s mt-4" data-fault="2">
+                                <div class="d-flex align-items-center p-3 fault-header" style="background: linear-gradient(135deg, #1a1a1a, #222222); border-radius: 10px; cursor: pointer;">
+                                    <div class="fault-number d-flex align-items-center justify-content-center" style="background: linear-gradient(135deg, #dc3545, #e35d6a); color: #ffffff; width: 35px; height: 35px; border-radius: 50%; font-weight: bold;">2</div>
+                                    <h5 class="mb-0 ms-3 fw-bold">Fault 2 – Pressure Switch Disconnection</h5>
+                                    <div class="ms-auto">
+                                        <a href="/teacher/3d-view?module=fault&step=2" class="btn btn-sm btn-danger px-3 py-2 me-2">Lihat dalam 3D</a>
+                                        <a href="/teacher/ar-viewer" class="btn btn-sm btn-outline-danger px-3 py-2">Lihat dalam AR</a>
+                                    </div>
+                                </div>
+                                <div class="fault-content p-3" style="border-left: 3px solid #dc3545; background-color: #1e1e1e;">
+                                    <div class="card-neumorphic p-3 mb-3" style="background-color: #222222; color: #ffffff;">
+                                        <h6 class="mb-2"><i class="bi bi-exclamation-circle-fill text-danger me-2"></i>Simptom:</h6>
+                                        <ul class="mb-0">
+                                            <li>Compressor tidak beroperasi, tiada aliran refrigerant.</li>
+                                            <li>Kipas pemeluwap tidak berpusing.</li>
+                                        </ul>
+                                    </div>
+                                    <div class="card-neumorphic p-3 mb-3" style="background-color: #222222; color: #ffffff;">
+                                        <h6 class="mb-2"><i class="bi bi-question-circle-fill text-warning me-2"></i>Punca:</h6>
+                                        <ul class="mb-0">
+                                            <li>Pressure switch terbuka kerana tiada tekanan dalam sistem.</li>
+                                            <li>Tekanan melebihi had (tinggi).</li>
+                                        </ul>
+                                    </div>
+                                    <div class="card-neumorphic p-3 mb-0" style="background-color: #222222; color: #ffffff;">
+                                        <h6 class="mb-2"><i class="bi bi-tools text-primary me-2"></i>Pengujian:</h6>
+                                        <ul class="mb-0">
+                                            <li>Periksa pressure suis.</li>
+                                            <li>Periksa tekanan dalam sistem.</li>
+                                            <li>Periksa pengaliran elektrik.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Fault 3 -->
+                            <div class="fault-step shadow-sm animate__animated animate__fadeInUp animate__delay-1s mt-4" data-fault="3">
+                                <div class="d-flex align-items-center p-3 fault-header" style="background: linear-gradient(135deg, #1a1a1a, #222222); border-radius: 10px; cursor: pointer;">
+                                    <div class="fault-number d-flex align-items-center justify-content-center" style="background: linear-gradient(135deg, #dc3545, #e35d6a); color: #ffffff; width: 35px; height: 35px; border-radius: 50%; font-weight: bold;">3</div>
+                                    <h5 class="mb-0 ms-3 fw-bold">Fault 3 – Condenser Fan OFF</h5>
+                                    <div class="ms-auto">
+                                        <a href="/teacher/3d-view?module=fault&step=3" class="btn btn-sm btn-danger px-3 py-2 me-2">Lihat dalam 3D</a>
+                                        <a href="/teacher/ar-viewer" class="btn btn-sm btn-outline-danger px-3 py-2">Lihat dalam AR</a>
+                                    </div>
+                                </div>
+                                <div class="fault-content p-3" style="border-left: 3px solid #dc3545; background-color: #1e1e1e;">
+                                    <div class="card-neumorphic p-3 mb-3" style="background-color: #222222; color: #ffffff;">
+                                        <h6 class="mb-2"><i class="bi bi-exclamation-circle-fill text-danger me-2"></i>Simptom:</h6>
+                                        <ul class="mb-0">
+                                            <li>Sistem tidak sejuk.</li>
+                                            <li>Suhu dan tekanan meningkat dalam sistem terutamanya di pemeluwap.</li>
+                                        </ul>
+                                    </div>
+                                    <div class="card-neumorphic p-3 mb-3" style="background-color: #222222; color: #ffffff;">
+                                        <h6 class="mb-2"><i class="bi bi-question-circle-fill text-warning me-2"></i>Punca:</h6>
+                                        <ul class="mb-0">
+                                            <li>Tiada aliran udara melalui condenser (kipas bermasalah).</li>
+                                        </ul>
+                                    </div>
+                                    <div class="card-neumorphic p-3 mb-0" style="background-color: #222222; color: #ffffff;">
+                                        <h6 class="mb-2"><i class="bi bi-tools text-primary me-2"></i>Tip Ujian:</h6>
+                                        <ul class="mb-0">
+                                            <li>Periksa motor kipas, relay, fius dan pendawaian.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Fault 4 -->
+                            <div class="fault-step shadow-sm animate__animated animate__fadeInUp animate__delay-1s mt-4" data-fault="4">
+                                <div class="d-flex align-items-center p-3 fault-header" style="background: linear-gradient(135deg, #1a1a1a, #222222); border-radius: 10px; cursor: pointer;">
+                                    <div class="fault-number d-flex align-items-center justify-content-center" style="background: linear-gradient(135deg, #dc3545, #e35d6a); color: #ffffff; width: 35px; height: 35px; border-radius: 50%; font-weight: bold;">4</div>
+                                    <h5 class="mb-0 ms-3 fw-bold">Fault 4 – Evaporator Blower OFF</h5>
+                                    <div class="ms-auto">
+                                        <a href="/teacher/3d-view?module=fault&step=4" class="btn btn-sm btn-danger px-3 py-2 me-2">Lihat dalam 3D</a>
+                                        <a href="/teacher/ar-viewer" class="btn btn-sm btn-outline-danger px-3 py-2">Lihat dalam AR</a>
+                                    </div>
+                                </div>
+                                <div class="fault-content p-3" style="border-left: 3px solid #dc3545; background-color: #1e1e1e;">
+                                    <div class="card-neumorphic p-3 mb-3" style="background-color: #222222; color: #ffffff;">
+                                        <h6 class="mb-2"><i class="bi bi-exclamation-circle-fill text-danger me-2"></i>Simptom:</h6>
+                                        <ul class="mb-0">
+                                            <li>Tiada aliran angin sejuk dari penyejat.</li>
+                                            <li>Suhu dan tekanan di pemeluwap akan meningkat.</li>
+                                        </ul>
+                                    </div>
+                                    <div class="card-neumorphic p-3 mb-3" style="background-color: #222222; color: #ffffff;">
+                                        <h6 class="mb-2"><i class="bi bi-question-circle-fill text-warning me-2"></i>Punca:</h6>
+                                        <ul class="mb-0">
+                                            <li>Motor blower atau resistor bermasalah.</li>
+                                            <li>Relay atau fius bermasalah.</li>
+                                            <li>Masalah pendawaian.</li>
+                                        </ul>
+                                    </div>
+                                    <div class="card-neumorphic p-3 mb-0" style="background-color: #222222; color: #ffffff;">
+                                        <h6 class="mb-2"><i class="bi bi-tools text-primary me-2"></i>Tip Ujian:</h6>
+                                        <ul class="mb-0">
+                                            <li>Periksa motor blower, resistor, relay atau fius dan pendawaian.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/theme-toggle.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Toggle fault content
+            document.querySelectorAll('.fault-header').forEach(header => {
+                header.addEventListener('click', function() {
+                    const content = this.nextElementSibling;
+                    const isVisible = content.style.display !== 'none';
+                    
+                    if (isVisible) {
+                        content.style.display = 'none';
+                    } else {
+                        content.style.display = 'block';
+                    }
+                });
+            });
+            
+            // Expand all faults
+            document.getElementById('expandAllFaults').addEventListener('click', function() {
+                document.querySelectorAll('.fault-content').forEach(content => {
+                    content.style.display = 'block';
+                });
+            });
+            
+            // Collapse all faults
+            document.getElementById('collapseAllFaults').addEventListener('click', function() {
+                document.querySelectorAll('.fault-content').forEach(content => {
+                    content.style.display = 'none';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

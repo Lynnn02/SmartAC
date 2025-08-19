@@ -3,37 +3,49 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const path = require('path');
-const admin = require('firebase-admin');
-const firebaseConfig = require('./config/firebase-config');
 require('dotenv').config();
+
+// Optional Firebase initialization
+let admin;
+let firebaseConfig;
+try {
+  admin = require('firebase-admin');
+  firebaseConfig = require('./config/firebase-config');
+} catch (error) {
+  console.log('Firebase modules not available, continuing in mock mode');
+}
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Initialize Firebase Admin with the config
-try {
-  admin.initializeApp({
-    credential: admin.credential.cert({
-      projectId: firebaseConfig.projectId,
-      clientEmail: process.env.FIREBASE_CLIENT_EMAIL || 'firebase-adminsdk-dummy@smartac-28a3c.iam.gserviceaccount.com',
-      // In production, you would use a proper private key, not this placeholder
-      privateKey: (process.env.FIREBASE_PRIVATE_KEY || 'dummy-key').replace(/\\n/g, '\n')
-    }),
-    databaseURL: `https://${firebaseConfig.projectId}.firebaseio.com`,
-    storageBucket: firebaseConfig.storageBucket
-  });
-  console.log('Firebase Admin initialized successfully');
-} catch (error) {
-  // If initialization fails, log the error but continue running the app
-  console.error('Firebase Admin initialization error:', error);
-}
-
-// Get Firestore database reference (will be used if Firebase is initialized)
+// Initialize Firebase Admin with the config if available
 let db;
-try {
-  db = admin.firestore();
-} catch (error) {
-  console.log('Firestore not available, continuing without it');
+if (admin && firebaseConfig) {
+  try {
+    admin.initializeApp({
+      credential: admin.credential.cert({
+        projectId: firebaseConfig.projectId,
+        clientEmail: process.env.FIREBASE_CLIENT_EMAIL || 'firebase-adminsdk-dummy@smartac-28a3c.iam.gserviceaccount.com',
+        // In production, you would use a proper private key, not this placeholder
+        privateKey: (process.env.FIREBASE_PRIVATE_KEY || 'dummy-key').replace(/\\n/g, '\n')
+      }),
+      databaseURL: `https://${firebaseConfig.projectId}.firebaseio.com`,
+      storageBucket: firebaseConfig.storageBucket
+    });
+    console.log('Firebase Admin initialized successfully');
+    
+    // Get Firestore database reference
+    try {
+      db = admin.firestore();
+    } catch (error) {
+      console.log('Firestore not available, continuing without it');
+    }
+  } catch (error) {
+    // If initialization fails, log the error but continue running the app
+    console.error('Firebase Admin initialization error:', error);
+  }
+} else {
+  console.log('Running in mock mode without Firebase');
 }
 
 // Middleware
@@ -274,6 +286,18 @@ app.get('/teacher/practical/:id', isAuthenticated, authorize(['teacher']), (req,
   res.render('teacher/practical', { user: req.session.user, practicalId });
 });
 
+app.get('/teacher/practical1', isAuthenticated, authorize(['teacher']), (req, res) => {
+  res.render('teacher/practical1', { user: req.session.user, activePage: 'modules' });
+});
+
+app.get('/teacher/practical2', isAuthenticated, authorize(['teacher']), (req, res) => {
+  res.render('teacher/practical2', { user: req.session.user, activePage: 'modules' });
+});
+
+app.get('/teacher/practical3', isAuthenticated, authorize(['teacher']), (req, res) => {
+  res.render('teacher/practical3', { user: req.session.user, activePage: 'modules' });
+});
+
 // Student routes
 app.get('/student/dashboard', isAuthenticated, authorize(['student']), (req, res) => {
   res.render('student/dashboard', { user: req.session.user, sessions });
@@ -292,7 +316,40 @@ app.get('/student/practical/:id/start', isAuthenticated, authorize(['student']),
 });
 
 app.get('/student/components', isAuthenticated, authorize(['student']), (req, res) => {
-  res.render('student/components', { user: req.session.user });
+  res.render('student/components', { user: req.session.user, activePage: 'components' });
+});
+
+app.get('/teacher/components', isAuthenticated, authorize(['teacher']), (req, res) => {
+  res.render('teacher/components', { user: req.session.user, activePage: 'components' });
+});
+
+app.get('/student/quiz', isAuthenticated, authorize(['student']), (req, res) => {
+  res.render('student/quiz', { user: req.session.user, activePage: 'quiz' });
+});
+
+app.get('/teacher/quiz', isAuthenticated, authorize(['teacher']), (req, res) => {
+  res.render('teacher/quiz', { user: req.session.user, activePage: 'quiz' });
+});
+
+// New module routes
+app.get('/student/airflow', isAuthenticated, authorize(['student']), (req, res) => {
+  res.render('student/airflow', { user: req.session.user, activePage: 'modules' });
+});
+
+app.get('/teacher/airflow', isAuthenticated, authorize(['teacher']), (req, res) => {
+  res.render('teacher/airflow', { user: req.session.user, activePage: 'modules' });
+});
+
+app.get('/student/fault', isAuthenticated, authorize(['student']), (req, res) => {
+  res.render('student/fault', { user: req.session.user, activePage: 'modules' });
+});
+
+app.get('/teacher/fault', isAuthenticated, authorize(['teacher']), (req, res) => {
+  res.render('teacher/fault', { user: req.session.user, activePage: 'modules' });
+});
+
+app.get('/teacher/facial-recognition', isAuthenticated, authorize(['teacher']), (req, res) => {
+  res.render('teacher/facial-recognition', { user: req.session.user, activePage: 'facial-recognition' });
 });
 
 // Individual component routes
@@ -319,6 +376,10 @@ app.get('/student/component/:componentId', isAuthenticated, authorize(['student'
       modelFile = 'TXV.glb';
       componentName = 'Thermal Expansion Valve';
       break;
+    case 'compressor':
+      modelFile = 'Compressor.glb';
+      componentName = 'Compressor';
+      break;
     default:
       modelFile = '';
       componentName = 'Component Not Found';
@@ -332,7 +393,49 @@ app.get('/student/component/:componentId', isAuthenticated, authorize(['student'
   });
 });
 
-// AR Viewer route - temporarily without authentication for testing
+// Teacher component routes
+app.get('/teacher/component/:componentId', isAuthenticated, authorize(['teacher']), (req, res) => {
+  const componentId = req.params.componentId;
+  let modelFile = '';
+  let componentName = '';
+  
+  // Map component IDs to their model files
+  switch(componentId) {
+    case 'pressure-switch':
+      modelFile = 'PressureSwitch.glb';
+      componentName = 'Pressure Switch';
+      break;
+    case 'receiver-drier':
+      modelFile = 'ReceiverDrier.glb';
+      componentName = 'Receiver Drier';
+      break;
+    case 'sight-glass':
+      modelFile = 'SightGlass.glb';
+      componentName = 'Sight Glass';
+      break;
+    case 'txv':
+      modelFile = 'TXV.glb';
+      componentName = 'Thermal Expansion Valve';
+      break;
+    case 'compressor':
+      modelFile = 'Compressor.glb';
+      componentName = 'Compressor';
+      break;
+    default:
+      modelFile = '';
+      componentName = 'Component Not Found';
+  }
+  
+  res.render('teacher/component-detail', { 
+    user: req.session.user,
+    componentId: componentId,
+    modelFile: modelFile,
+    componentName: componentName,
+    activePage: 'components'
+  });
+});
+
+// AR Viewer routes - temporarily without authentication for testing
 app.get('/student/ar-viewer', (req, res) => {
   // Get model file from query parameter
   const modelFile = req.query.model || '';
@@ -342,6 +445,19 @@ app.get('/student/ar-viewer', (req, res) => {
     user: req.session.user || { name: 'Guest' },
     modelFile: modelFile,
     modelName: modelName
+  });
+});
+
+app.get('/teacher/ar-viewer', (req, res) => {
+  // Get model file from query parameter
+  const modelFile = req.query.model || '';
+  const modelName = req.query.name || 'AR Model';
+  
+  res.render('teacher/ar-viewer', { 
+    user: req.session.user || { name: 'Guest' },
+    modelFile: modelFile,
+    modelName: modelName,
+    activePage: 'components'
   });
 });
 
@@ -361,6 +477,41 @@ app.get('/student/practical/:id', isAuthenticated, authorize(['student']), (req,
     return res.redirect('/student/practicals');
   }
   res.render(`student/practical${practicalId}`, { user: req.session.user });
+});
+
+// 3D View page route - temporarily without authentication for testing
+app.get('/student/3d-view', (req, res) => {
+  const practicalNumber = req.query.practical || '1';
+  const stepNumber = req.query.step || '1';
+  
+  // Get step description based on practical and step number
+  let stepDescription = 'Langkah ini memerlukan perhatian khusus.';
+  
+  // In a real implementation, you would fetch this from a database
+  // For now, we'll use hardcoded descriptions for practical 3
+  if (practicalNumber === '3') {
+    switch(stepNumber) {
+      case '1':
+        stepDescription = 'Tutup semua Injap Tangan di Manifold Gauge (Biru, Merah, Kuning & Hitam).';
+        break;
+      case '2':
+        stepDescription = 'Letakkan Refrigerant Tank R134a di atas Timbang dan catat bacaan berat.';
+        break;
+      case '3':
+        stepDescription = 'Buka Injap Tangan Tank Refrigerant R134a.';
+        break;
+      // Add more cases for other steps
+      default:
+        stepDescription = 'Ikuti arahan dengan teliti untuk langkah ini.';
+    }
+  }
+  
+  res.render('student/3d-view', { 
+    user: req.session.user || { name: 'Guest' }, 
+    practicalNumber: practicalNumber,
+    stepNumber: stepNumber,
+    stepDescription: stepDescription
+  });
 });
 
 // =====================================================================

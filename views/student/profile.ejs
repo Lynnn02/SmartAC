@@ -12,12 +12,18 @@
     <link rel="stylesheet" href="/css/theme-toggle.css">
     <meta name="theme-color" content="#000000">
     <style>
+        :root {
+            --primary-color: #d4af37; /* Gold color */
+            --primary-dark: #b8860b; /* Darker gold */
+            --text-gold: #d4af37;
+        }
+        
         body {
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            background-color: var(--body-bg);
-            color: var(--text-color);
+            background-color: #121212; /* Black background */
+            color: #ffffff; /* White text */
             padding-top: 60px; /* Adjusted padding for fixed header */
         }
         
@@ -53,16 +59,29 @@
         .profile-header {
             padding: 2rem 0;
             margin-top: 0;
-            background: linear-gradient(135deg, rgba(49, 135, 123, 0.2), rgba(59, 95, 224, 0.2));
+            background: linear-gradient(135deg, #121212, #1a1a1a);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .profile-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--primary-dark));
         }
         .card {
             border-radius: 16px;
-            box-shadow: 0 10px 20px rgba(0, 202, 188, 0.08);
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.15);
             border: none;
             overflow: hidden;
-            background-color: white;
-            color: #333;
+            background-color: #1a1a1a; /* Dark card background */
+            color: #ffffff; /* White text */
             margin-bottom: 1.5rem;
+            border-left: 4px solid var(--primary-color);
         }
         
         /* Mobile optimizations for cards */
@@ -88,12 +107,23 @@
             .form-label {
                 font-size: 0.9rem;
                 margin-bottom: 0.3rem;
+                color: var(--primary-color);
             }
             
             .form-control {
+                background-color: #2a2a2a;
+                border-color: rgba(212, 175, 55, 0.3);
+                color: #ffffff;
                 font-size: 0.95rem;
                 padding: 0.5rem 0.75rem;
                 margin-bottom: 0.75rem;
+            }
+            
+            .form-control:focus {
+                background-color: #333333;
+                border-color: var(--primary-color);
+                color: #ffffff;
+                box-shadow: 0 0 0 0.25rem rgba(212, 175, 55, 0.25);
             }
             
             .btn {
@@ -107,18 +137,24 @@
             }
         }
         .card-header {
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
             padding: 1.25rem 1.5rem;
-            background-color: #f8f9fa;
-            color: #333;
+            background-color: #222222;
+            color: var(--primary-color);
         }
         .card-body {
             padding: 1.5rem;
         }
         .list-group-item {
-            background-color: white;
-            border-color: rgba(0, 0, 0, 0.1);
-            color: #333;
+            background-color: #1a1a1a;
+            border-color: rgba(212, 175, 55, 0.2);
+            color: #ffffff;
+            border-left: 4px solid var(--primary-color);
+            transition: all 0.3s ease;
+        }
+        
+        .list-group-item:hover {
+            background-color: #222222;
         }
         .user-avatar {
             display: flex;
@@ -127,8 +163,8 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #2dd4bf, #3b5fe0);
-            color: white;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: #121212; /* Black text on gold background */
             font-weight: bold;
         }
         .user-avatar.large {
@@ -168,21 +204,23 @@
             }
             
             /* Improve button styles for mobile */
-            .btn-primary {
-                background: linear-gradient(135deg, #2dd4bf, #3b5fe0);
+            .btn-primary, .btn {
+                background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
                 border: none;
                 border-radius: 30px;
                 font-weight: 500;
                 padding: 0.6rem 1.2rem;
-                box-shadow: 0 4px 10px rgba(59, 95, 224, 0.2);
+                box-shadow: 0 4px 10px rgba(212, 175, 55, 0.2);
                 transition: all 0.3s ease;
+                color: #121212;
             }
             
-            .btn-primary:hover, .btn-primary:focus {
+            .btn-primary:hover, .btn-primary:focus, .btn:hover, .btn:focus {
                 transform: translateY(-2px);
-                box-shadow: 0 6px 15px rgba(59, 95, 224, 0.3);
-                background: linear-gradient(135deg, #2dd4bf, #3b5fe0);
+                box-shadow: 0 6px 15px rgba(212, 175, 55, 0.3);
+                background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
                 border: none;
+                color: #121212;
             }
         }
         footer {
@@ -194,7 +232,7 @@
         .section-divider {
             height: 4px;
             width: 60px;
-            background: linear-gradient(135deg, #2dd4bf, #3b5fe0);
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
             border-radius: 2px;
             margin: 0 auto 1.5rem;
         }
@@ -206,11 +244,15 @@
         }
         
         .text-primary {
-            color: #3b5fe0 !important;
+            color: var(--primary-color) !important;
         }
         
         .text-success {
-            color: #2dd4bf !important;
+            color: var(--primary-color) !important;
+        }
+        
+        .text-gold {
+            color: var(--primary-color) !important;
         }
     </style>
 </head>
@@ -219,16 +261,17 @@
         <!-- Include student header partial -->
         <%- include('../partials/student-header', { user: user, activePage: 'profile' }) %>
 
-    <section class="profile-header py-4 text-center d-flex align-items-center">
+    <section class="profile-header py-4 text-center d-flex align-items-center" style="background: linear-gradient(135deg, #121212, #1a1a1a);">
         <div class="container py-4">
             <div class="row align-items-center">
                 <div class="col-lg-8 mx-auto text-center">
+                    <div style="width: 50px; height: 50px;"></div>
                     <div class="user-avatar large mx-auto mb-3">
                         <span><%= user.name.charAt(0) %></span>
                     </div>
-                    <h1 class="display-5 fw-bold mb-3" style="color: #333;"><%= user.name %></h1>
+                    <h1 class="display-5 fw-bold mb-3" style="color: var(--primary-color);"><%= user.name %></h1>
                     <div class="section-divider mb-3 mx-auto"></div>
-                    <p class="lead mb-0" style="color: #333;">Student Profile</p>
+                    <p class="lead mb-0" style="color: #ffffff;">Student Profile</p>
                 </div>
             </div>
         </div>
@@ -238,6 +281,7 @@
         <div class="row">
             <div class="col-lg-8">
                 <div class="card shadow-sm mb-4" data-aos="fade-up" data-aos-duration="800">
+                    <div style="width: 50px; height: 200px;"></div>
                     <div class="card-header">
                         <h4 class="mb-0 fw-bold">Profile Information</h4>
                     </div>
@@ -260,7 +304,7 @@
                                 <input type="text" class="form-control" id="studentId" name="studentId" value="TVET-2025-001">
                             </div>
                             <div class="d-grid">
-                                <button type="submit" class="btn btn-primary">Update Profile</button>
+                                <button type="submit" class="btn" style="background: linear-gradient(135deg, var(--primary-color), var(--primary-dark)); color: #121212; font-weight: 500; border-radius: 30px; box-shadow: 0 4px 10px rgba(212, 175, 55, 0.3); transition: all 0.3s ease;">Update Profile</button>
                             </div>
                         </form>
                     </div>
@@ -285,7 +329,7 @@
                                 <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
                             </div>
                             <div class="d-grid">
-                                <button type="submit" class="btn btn-primary">Change Password</button>
+                                <button type="submit" class="btn" style="background: linear-gradient(135deg, var(--primary-color), var(--primary-dark)); color: #121212; font-weight: 500; border-radius: 30px; box-shadow: 0 4px 10px rgba(212, 175, 55, 0.3); transition: all 0.3s ease;">Change Password</button>
                             </div>
                         </form>
                     </div>
@@ -299,16 +343,16 @@
                     <div class="card-body">
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <span>Role</span>
-                                <span class="badge bg-success">Student</span>
+                                <span style="color: var(--primary-color);">Role</span>
+                                <span class="badge" style="background: linear-gradient(135deg, var(--primary-color), var(--primary-dark)); color: #121212;">Student</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <span>Account ID</span>
-                                <span class="text-muted">#<%= user.id %></span>
+                                <span style="color: var(--primary-color);">Account ID</span>
+                                <span style="color: var(--primary-color);">#<%= user.id %></span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <span>Last Login</span>
-                                <span class="text-muted">Today, 6:00 AM</span>
+                                <span style="color: var(--primary-color);">Last Login</span>
+                                <span style="color: var(--primary-color);">Today, 6:00 AM</span>
                             </li>
                         </ul>
                     </div>

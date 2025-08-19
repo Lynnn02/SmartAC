@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuiz Pengetahuan | SmartAC VTU Plus</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <!-- Google Fonts - Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #d4af37;
+            --primary-dark: #bb9a30;
+            --dark-bg: #121212;
+            --dark-card: #1a1a1a;
+            --dark-card-hover: #212121;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--dark-bg);
+            color: #ffffff;
+        }
+        
+        .section-divider {
+            height: 4px;
+            width: 80px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            border-radius: 2px;
+        }
+        
+        .quiz-card {
+            background: linear-gradient(145deg, var(--dark-card), var(--dark-card-hover));
+            border-left: 4px solid var(--primary-color);
+            border-radius: 8px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .quiz-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
+        }
+        
+        .quiz-option {
+            background-color: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .quiz-option:hover {
+            background-color: rgba(212, 175, 55, 0.1);
+            border-color: var(--primary-color);
+        }
+        
+        .quiz-option.selected {
+            background-color: rgba(212, 175, 55, 0.2);
+            border-color: var(--primary-color);
+        }
+        
+        .quiz-option.correct {
+            background-color: rgba(40, 167, 69, 0.2);
+            border-color: #28a745;
+        }
+        
+        .quiz-option.incorrect {
+            background-color: rgba(220, 53, 69, 0.2);
+            border-color: #dc3545;
+        }
+        
+        .btn-gold {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: #121212;
+            border: none;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+        }
+        
+        .btn-gold:hover {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
+            color: #121212;
+            transform: translateY(-2px);
+        }
+        
+        .btn-outline-gold {
+            background: transparent;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+        }
+        
+        .btn-outline-gold:hover {
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--primary-color);
+        }
+        
+        .progress-bar {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+        }
+        
+        .result-icon {
+            font-size: 5rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .card-neumorphic {
+            background-color: #222222;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .animate__animated.animate__fadeIn {
+            --animate-duration: 0.8s;
+        }
+        
+        .animate__animated.animate__fadeInUp {
+            --animate-duration: 0.8s;
+        }
+    </style>
+</head>
+<body style="background-color: #121212; color: #ffffff;" class="animate__animated animate__fadeIn">
+    <div class="container-fluid p-0 footer-wrapper">
+        <!-- Include student header partial -->
+        <%- include('../partials/student-header', { user: user, activePage: 'quiz' }) %>
+        
+        <section class="dashboard-header position-relative overflow-hidden animate__animated animate__fadeIn" style="background: linear-gradient(135deg, #121212, #1a1a1a);">
+            <div class="container position-relative" style="z-index: 2;">
+                <div class="row align-items-center">
+                    <div class="col-lg-8">
+                        <div style="width: 50px; height: 50px;"></div>
+                        <div class="d-flex align-items-center mb-3 animate__animated animate__fadeInUp">
+                            <div class="badge-floating bg-primary text-white fs-5 me-3 d-flex align-items-center justify-content-center" style="width: 50px; height: 50px; border-radius: 12px; box-shadow: 0 4px 10px rgba(212,175,55,0.3); background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));">
+                                <i class="bi bi-question-circle"></i>
+                            </div>
+                            
+                            <div>
+                                <h1 class="mb-0 display-5 fw-bold" style="color: var(--bs-white);">Kuiz <span style="color: #d4af37;">Pengetahuan</span></h1>
+                                <div style="color: #d4af37;">AC System Knowledge Test</div>
+                            </div>
+                        </div>
+                        <p class="lead mb-4 animate__animated animate__fadeInUp animate__delay-1s">Uji pengetahuan anda tentang sistem penyaman udara kereta dan dapatkan maklum balas segera</p>
+                        <div class="d-flex flex-wrap gap-3 animate__animated animate__fadeInUp animate__delay-2s">
+                            <div class="card-neumorphic py-2 px-3 d-flex align-items-center">
+                                <i class="bi bi-question-circle text-primary me-2"></i>
+                                <span>10 Soalan</span>
+                            </div>
+                            <div class="card-neumorphic py-2 px-3 d-flex align-items-center">
+                                <i class="bi bi-clock text-primary me-2"></i>
+                                <span>Est. 15 minit</span>
+                            </div>
+                            <div class="card-neumorphic py-2 px-3 d-flex align-items-center">
+                                <i class="bi bi-trophy text-warning me-2"></i>
+                                <span>100 XP</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 d-none d-lg-block">
+                        <div class="position-relative animate__animated animate__fadeInRight animate__delay-2s">
+                            <div class="position-absolute top-0 start-0 w-100 h-100 bg-primary rounded-circle" style="filter: blur(70px); opacity: 0.1; z-index: -1;"></div>
+                            <div class="text-center position-relative">
+                                <i class="bi bi-lightbulb" style="font-size: 8rem; color: var(--primary-color); opacity: 0.2;"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="position-absolute top-0 end-0 w-50 h-100 d-none d-lg-block" style="background: linear-gradient(135deg, transparent 0%, rgba(212,175,55,0.03) 100%);"></div>
+        </section>
+        
+        <div class="container mb-5">
+            <div class="row">
+                <div class="col-lg-4 order-lg-2 mb-4">
+                    <div class="position-sticky" style="top: 2rem;">
+                        <!-- Progress Card -->
+                        <div class="card shadow-sm mb-4 animate__animated animate__fadeInRight" style="background-color: #1a1a1a; color: #ffffff;">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 40px; height: 40px; background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));">
+                                        <i class="bi bi-graph-up text-dark"></i>
+                                    </div>
+                                    <h5 class="mb-0 text-white">Kemajuan Anda</h5>
+                                </div>
+                                
+                                <div class="progress mb-3" style="height: 10px;">
+                                    <div class="progress-bar" role="progressbar" style="width: 0%" id="quiz-progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <span class="text-white">Kemajuan</span>
+                                    <span class="badge" id="progress-percentage" style="background: linear-gradient(135deg, var(--primary-color), var(--primary-dark)); color: #121212;">0%</span>
+                                </div>
+                                
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="text-white">Soalan Dijawab</span>
+                                    <span class="badge bg-dark text-white" id="questions-answered">0/10</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Quiz Stats Card -->
+                        <div class="card shadow-sm animate__animated animate__fadeInRight animate__delay-1s" style="background-color: #1a1a1a; color: #ffffff;">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 40px; height: 40px; background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));">
+                                        <i class="bi bi-stopwatch text-dark"></i>
+                                    </div>
+                                    <h5 class="mb-0">Statistik Kuiz</h5>
+                                </div>
+                                
+                                <div class="card-neumorphic p-3 mb-3">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span>Masa Diambil</span>
+                                        <span class="badge bg-dark text-white" id="time-elapsed">00:00</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="card-neumorphic p-3">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span>Skor Semasa</span>
+                                        <span class="badge bg-dark text-white" id="current-score">0</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-8 order-lg-1">
+                    <!-- Quiz Section -->
+                    <section class="quiz-section">
+                        <div class="d-flex align-items-center mb-4 animate__animated animate__fadeInUp">
+                            <div class="rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 45px; height: 45px; background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));">
+                                <i class="bi bi-question-diamond text-dark fs-5"></i>
+                            </div>
+                            <h3 class="mb-0">Kuiz Pengetahuan AC</h3>
+                        </div>
+                        
+                        <!-- Quiz Container -->
+                        <div id="quiz-container">
+                            <!-- Quiz cards will be dynamically inserted here -->
+                        </div>
+                        
+                        <!-- Quiz Navigation -->
+                        <div class="d-flex justify-content-between mt-4 animate__animated animate__fadeInUp animate__delay-1s">
+                            <button id="prev-btn" class="btn btn-outline-gold px-4 py-2" disabled>
+                                <i class="bi bi-arrow-left me-2"></i>Soalan Sebelumnya
+                            </button>
+                            <button id="next-btn" class="btn btn-gold px-4 py-2">
+                                Soalan Seterusnya<i class="bi bi-arrow-right ms-2"></i>
+                            </button>
+                        </div>
+                    </section>
+                    
+                    <!-- Results Section (Initially Hidden) -->
+                    <section id="results-section" class="d-none">
+                        <div class="quiz-card p-5 text-center animate__animated animate__fadeIn">
+                            <i class="bi bi-trophy-fill result-icon mb-4"></i>
+                            <h2 class="display-5 fw-bold mb-3">Tahniah!</h2>
+                            <p class="lead mb-4">Anda telah melengkapkan kuiz pengetahuan AC kereta</p>
+                            
+                            <div class="result-stats my-5">
+                                <div class="row g-4">
+                                    <div class="col-md-4">
+                                        <div class="p-3 rounded" style="background-color: rgba(0,0,0,0.3);">
+                                            <h3 id="correct-count" class="gradient-text display-4 fw-bold">0</h3>
+                                            <p>Jawapan Betul</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="p-3 rounded" style="background-color: rgba(0,0,0,0.3);">
+                                            <h3 id="score-percent" class="gradient-text display-4 fw-bold">0%</h3>
+                                            <p>Skor</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="p-3 rounded" style="background-color: rgba(0,0,0,0.3);">
+                                            <h3 id="time-taken" class="gradient-text display-4 fw-bold">0:00</h3>
+                                            <p>Masa</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-5">
+                                <button id="review-btn" class="btn btn-outline-gold px-4 py-2 me-3">
+                                    <i class="bi bi-eye me-2"></i>Semak Jawapan
+                                </button>
+                                <button id="restart-btn" class="btn btn-gold px-4 py-2">
+                                    <i class="bi bi-arrow-repeat me-2"></i>Cuba Lagi
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <script>
+        // Initialize AOS
+        AOS.init();
+        
+        // Quiz Questions
+        const quizQuestions = [
+            {
+                question: "Apakah komponen utama sistem penyaman udara kereta yang memampatkan gas penyejuk?",
+                options: [
+                    "Pemampat (Compressor)",
+                    "Pemeluwap (Condenser)",
+                    "Penyejat (Evaporator)",
+                    "Injap Pengembangan (Expansion Valve)"
+                ],
+                correctAnswer: 0,
+                explanation: "Pemampat (Compressor) adalah komponen yang memampatkan gas penyejuk, meningkatkan tekanan dan suhunya sebelum ia mengalir ke pemeluwap."
+            },
+            {
+                question: "Di manakah proses penukaran gas penyejuk panas kepada cecair berlaku?",
+                options: [
+                    "Penyejat (Evaporator)",
+                    "Pemeluwap (Condenser)",
+                    "Pemampat (Compressor)",
+                    "Pengering (Receiver Drier)"
+                ],
+                correctAnswer: 1,
+                explanation: "Pemeluwap (Condenser) menukarkan gas penyejuk panas kepada cecair dengan melepaskan haba ke persekitaran."
+            },
+            {
+                question: "Apakah fungsi injap pengembangan dalam sistem AC kereta?",
+                options: [
+                    "Memampatkan gas penyejuk",
+                    "Menukarkan gas kepada cecair",
+                    "Mengawal aliran penyejuk ke penyejat",
+                    "Menapis kotoran dari penyejuk"
+                ],
+                correctAnswer: 2,
+                explanation: "Injap pengembangan mengawal jumlah penyejuk cecair yang mengalir ke penyejat, di mana ia bertukar menjadi gas dan menyerap haba."
+            },
+            {
+                question: "Komponen manakah yang bertanggungjawab untuk menyejukkan udara dalam kabin kereta?",
+                options: [
+                    "Pemampat (Compressor)",
+                    "Pemeluwap (Condenser)",
+                    "Penyejat (Evaporator)",
+                    "Pengering (Receiver Drier)"
+                ],
+                correctAnswer: 2,
+                explanation: "Penyejat (Evaporator) terletak di dalam dasbod kereta dan menyejukkan udara kabin apabila penyejuk bertukar dari cecair kepada gas, menyerap haba dari udara yang melaluinya."
+            },
+            {
+                question: "Apakah jenis penyejuk yang biasa digunakan dalam sistem AC kereta moden?",
+                options: [
+                    "R-12",
+                    "R-134a",
+                    "R-22",
+                    "R-1234yf"
+                ],
+                correctAnswer: 3,
+                explanation: "R-1234yf adalah penyejuk yang kini digunakan dalam kebanyakan kereta baru kerana ia mempunyai potensi pemanasan global yang lebih rendah berbanding R-134a."
+            },
+            {
+                question: "Apakah tanda-tanda bahawa sistem AC kereta anda memerlukan servis?",
+                options: [
+                    "Udara sejuk yang tidak mencukupi",
+                    "Bunyi bising dari bawah hud",
+                    "Bau tidak menyenangkan dari liang udara",
+                    "Semua di atas"
+                ],
+                correctAnswer: 3,
+                explanation: "Semua tanda-tanda ini menunjukkan bahawa sistem AC kereta anda mungkin memerlukan servis atau pembaikan."
+            },
+            {
+                question: "Apakah fungsi pengering (receiver drier) dalam sistem AC kereta?",
+                options: [
+                    "Menyejukkan penyejuk",
+                    "Memampatkan penyejuk",
+                    "Menapis kotoran dan mengeluarkan kelembapan",
+                    "Mengawal aliran penyejuk"
+                ],
+                correctAnswer: 2,
+                explanation: "Pengering (receiver drier) menapis kotoran dan mengeluarkan kelembapan dari penyejuk untuk mencegah kerosakan pada komponen sistem."
+            },
+            {
+                question: "Mengapa penyelenggaraan berkala sistem AC kereta penting?",
+                options: [
+                    "Meningkatkan kecekapan bahan api",
+                    "Mencegah kerosakan komponen yang mahal",
+                    "Memastikan kualiti udara yang baik dalam kabin",
+                    "Semua di atas"
+                ],
+                correctAnswer: 3,
+                explanation: "Penyelenggaraan berkala sistem AC kereta penting untuk semua sebab yang dinyatakan - ia meningkatkan kecekapan bahan api, mencegah kerosakan komponen yang mahal, dan memastikan kualiti udara yang baik dalam kabin."
+            },
+            {
+                question: "Apakah yang berlaku jika tahap penyejuk dalam sistem AC kereta terlalu rendah?",
+                options: [
+                    "Sistem akan menjadi terlalu sejuk",
+                    "Pemampat boleh rosak",
+                    "Kecekapan bahan api akan meningkat",
+                    "Tiada kesan pada prestasi sistem"
+                ],
+                correctAnswer: 1,
+                explanation: "Jika tahap penyejuk terlalu rendah, pemampat boleh rosak kerana ia tidak mempunyai pelinciran yang mencukupi dan boleh menjadi terlalu panas."
+            },
+            {
+                question: "Apakah komponen yang menggerakkan pemampat AC?",
+                options: [
+                    "Motor elektrik",
+                    "Tali sawat enjin",
+                    "Turbin",
+                    "Bateri kereta"
+                ],
+                correctAnswer: 1,
+                explanation: "Dalam kebanyakan kereta, pemampat AC digerakkan oleh tali sawat enjin yang disambungkan ke kotak engkol enjin."
+            }
+        ];
+        
+        // Quiz State
+        let currentQuestionIndex = 0;
+        let userAnswers = Array(quizQuestions.length).fill(null);
+        let quizStartTime = null;
+        let quizEndTime = null;
+        let timerInterval = null;
+        
+        // DOM Elements
+        const quizContainer = document.getElementById('quiz-container');
+        const progressBar = document.getElementById('quiz-progress');
+        const progressPercentage = document.getElementById('progress-percentage');
+        const questionsAnswered = document.getElementById('questions-answered');
+        const timeElapsed = document.getElementById('time-elapsed');
+        const currentScore = document.getElementById('current-score');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const resultsSection = document.getElementById('results-section');
+        const quizSection = document.querySelector('.quiz-section');
+        const correctCount = document.getElementById('correct-count');
+        const scorePercent = document.getElementById('score-percent');
+        const timeTaken = document.getElementById('time-taken');
+        const reviewBtn = document.getElementById('review-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        
+        // Initialize Quiz
+        function initQuiz() {
+            quizStartTime = new Date();
+            startTimer();
+            renderQuestion();
+            updateProgress();
+        }
+        
+        // Start Timer
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                const now = new Date();
+                const timeDiff = Math.floor((now - quizStartTime) / 1000); // in seconds
+                const minutes = Math.floor(timeDiff / 60);
+                const seconds = timeDiff % 60;
+                timeElapsed.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }, 1000);
+        }
+        
+        // Render Current Question
+        function renderQuestion() {
+            const question = quizQuestions[currentQuestionIndex];
+            
+            // Clear previous content
+            quizContainer.innerHTML = '';
+            
+            // Create quiz card
+            const quizCard = document.createElement('div');
+            quizCard.className = 'quiz-card p-4 p-md-5';
+            quizCard.setAttribute('data-aos', 'fade-up');
+            quizCard.setAttribute('data-aos-duration', '800');
+            
+            // Question number and text
+            const questionHeader = document.createElement('div');
+            questionHeader.className = 'mb-4';
+            questionHeader.innerHTML = `
+                <span class="badge bg-black text-white mb-3">Soalan ${currentQuestionIndex + 1}/${quizQuestions.length}</span>
+                <h3 class="fw-bold">${question.question}</h3>
+            `;
+            
+            // Options
+            const optionsContainer = document.createElement('div');
+            optionsContainer.className = 'mt-4';
+            
+            question.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = `quiz-option ${userAnswers[currentQuestionIndex] === index ? 'selected' : ''}`;
+                optionElement.innerHTML = `
+                    <div class="d-flex align-items-center">
+                        <div class="option-indicator me-3">${String.fromCharCode(65 + index)}</div>
+                        <div>${option}</div>
+                    </div>
+                `;
+                
+                // Add click event
+                optionElement.addEventListener('click', () => selectOption(index));
+                
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            // Explanation (only shown after answering)
+            if (userAnswers[currentQuestionIndex] !== null) {
+                const explanationElement = document.createElement('div');
+                explanationElement.className = 'mt-4 p-3 rounded';
+                explanationElement.style.backgroundColor = 'rgba(0, 0, 0, 0.3)';
+                explanationElement.style.borderLeft = '4px solid var(--primary-color)';
+                
+                const isCorrect = userAnswers[currentQuestionIndex] === question.correctAnswer;
+                
+                explanationElement.innerHTML = `
+                    <div class="d-flex align-items-center mb-2">
+                        <i class="bi ${isCorrect ? 'bi-check-circle-fill text-success' : 'bi-x-circle-fill text-danger'} me-2"></i>
+                        <strong>${isCorrect ? 'Jawapan Betul!' : 'Jawapan Salah'}</strong>
+                    </div>
+                    <p class="mb-0">${question.explanation}</p>
+                `;
+                
+                optionsContainer.appendChild(explanationElement);
+            }
+            
+            // Assemble quiz card
+            quizCard.appendChild(questionHeader);
+            quizCard.appendChild(optionsContainer);
+            
+            // Add to container
+            quizContainer.appendChild(quizCard);
+            
+            // Update button states
+            updateButtonStates();
+        }
+        
+        // Select Option
+        function selectOption(optionIndex) {
+            // Only allow selection if not already answered
+            if (userAnswers[currentQuestionIndex] === null) {
+                userAnswers[currentQuestionIndex] = optionIndex;
+                
+                // Show correct/incorrect immediately
+                const options = document.querySelectorAll('.quiz-option');
+                
+                options.forEach((option, index) => {
+                    if (index === optionIndex) {
+                        option.classList.add('selected');
+                        if (optionIndex === quizQuestions[currentQuestionIndex].correctAnswer) {
+                            option.classList.add('correct');
+                        } else {
+                            option.classList.add('incorrect');
+                        }
+                    }
+                    
+                    // Show correct answer if user selected wrong
+                    if (index === quizQuestions[currentQuestionIndex].correctAnswer && optionIndex !== index) {
+                        option.classList.add('correct');
+                    }
+                });
+                
+                // Update progress and score
+                updateProgress();
+                updateScore();
+                
+                // Re-render to show explanation
+                renderQuestion();
+                
+                // Check if all questions answered
+                if (userAnswers.every(answer => answer !== null)) {
+                    nextBtn.textContent = 'Lihat Keputusan';
+                    nextBtn.classList.add('btn-success');
+                }
+            }
+        }
+        
+        // Update Progress Bar
+        function updateProgress() {
+            const answeredCount = userAnswers.filter(answer => answer !== null).length;
+            const progressPercentageValue = (answeredCount / quizQuestions.length) * 100;
+            progressBar.style.width = `${progressPercentageValue}%`;
+            progressBar.setAttribute('aria-valuenow', progressPercentageValue);
+            progressPercentage.textContent = `${Math.round(progressPercentageValue)}%`;
+            questionsAnswered.textContent = `${answeredCount}/${quizQuestions.length}`;
+        }
+        
+        // Update Score
+        function updateScore() {
+            const correctAnswers = userAnswers.filter((answer, index) => 
+                answer === quizQuestions[index].correctAnswer && answer !== null
+            ).length;
+            currentScore.textContent = correctAnswers;
+        }
+        
+        // Update Button States
+        function updateButtonStates() {
+            prevBtn.disabled = currentQuestionIndex === 0;
+            
+            if (userAnswers.every(answer => answer !== null)) {
+                nextBtn.textContent = 'Lihat Keputusan';
+                nextBtn.classList.add('btn-success');
+            } else if (currentQuestionIndex === quizQuestions.length - 1) {
+                nextBtn.textContent = 'Lihat Keputusan';
+            } else {
+                nextBtn.textContent = 'Soalan Seterusnya';
+                nextBtn.classList.remove('btn-success');
+            }
+        }
+        
+        // Navigate to Previous Question
+        function goToPrevQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                renderQuestion();
+            }
+        }
+        
+        // Navigate to Next Question or Show Results
+        function goToNextQuestion() {
+            if (currentQuestionIndex < quizQuestions.length - 1) {
+                currentQuestionIndex++;
+                renderQuestion();
+            } else {
+                showResults();
+            }
+        }
+        
+        // Show Quiz Results
+        function showResults() {
+            quizEndTime = new Date();
+            clearInterval(timerInterval);
+            
+            // Calculate score
+            const correctAnswers = userAnswers.filter((answer, index) => 
+                answer === quizQuestions[index].correctAnswer
+            ).length;
+            
+            const scorePercentage = Math.round((correctAnswers / quizQuestions.length) * 100);
+            
+            // Calculate time
+            const timeDiff = Math.floor((quizEndTime - quizStartTime) / 1000); // in seconds
+            const minutes = Math.floor(timeDiff / 60);
+            const seconds = timeDiff % 60;
+            
+            // Update results
+            correctCount.textContent = correctAnswers;
+            scorePercent.textContent = `${scorePercentage}%`;
+            timeTaken.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            
+            // Hide quiz, show results
+            quizSection.classList.add('d-none');
+            resultsSection.classList.remove('d-none');
+        }
+        
+        // Review Answers
+        function reviewAnswers() {
+            quizSection.classList.remove('d-none');
+            resultsSection.classList.add('d-none');
+            currentQuestionIndex = 0;
+            renderQuestion();
+        }
+        
+        // Restart Quiz
+        function restartQuiz() {
+            currentQuestionIndex = 0;
+            userAnswers = Array(quizQuestions.length).fill(null);
+            quizStartTime = new Date();
+            startTimer();
+            
+            quizSection.classList.remove('d-none');
+            resultsSection.classList.add('d-none');
+            
+            renderQuestion();
+            updateProgress();
+            updateScore();
+        }
+        
+        // Event Listeners
+        prevBtn.addEventListener('click', goToPrevQuestion);
+        nextBtn.addEventListener('click', goToNextQuestion);
+        reviewBtn.addEventListener('click', reviewAnswers);
+        restartBtn.addEventListener('click', restartQuiz);
+        
+        // Initialize Quiz on Page Load
+        document.addEventListener('DOMContentLoaded', initQuiz);
+    </script>
+</body>
+</html>

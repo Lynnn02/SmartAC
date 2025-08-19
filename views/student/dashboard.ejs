@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - SmartAC</title>
+    <title>Dashboard - SmartAC VTU Plus</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -16,10 +16,11 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            background-color: var(--body-bg);
-            color: var(--text-color);
+            background-color: #121212;
+            color: #ffffff;
             -webkit-tap-highlight-color: transparent;
             touch-action: manipulation;
+            font-family: 'Poppins', sans-serif;
         }
         
         /* Mobile optimizations */
@@ -57,12 +58,13 @@
             }
         }
         .dashboard-header {
-            background: linear-gradient(135deg, #2dd4bf, #3b5fe0);
+            background: linear-gradient(135deg, #121212, #1a1a1a);
             color: white;
             padding: 2.5rem 0;
             margin-bottom: 2rem;
             position: relative;
             overflow: hidden;
+            border-bottom: 2px solid #d4af37;
         }
         .dashboard-header::before {
             content: '';
@@ -126,12 +128,12 @@
             justify-content: center;
             font-size: 1.8rem;
             margin-bottom: 1rem;
-            background: rgba(59, 95, 224, 0.1);
-            color: #3b5fe0;
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--color-primary);
         }
         .blue-card .card-icon {
-            background: rgba(59, 95, 224, 0.1);
-            color: #3b5fe0;
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--color-primary);
         }
         .green-card .card-icon {
             background: rgba(45, 212, 191, 0.1);
@@ -157,18 +159,26 @@
             bottom: 0;
             width: 50px;
             height: 3px;
-            background: linear-gradient(135deg, #2dd4bf, #3b5fe0);
+            background: linear-gradient(135deg, #d4af37, #bb9a30);
+            border-radius: 3px;
+        }
+        
+        .section-divider {
+            height: 3px;
+            width: 80px;
+            background: linear-gradient(135deg, #d4af37, #bb9a30);
+            margin: 0 auto;
             border-radius: 3px;
         }
         .btn-primary {
-            background: linear-gradient(135deg, #2dd4bf, #3b5fe0);
+            background: linear-gradient(135deg, #d4af37, #bb9a30);
             border: none;
-            box-shadow: 0 4px 15px rgba(59, 95, 224, 0.3);
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
             transition: all 0.3s ease;
         }
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(59, 95, 224, 0.4);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
         }
         .navbar {
             background-color: var(--navbar-bg) !important;
@@ -289,7 +299,7 @@
             width: 150px;
             height: 150px;
             border-radius: 50%;
-            background: linear-gradient(135deg, rgba(45, 212, 191, 0.2), rgba(59, 95, 224, 0.2));
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(187, 154, 48, 0.2));
             color: var(--primary-color);
             margin-bottom: 1.5rem;
         }
@@ -337,20 +347,20 @@
         }
     </style>
 </head>
-<body>
+<body style="background-color: #121212; color: #ffffff;">
     <div class="container-fluid p-0 footer-wrapper">
         <!-- Include student header partial -->
         <%- include('../partials/student-header', { user: user, activePage: 'dashboard' }) %>
 
-    <section class="hero-section py-5 text-center d-flex align-items-center">
+    <section class="hero-section py-5 text-center d-flex align-items-center" style="background: linear-gradient(135deg, #121212, #1a1a1a); color: var(--bs-white);">
         <div class="container py-5 mt-5">
             <div class="row align-items-center">
                 <div class="col-lg-8 mx-auto text-center" data-aos="fade-up" data-aos-duration="1000">
-                    <h1 class="display-3 fw-bold mb-3">Welcome, <span class="text-primary">Student</span></h1>
+                    <h1 class="display-4 fw-bold mb-3" style="color: var(--bs-white);">Selamat Datang ke <span style="background: linear-gradient(135deg, #d4af37, #e6c158); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">SmartAC VTU Plus</span></h1>
                     <div class="section-divider mb-4 mx-auto"></div>
-                    <p class="lead mb-5">Access your learning materials and track your progress in car AC maintenance and repair</p>
-                    <a href="/student/join-session" class="btn btn-primary btn-lg px-5 py-3 fw-semibold">
-                        Join Session <i class="bi bi-broadcast ms-2"></i>
+                    <p class="lead mb-5" style="color: var(--bs-light);">Akses bahan pembelajaran dan jejaki kemajuan anda dalam penyelenggaraan dan pembaikan AC kereta dengan model 3D interaktif dan modul praktikal kami</p>
+                    <a href="/student/practical/1" class="btn btn-lg px-5 py-3 fw-semibold" style="background: linear-gradient(135deg, #d4af37, #e6c158); color: #121212; border: none; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);">
+                        Mula Belajar <i class="bi bi-arrow-right ms-2"></i>
                     </a>
                 </div>
             </div>
@@ -361,52 +371,67 @@
         <section id="resources" class="features-section py-5">
             <div class="container py-5">
                 <div class="section-header text-center mb-5" data-aos="fade-up" data-aos-duration="800">
-                    <h2 class="display-5 fw-bold mb-3">Learning Resources</h2>
+                    <h2 class="display-5 fw-bold mb-3" style="background: linear-gradient(135deg, #d4af37, #e6c158); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">Sumber Pembelajaran</h2>
                     <div class="section-divider mb-4 mx-auto"></div>
-                    <p class="lead text-secondary">Explore our comprehensive learning materials and practical modules</p>
+                    <p class="lead" style="color: #e0e0e0;">Terokai bahan pembelajaran komprehensif dan modul praktikal kami</p>
                 </div>
                 
                 <div class="row g-5">
-                    <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
-                        <div class="modern-card pink-card h-100">
+                    <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
+                        <div class="modern-card h-100" style="background: linear-gradient(145deg, #1a1a1a, #212121); color: #ffffff; border-left: 4px solid #d4af37;">
                             <div class="card-body">
-                                <div class="card-icon mb-4">
-                                    <i class="bi bi-journal-text"></i>
+                                <div class="card-icon mb-4" style="background: rgba(212, 175, 55, 0.15);">
+                                    <i class="bi bi-journal-text" style="color: #d4af37;"></i>
                                 </div>
-                                <h3 class="card-title h4 mb-3">Practical Modules</h3>
-                                <p class="card-text mb-4">Access step-by-step practical modules for car AC maintenance and repair with interactive guides.</p>
+                                <h3 class="card-title h4 mb-3">Modul Praktikal</h3>
+                                <p class="card-text mb-4">Akses modul praktikal langkah demi langkah untuk penyelenggaraan dan pembaikan AC kereta dengan panduan interaktif.</p>
                                 <div class="card-action">
-                                    <a href="/student/practical/1" class="btn btn-light">Start Practical 1</a>
+                                    <a href="/student/practical/1" class="btn" style="background: linear-gradient(135deg, #d4af37, #bb9a30); color: #121212;">Mula Praktikal 1</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
-                        <div class="modern-card purple-card h-100">
+                    <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
+                        <div class="modern-card h-100" style="background: linear-gradient(145deg, #1a1a1a, #212121); color: #ffffff; border-left: 4px solid #d4af37;">
                             <div class="card-body">
-                                <div class="card-icon mb-4">
-                                    <i class="bi bi-gear"></i>
+                                <div class="card-icon mb-4" style="background: rgba(212, 175, 55, 0.15);">
+                                    <i class="bi bi-gear" style="color: #d4af37;"></i>
                                 </div>
-                                <h3 class="card-title h4 mb-3">AC Components</h3>
-                                <p class="card-text mb-4">Explore detailed information about car AC components and their functions with 3D models.</p>
+                                <h3 class="card-title h4 mb-3">Komponen AC</h3>
+                                <p class="card-text mb-4">Terokai maklumat terperinci tentang komponen AC kereta dan fungsinya dengan model 3D.</p>
                                 <div class="card-action">
-                                    <a href="/student/components" class="btn btn-light">View Components</a>
+                                    <a href="/student/components" class="btn" style="background: linear-gradient(135deg, #d4af37, #bb9a30); color: #121212;">Lihat Komponen</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-duration="800" data-aos-delay="300">
-                        <div class="modern-card teal-card h-100">
+                    <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-duration="800" data-aos-delay="300">
+                        <div class="modern-card h-100" style="background: linear-gradient(145deg, #1a1a1a, #212121); color: #ffffff; border-left: 4px solid #d4af37;">
                             <div class="card-body">
-                                <div class="card-icon mb-4">
-                                    <i class="bi bi-person"></i>
+                                <div class="card-icon mb-4" style="background: rgba(212, 175, 55, 0.15);">
+                                    <i class="bi bi-question-circle" style="color: #d4af37;"></i>
                                 </div>
-                                <h3 class="card-title h4 mb-3">My Profile</h3>
-                                <p class="card-text mb-4">View and update your profile information and track your learning progress in one place.</p>
+                                <h3 class="card-title h4 mb-3">Kuiz Pengetahuan</h3>
+                                <p class="card-text mb-4">Uji pengetahuan anda tentang sistem AC kereta dengan kuiz interaktif dan dapatkan maklum balas segera.</p>
                                 <div class="card-action">
-                                    <a href="/student/profile" class="btn btn-light">Go to Profile</a>
+                                    <a href="/student/quiz" class="btn" style="background: linear-gradient(135deg, #d4af37, #bb9a30); color: #121212;">Mula Kuiz</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-duration="800" data-aos-delay="400">
+                        <div class="modern-card h-100" style="background: linear-gradient(145deg, #1a1a1a, #212121); color: #ffffff; border-left: 4px solid #d4af37;">
+                            <div class="card-body">
+                                <div class="card-icon mb-4" style="background: rgba(212, 175, 55, 0.15);">
+                                    <i class="bi bi-person" style="color: #d4af37;"></i>
+                                </div>
+                                <h3 class="card-title h4 mb-3">Profil Saya</h3>
+                                <p class="card-text mb-4">Lihat dan kemaskini maklumat profil anda dan jejaki kemajuan pembelajaran anda di satu tempat.</p>
+                                <div class="card-action">
+                                    <a href="/student/profile" class="btn" style="background: linear-gradient(135deg, #d4af37, #bb9a30); color: #121212;">Ke Profil</a>
                                 </div>
                             </div>
                         </div>
@@ -416,28 +441,31 @@
         </section>
 
             <!-- Car AC Components Section -->
-            <div class="section-header text-center mb-2" data-aos="fade-up" data-aos-duration="800">
-                <h2 class="display-5 fw-bold mb-3">Car AC Components</h2>
-                <div class="section-divider mb-2 mx-auto"></div>
-                <p class="lead">Explore the components of a car air conditioning system in 3D</p>
+            <div class="section-header text-center mb-4 mt-5" data-aos="fade-up" data-aos-duration="800">
+                <h2 class="display-5 fw-bold mb-3" style="background: linear-gradient(135deg, #d4af37, #e6c158); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">Komponen AC Kereta</h2>
+                <div class="section-divider mb-3 mx-auto"></div>
+                <p class="lead" style="color: #e0e0e0;">Terokai komponen sistem penyaman udara kereta dalam 3D</p>
             </div>
             
             <div class="row g-3 mb-4 align-items-center justify-content-center ps-md-4">
                 <div class="col-lg-6 ps-lg-4" data-aos="fade-right" data-aos-duration="1000">
                     <div class="modern-card h-100 p-4 mx-auto" style="max-width: 90%;">
                         <div class="card-body">
-                            <h3 class="h4 mb-4">Interactive 3D Components</h3>
-                            <p class="card-text mb-4">Explore the components of a car air conditioning system in 3D.</p>
-                            <p class="card-text mb-4">Learn about each part's function and how they work together in an interactive environment.</p>
+                            <h3 class="h4 mb-4">Komponen 3D Interaktif</h3>
+                            <p class="card-text mb-4">Terokai komponen sistem penyaman udara kereta dalam 3D.</p>
+                            <p class="card-text mb-4">Pelajari tentang fungsi setiap bahagian dan bagaimana ia berfungsi bersama dalam persekitaran interaktif.</p>
                             <ul class="feature-list mb-4">
-                                <li><i class="bi bi-check-circle-fill text-primary me-2"></i> Compressor</li>
-                                <li><i class="bi bi-check-circle-fill text-primary me-2"></i> Condenser</li>
-                                <li><i class="bi bi-check-circle-fill text-primary me-2"></i> Expansion Valve</li>
-                                <li><i class="bi bi-check-circle-fill text-primary me-2"></i> Evaporator</li>
+                                <li><i class="bi bi-check-circle-fill me-2" style="color: #d4af37;"></i> Pemampat</li>
+                                <li><i class="bi bi-check-circle-fill me-2" style="color: #d4af37;"></i> Pemeluwap</li>
+                                <li><i class="bi bi-check-circle-fill me-2" style="color: #d4af37;"></i> Injap Pengembangan</li>
+                                <li><i class="bi bi-check-circle-fill me-2" style="color: #d4af37;"></i> Penyejat</li>
                             </ul>
-                            <div class="mt-4">
-                                <a href="/student/components" class="btn btn-primary btn-lg px-4">
-                                    <i class="bi bi-box me-2"></i>View Components
+                            <div class="mt-4 d-flex gap-3">
+                                <a href="/student/components" class="btn btn-lg px-4" style="background: linear-gradient(135deg, #d4af37, #bb9a30); color: #121212; border: none; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);">
+                                    <i class="bi bi-box me-2"></i>Lihat Komponen
+                                </a>
+                                <a href="/student/quiz" class="btn btn-lg px-4" style="background: linear-gradient(135deg, #121212, #212121); color: #d4af37; border: 1px solid #d4af37; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);">
+                                    <i class="bi bi-question-circle me-2"></i>Kuiz
                                 </a>
                             </div>
                         </div>
@@ -446,11 +474,11 @@
                 
                 <div class="col-lg-6 pe-lg-4" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
                     <div class="component-image-container text-center p-3 me-lg-3 mx-auto" style="max-width: 90%;">
-                        <div class="component-icon-large d-flex align-items-center justify-content-center mx-auto mb-3" style="height: 120px;">
-                            <i class="bi bi-gear-wide-connected display-1"></i>
+                        <div class="component-icon-large d-flex align-items-center justify-content-center mx-auto mb-3" style="height: 120px; background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(187, 154, 48, 0.15));">
+                            <i class="bi bi-gear-wide-connected display-1" style="color: #d4af37;"></i>
                         </div>
-                        <h4 class="mb-2">Interactive 3D Models</h4>
-                        <p class="mb-0">Rotate, zoom and explore each component in detail</p>
+                        <h4 class="mb-2">Model 3D Interaktif</h4>
+                        <p class="mb-0">Putar, zum dan terokai setiap komponen secara terperinci</p>
                     </div>
                 </div>
             </div>

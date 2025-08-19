@@ -39,6 +39,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize smooth scrolling
     initializeSmoothScrolling();
+    
+    // Initialize pricing tabs
+    initializePricingTabs();
 });
 
 // Apply interactive classes to elements
@@ -432,5 +435,41 @@ function togglePasswordVisibility(inputId, iconId) {
     } else {
         passwordInput.type = 'password';
         icon.classList.replace('bi-eye-slash', 'bi-eye');
+    }
+}
+
+// Initialize pricing tabs functionality
+function initializePricingTabs() {
+    const digitalTab = document.getElementById('digital-tab');
+    const physicalTab = document.getElementById('physical-tab');
+    const digitalContent = document.getElementById('digital-content');
+    const physicalContent = document.getElementById('physical-content');
+    
+    if (digitalTab && physicalTab && digitalContent && physicalContent) {
+        // Set up click event for digital access tab
+        digitalTab.addEventListener('click', function() {
+            // Update active tab styling
+            digitalTab.style.backgroundColor = '#d4af37';
+            digitalTab.style.color = '#000';
+            physicalTab.style.backgroundColor = 'transparent';
+            physicalTab.style.color = '#d4af37';
+            
+            // Show/hide content
+            digitalContent.style.display = 'block';
+            physicalContent.style.display = 'none';
+        });
+        
+        // Set up click event for physical units tab
+        physicalTab.addEventListener('click', function() {
+            // Update active tab styling
+            physicalTab.style.backgroundColor = '#d4af37';
+            physicalTab.style.color = '#000';
+            digitalTab.style.backgroundColor = 'transparent';
+            digitalTab.style.color = '#d4af37';
+            
+            // Show/hide content
+            digitalContent.style.display = 'none';
+            physicalContent.style.display = 'block';
+        });
     }
 }

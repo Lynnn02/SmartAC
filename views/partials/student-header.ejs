@@ -3,8 +3,8 @@
     <nav class="navbar navbar-expand-lg navbar-dark py-2">
         <div class="container-fluid px-4">
             <a class="navbar-brand d-flex align-items-center" href="/student/dashboard">
-                <span class="fw-bold fs-2 logo-text">SmartAC</span>
-                <span class="ms-2 text-dark d-none d-sm-inline">&nbsp Student</span>
+                <span class="fw-bold fs-2 logo-text">SmartAC VTU</span>
+                <span class="ms-2 text-white d-none d-sm-inline">Plus</span>
             </a>
         
             <!-- Theme toggle and user profile for mobile -->
@@ -36,24 +36,33 @@
                             <i class="bi bi-speedometer2 me-2"></i> Home
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link <%= activePage === 'join-session' || activePage === 'session-detail' ? 'active' : '' %> px-3" href="/student/join-session">
-                            <i class="bi bi-people-fill me-2"></i> Sessions
-                        </a>
-                    </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle <%= activePage === 'practical' ? 'active' : '' %> px-3" href="#" id="practicalDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-journal-text me-2"></i> Practical Modules
+                        <a class="nav-link dropdown-toggle <%= activePage === 'modules' ? 'active' : '' %> px-3" href="#" id="modulesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-journal-text me-2"></i> Modules
                         </a>
-                        <ul class="dropdown-menu shadow-sm" aria-labelledby="practicalDropdown">
-                            <li><a class="dropdown-item" href="/student/practical/1">Praktikal 1</a></li>
-                            <li><a class="dropdown-item" href="/student/practical/2">Praktikal 2</a></li>
-                            <li><a class="dropdown-item" href="/student/practical/3">Praktikal 3</a></li>
+                        <ul class="dropdown-menu shadow-sm" aria-labelledby="modulesDropdown">
+                            <li><a class="dropdown-item" href="/student/airflow">Airflow Module</a></li>
+                            <li class="dropdown-submenu">
+                                <a class="dropdown-item dropdown-toggle" href="#" id="practicalSubmenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Practical Module
+                                </a>
+                                <ul class="dropdown-menu dropdown-submenu shadow-sm" aria-labelledby="practicalSubmenu">
+                                    <li><a class="dropdown-item" href="/student/practical/1">PRAKTIKAL 1: PEMASANGAN HOSE MANIFOLD GAUGE & VACUUM HOSE (KAEDAH MANUAL)</a></li>
+                                    <li><a class="dropdown-item" href="/student/practical/2">PRAKTIKAL 2: PROSES VACUUM SYSTEM SELEPAS BAIK-PULIH (KAEDAH MANUAL)</a></li>
+                                    <li><a class="dropdown-item" href="/student/practical/3">PRAKTIKAL 3: PROSES CHARGING GAS DALAM SYSTEM SELEPAS BAIK-PULIH (KAEDAH MANUAL)</a></li>
+                                </ul>
+                            </li>
+                            <li><a class="dropdown-item" href="/student/fault">Fault Module</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link <%= activePage === 'components' ? 'active' : '' %> px-3" href="/student/components">
                             <i class="bi bi-grid-3x3-gap me-2"></i> AC Components
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <%= activePage === 'quiz' ? 'active' : '' %> px-3" href="/student/quiz">
+                            <i class="bi bi-question-circle me-2"></i> Quiz
                         </a>
                     </li>
                 </ul>
@@ -70,37 +79,83 @@
                 </div>
                 <span>Home</span>
             </a>
-            <a href="/student/join-session" class="mobile-nav-item <%= activePage === 'join-session' || activePage === 'session-detail' ? 'active' : '' %>">
-                <div class="nav-icon-container">
-                    <i class="bi bi-people"></i>
-                </div>
-                <span>Sessions</span>
-            </a>
             <a href="/student/components" class="mobile-nav-item <%= activePage === 'components' ? 'active' : '' %>">
                 <div class="nav-icon-container">
                     <i class="bi bi-grid"></i>
                 </div>
                 <span>Components</span>
             </a>
-            <a href="/student/practicals" class="mobile-nav-item <%= activePage === 'practical' ? 'active' : '' %>">
+            <a href="/student/quiz" class="mobile-nav-item <%= activePage === 'quiz' ? 'active' : '' %>">
+                <div class="nav-icon-container">
+                    <i class="bi bi-question-circle"></i>
+                </div>
+                <span>Quiz</span>
+            </a>
+            <a href="#" class="mobile-nav-item dropdown-toggle <%= activePage === 'modules' ? 'active' : '' %>" id="mobileModulesDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                 <div class="nav-icon-container">
                     <i class="bi bi-journal"></i>
                 </div>
-                <span>Practical</span>
+                <span>Modules</span>
             </a>
         </div>
+    </div>
+    <!-- Mobile Modules Dropdown (will be positioned with JavaScript) -->
+    <div class="dropdown-menu shadow-sm mobile-modules-dropdown" aria-labelledby="mobileModulesDropdown">
+        <a class="dropdown-item" href="/student/airflow">Airflow Module</a>
+        <a class="dropdown-item" href="/student/practical/1">Praktikal 1</a>
+        <a class="dropdown-item" href="/student/practical/2">Praktikal 2</a>
+        <a class="dropdown-item" href="/student/practical/3">Praktikal 3</a>
+        <a class="dropdown-item" href="/student/fault">Fault Module</a>
     </div>
 </header>
 
 <style>
+    /* Nested dropdown styles */
+    .dropdown-submenu {
+        position: relative;
+    }
+    
+    .dropdown-submenu .dropdown-menu {
+        top: 0;
+        left: 100%;
+        margin-top: -1px;
+        border-radius: 0.25rem;
+    }
+    
+    .dropdown-submenu:hover > .dropdown-menu {
+        display: block;
+    }
+    
+    .dropdown-item.dropdown-toggle::after {
+        display: inline-block;
+        margin-left: 0.5em;
+        vertical-align: 0.255em;
+        content: "";
+        border-top: 0.3em solid transparent;
+        border-right: 0;
+        border-bottom: 0.3em solid transparent;
+        border-left: 0.3em solid;
+    }
+    
+    /* Mobile modules dropdown positioning */
+    .mobile-modules-dropdown {
+        width: 100%;
+        border-radius: 12px 12px 0 0;
+        margin-bottom: 48px;
+        position: fixed;
+        bottom: 48px;
+        left: 0;
+        z-index: 9998;
+    }
+    
     /* Mobile navigation styles */
     .mobile-nav {
         position: fixed !important;
         bottom: 0 !important;
         left: 0 !important;
         right: 0 !important;
-        background: white;
-        box-shadow: 0 -1px 6px rgba(0, 0, 0, 0.08);
+        background: #000000;
+        box-shadow: 0 -1px 6px rgba(212, 175, 55, 0.15);
         z-index: 9999 !important; /* Extremely high z-index to ensure it stays on top */
         border-top-left-radius: 12px;
         border-top-right-radius: 12px;
@@ -154,7 +209,7 @@
     }
     
     .mobile-nav-item.active {
-        color: #3b5fe0;
+        color: var(--color-primary);
     }
     
     .mobile-nav-item.active::after {
@@ -166,7 +221,7 @@
         width: 4px;
         height: 4px;
         border-radius: 50%;
-        background: linear-gradient(135deg, #2dd4bf, #3b5fe0);
+        background: linear-gradient(135deg, #d4af37, #bb9a30);
     }
     
     /* Adjust body padding for mobile navigation */
@@ -190,7 +245,7 @@
             color: var(--text-color);
         }
         .dashboard-header {
-            background: linear-gradient(135deg, #2dd4bf, #3b5fe0);
+            background: linear-gradient(135deg, #d4af37, #bb9a30);
             color: white;
             padding: 2.5rem 0;
             margin-bottom: 2rem;
@@ -259,12 +314,12 @@
             justify-content: center;
             font-size: 1.8rem;
             margin-bottom: 1rem;
-            background: rgba(59, 95, 224, 0.1);
-            color: #3b5fe0;
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--color-primary);
         }
         .blue-card .card-icon {
-            background: rgba(59, 95, 224, 0.1);
-            color: #3b5fe0;
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--color-primary);
         }
         .green-card .card-icon {
             background: rgba(45, 212, 191, 0.1);
@@ -290,21 +345,21 @@
             bottom: 0;
             width: 50px;
             height: 3px;
-            background: linear-gradient(135deg, #2dd4bf, #3b5fe0);
+            background: linear-gradient(135deg, #d4af37, #bb9a30);
             border-radius: 3px;
         }
         .btn-primary {
-            background: linear-gradient(135deg, #2dd4bf, #3b5fe0);
+            background: linear-gradient(135deg, #d4af37, #bb9a30);
             border: none;
-            box-shadow: 0 4px 15px rgba(59, 95, 224, 0.3);
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
             transition: all 0.3s ease;
         }
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(59, 95, 224, 0.4);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
         }
         .navbar {
-            background-color: var(--navbar-bg) !important;
+            background-color: #000000 !important;
         }
         .user-avatar {
             width: 36px;
@@ -422,7 +477,7 @@
             width: 150px;
             height: 150px;
             border-radius: 50%;
-            background: linear-gradient(135deg, rgba(45, 212, 191, 0.2), rgba(59, 95, 224, 0.2));
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(187, 154, 48, 0.2));
             color: var(--primary-color);
             margin-bottom: 1.5rem;
         }
@@ -464,7 +519,10 @@
     }
     
     .nav-link.active {
-        color: #3b5fe0 !important;
+        color: var(--color-primary) !important;
         font-weight: 500;
     }
 </style>
+
+<!-- Include dropdown handler script -->
+<script src="/js/dropdown-handler.js" defer></script>
